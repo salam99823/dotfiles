@@ -1,0 +1,7 @@
+---@class Ya
+---@field clamp fun(min: any, x: any, max: any): any
+---@field round fun(x: number): number
+---@field flat fun(t: any[]): any[]
+---@field basename fun(str: string): string
+---@field readable_size fun(size: number): string
+---@field readable_path fun(path: string): string

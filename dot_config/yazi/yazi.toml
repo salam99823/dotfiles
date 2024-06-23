@@ -1,0 +1,11 @@
+[manager]
+show_hidden = true
+sort_by = "extension"
+scrolloff = 4
+
+[opener]
+
+[open]
+
+[plugin]
+append_previewers = [{ mime = "text/*", run = "bat" }]

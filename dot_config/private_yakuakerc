@@ -1,0 +1,25 @@
+[Animation]
+Frames=5
+
+[Appearance]
+HideSkinBorders=true
+Skin=breath-dark
+TerminalHighlightOnManualActivation=true
+Translucency=true
+
+[Desktop Entry]
+DefaultProfile=salam.profile
+
+[Dialogs]
+FirstRun=false
+
+[Notification Messages]
+ShowPasteHugeTextWarning=false
+hinding_title_bar=false
+
+[Window]
+Height=40
+KeepOpen=false
+ShowTabBar=false
+ShowTitleBar=false
+Width=100
