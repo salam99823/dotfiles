@@ -1,7 +1,8 @@
 [Animation]
-Frames=5
+Frames=0
 
 [Appearance]
+BackgroundColor=34,36,54
 HideSkinBorders=true
 Skin=breath-dark
 TerminalHighlightOnManualActivation=true
@@ -18,8 +19,9 @@ ShowPasteHugeTextWarning=false
 hinding_title_bar=false
 
 [Window]
+DynamicTabTitles=true
 Height=40
 KeepOpen=false
-ShowTabBar=false
+KeepOpenAfterLastSessionCloses=true
 ShowTitleBar=false
-Width=100
+Width=80

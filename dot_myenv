@@ -38,6 +38,3 @@ export FZF_DEFAULT_OPTS="\
 # FZF
 # CTRL_T CTRL_R ALT_C
 # OPTS DEFAULT_COMMAND
-
-# shellcheck disable=SC2155
-export BW_SESSION="$(bw unlock --raw --passwordfile "$HOME/secret")"
