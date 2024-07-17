@@ -1,0 +1,13 @@
+[plugin]
+deps = [
+  { use = "AnirudhG07/custom-shell", commit = "5e5c6ee" },
+  { use = "dedukun/relative-motions", commit = "3f19442" },
+  { use = "redbeardymcgee/yazi-plugins#fg", commit = "60d393f" },
+  { use = "Reledia/hexyl", commit = "64daf93" },
+  { use = "yazi-rs/plugins#chmod", commit = "0dc9dcd" },
+  { use = "yazi-rs/plugins#hide-preview", commit = "0dc9dcd" },
+  { use = "yazi-rs/plugins#max-preview", commit = "0dc9dcd" }, { use = "imsi32/yatline", commit = "c2b07ca" },
+]
+
+[flavor]
+deps = [{ use = "BennyOe/tokyo-night", commit = "024fb09" }]

@@ -8,4 +8,7 @@ scrolloff = 4
 [open]
 
 [plugin]
-append_previewers = [{ mime = "text/*", run = "bat" }]
+append_previewers = [
+  { mime = "text/*", run = "bat" },
+  { name = "*", run = "hexyl" },
+]
