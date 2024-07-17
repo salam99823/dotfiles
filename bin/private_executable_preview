@@ -1,0 +1,62 @@
+#!/bin/zsh
+# Dependencies:
+# bat OR cat
+# eza OR ls
+# kitty OR chafa
+# zipinfo
+# tar
+
+if [[ $# == 0 ]]; then
+	echo >&2 "usage: $0 [FILE]..."
+	exit 1
+fi
+
+file=${1/#\~\//$HOME/}
+ftype=$(file --mime-type -b -- "$file")
+fencode=$(file --mime-encoding -b -- "$file")
+
+case "$ftype" in
+text/*)
+	if command -v bat >/dev/null; then
+		bat --style="${BAT_STYLE:-numbers}" --color=always --pager=never -- "$file"
+	else
+		cat "$1"
+	fi
+	;;
+*/directory)
+	if command -v eza >/dev/null; then
+		eza -lTaL1 --colour="always" --no-filesize --no-time --no-quotes $1
+	elif command -v ls >/dev/null; then
+		ls -lGah $1 | grep -Pv "^.+\d+ \d{2}:\d{2} \.\.$|^total \d+"
+	fi
+	;;
+image/*)
+	dim=${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}
+	if [[ $dim == x ]]; then
+		dim=$(stty size </dev/tty | awk '{print $2 "x" $1}')
+	elif ! [[ $KITTY_WINDOW_ID ]] && ((FZF_PREVIEW_TOP + FZF_PREVIEW_LINES == $(stty size </dev/tty | awk '{print $1}'))); then
+		dim=${FZF_PREVIEW_COLUMNS}x$((FZF_PREVIEW_LINES - 1))
+	fi
+	if [[ $KITTY_WINDOW_ID ]]; then
+		kitty icat --clear --transfer-mode=memory --unicode-placeholder --stdin=no --place="$dim@0x0" "$file" | sed '$d' | sed $'$s/$/\e[m/'
+	elif command -v chafa >/dev/null; then
+		chafa -s "$dim" "$file"
+		echo
+	fi
+	;;
+application/zip | application/gzip)
+  if command -v zipinfo >/dev/null; then
+    zipinfo -2zh "$file"
+  fi
+	;;
+application/x-tar)
+  if command -v tar >/dev/null; then
+    echo "Archive: $file"
+    tar -tf "$file"
+  fi
+	;;
+*)
+  echo "$file"
+  echo "$ftype"
+  echo "$fencode"
+esac
