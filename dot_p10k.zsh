@@ -32,7 +32,7 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
-    os_icon               # os identifier
+    # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
     # =========================[ Line #2 ]=========================
@@ -52,23 +52,23 @@
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
-    # anaconda                # conda environment (https://conda.io/)
-    # pyenv                   # python environment (https://github.com/pyenv/pyenv)
-    # goenv                   # go environment (https://github.com/syndbg/goenv)
-    # # nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
-    # # nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
-    # nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
-    node_version          # node.js version
+    anaconda                # conda environment (https://conda.io/)
+    pyenv                   # python environment (https://github.com/pyenv/pyenv)
+    goenv                   # go environment (https://github.com/syndbg/goenv)
+    nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
+    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+    nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
+    # node_version          # node.js version
     # go_version            # go version (https://golang.org)
-    rust_version          # rustc version (https://www.rust-lang.org)
+    # rust_version          # rustc version (https://www.rust-lang.org)
     # dotnet_version        # .NET version (https://dotnet.microsoft.com)
     # php_version           # php version (https://www.php.net/)
     # laravel_version       # laravel php framework version (https://laravel.com/)
     # java_version          # java version (https://www.java.com/)
-    package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
-    # rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
-    # rvm                     # ruby version from rvm (https://rvm.io)
-    # fvm                     # flutter version management (https://github.com/leoafarias/fvm)
+    # package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
+    rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
+    rvm                     # ruby version from rvm (https://rvm.io)
+    fvm                     # flutter version management (https://github.com/leoafarias/fvm)
     luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
     jenv                    # java version from jenv (https://github.com/jenv/jenv)
     plenv                   # perl version from plenv (https://github.com/tokuhirom/plenv)
@@ -96,7 +96,7 @@
     midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     chezmoi_shell           # chezmoi shell (https://www.chezmoi.io/)
-    vi_mode               # vi mode (you don't need this if you've enabled prompt_char)
+    # vi_mode               # vi mode (you don't need this if you've enabled prompt_char)
     # vpn_ip                # virtual private network indicator
     # load                  # CPU load
     # disk_usage            # disk usage
@@ -107,13 +107,13 @@
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
-    # time                    # current time
+    time                    # current time
     # =========================[ Line #2 ]=========================
-    # newline                 # \n
+    newline                 # \n
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
-    battery               # internal battery
+    # battery               # internal battery
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
   )
@@ -171,24 +171,24 @@
   typeset -g POWERLEVEL9K_BACKGROUND=8
 
   # Separator between same-color segments on the left.
-  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%242F\uE0B5'
+  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%242F'
   # Separator between same-color segments on the right.
-  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%242F\uE0B7'
+  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%242F'
   # Separator between different-color segments on the left.
-  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\uE0B4'
+  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''
   # Separator between different-color segments on the right.
-  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B6'
+  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
   # To remove a separator between two segments, add "_joined" to the second segment name.
   # For example: POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(os_icon context_joined)
 
   # The right end of left prompt.
-  typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL='\uE0B4'
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
   # The left end of right prompt.
-  typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL='\uE0B6'
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
   # The left end of left prompt.
-  typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL='\uE0B6'
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=''
   # The right end of right prompt.
-  typeset -g POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL='\uE0B4'
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_LAST_SEGMENT_END_SYMBOL=''
   # Left prompt terminator for lines without any segments.
   typeset -g POWERLEVEL9K_EMPTY_LINE_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=
 
@@ -219,7 +219,8 @@
   # No line introducer if prompt_char is the first segment.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_FIRST_SEGMENT_START_SYMBOL=
   # No surrounding whitespace.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_{LEFT,RIGHT}_WHITESPACE=
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_RIGHT_WHITESPACE=
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_LEFT_WHITESPACE=
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
