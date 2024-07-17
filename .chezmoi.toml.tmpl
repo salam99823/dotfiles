@@ -1,7 +1,11 @@
-s = 1
-[merge]
-command = "nvim"
-args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
-
+{{ $email := promptString "email" -}}
+{{ $name := promptString "name" }}
 [diff]
 pager = "delta"
+
+[data]
+email = {{ $email | quote }}
+name = {{ $name | quote }}
+editor = {{ env "EDITOR" | default "nvim" | quote }}
+font.family = "JetBrainsMono Nerd Font"
+font.size = 10
