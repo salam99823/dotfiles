@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+# ~/.myenv
+#
+export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
+export EDITOR={{ .editor | quote }}
+export FZF_DEFAULT_COMMAND='fd -L -t f'
+export FZF_BASE="/usr/bin/fzf"
+export FZF_DEFAULT_OPTS="\
+--color=bg+:#2d3f76 \
+--color=bg:#1e2030 \
+--color=border:#589ed7 \
+--color=fg:#c8d3f5 \
+--color=gutter:#1e2030 \
+--color=header:#ff966c \
+--color=hl+:#65bcff \
+--color=hl:#65bcff \
+--color=info:#545c7e \
+--color=marker:#ff007c \
+--color=pointer:#ff007c \
+--color=prompt:#65bcff \
+--color=query:#c8d3f5:regular \
+--color=scrollbar:#589ed7 \
+--color=separator:#ff966c \
+--color=spinner:#ff007c \
+--highlight-line \
+--layout='reverse' \
+--prompt=' ' \
+--marker='󰃀' \
+--pointer='' \
+--separator='󱋰' \
+--info='right' \
+--border='left' \
+--no-scrollbar \
+--preview='preview {}' \
+"
+alias e="$EDITOR"
+alias c="clear"
+alias h="htop"
+alias l="eza -TAlL1"
+function yy() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
+alias plugin_updated="{{ .chezmoi.executable }} add ~/.config/nvim/lazy-lock.json ~/.config/nvim/lazyvim.json ~/.config/yazi/package.toml"
+alias bashconf="$EDITOR ~/.bashrc"
+alias zshconf="$EDITOR ~/.zshrc"
+
+# TODO:
+# FZF
+# CTRL_T CTRL_R ALT_C
+# OPTS DEFAULT_COMMAND
