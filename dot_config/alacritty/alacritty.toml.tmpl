@@ -7,5 +7,5 @@ startup_mode = "Maximized"
 decorations_theme_variant = "Dark"
 
 [font]
-normal.family = "JetBrainsMono Nerd Font"
-size = 10
+normal.family = {{ .font.family | quote }}
+size = {{ .font.size }}
