@@ -103,19 +103,24 @@ return {
             end
             return render_result
           end
-          return expand({
-            borders.right,
-            " ",
-            get_git_diff(),
-            {
-              ft_icon and { ft_icon, " ", guifg = ft_color } or "",
-              { filename or "[No Name]", gui = modified and "bold" or nil },
-              modified and " ● " or " ",
-            },
-            get_diagnostic_label(),
-            borders.left,
-            group = "Incline" .. group,
-          })
+          return #filename > 0
+              and expand({
+                borders.right,
+                " ",
+                get_git_diff(),
+                {
+                  ft_icon and { ft_icon, " ", guifg = ft_color } or "",
+                  {
+                    filename,
+                    gui = modified and "bold" or nil,
+                  },
+                  modified and " ● " or " ",
+                },
+                get_diagnostic_label(),
+                borders.left,
+                group = "Incline" .. group,
+              })
+            or {}
         end,
         window = {
           padding = 0,
