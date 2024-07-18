@@ -1,11 +1,10 @@
-{{ $email := promptString "email" -}}
-{{ $name := promptString "name" }}
 [diff]
 pager = "delta"
 
 [data]
-email = {{ $email | quote }}
-name = {{ $name | quote }}
+email = {{ promptStringOnce . "email" "Email address" | quote }}
+name = {{ promptStringOnce . "name" "Defult name" | quote }}
+shell = {{ promptStringOnce . "shell" "Default shell" | quote }}
 editor = {{ env "EDITOR" | default "nvim" | quote }}
 font.family = "JetBrainsMono Nerd Font"
 font.size = 10

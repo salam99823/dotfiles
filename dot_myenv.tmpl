@@ -2,6 +2,9 @@
 #
 # ~/.myenv
 #
+export SHELL=/bin/{{ .shell | quote }}
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_THEME="powerlevel10k/powerlevel10k"
 export PATH="$HOME/bin:$HOME/.cargo/bin:$PATH"
 export EDITOR={{ .editor | quote }}
 export FZF_DEFAULT_COMMAND='fd -L -t f'

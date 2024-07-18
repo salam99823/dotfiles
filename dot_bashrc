@@ -2,13 +2,10 @@
 #
 # ~/.bashrc
 #
-
-# If not running interactively, don't do anything
+source ~/.myenv
 [[ $- != *i* ]] && return
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
 shopt -s checkwinsize
 shopt -s expand_aliases
 shopt -s histappend
-
-source "$HOME/.myenv"
