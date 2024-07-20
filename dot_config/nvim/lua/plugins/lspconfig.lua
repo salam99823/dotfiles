@@ -9,12 +9,13 @@ return {
     ---@param opts lspconfig.settings
     ---@return lspconfig.settings
     opts = function(_, opts)
-      opts = opts or {}
-      opts.setup = opts.setup or {}
-      opts.setup.rust_analyzer = function()
-        return true
-      end
-      return opts
+      return vim.tbl_deep_extend("force", opts, {
+        setup = {
+          rust_analyzer = function()
+            return true
+          end,
+        },
+      })
     end,
   },
 }

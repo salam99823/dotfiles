@@ -9,14 +9,15 @@ return {
     ---@param opts MasonSettings
     ---@return MasonSettings
     opts = function(_, opts)
-      opts = opts or {}
-      opts.ui = opts.ui or {}
-      opts.ui.icons = {
-        package_installed = "󰄳",
-        package_pending = "󰇚",
-        package_uninstalled = "󰝦",
-      }
-      return opts
+      return vim.tbl_deep_extend("force", opts, {
+        ui = {
+          icons = {
+            package_installed = "󰄳",
+            package_pending = "󰇚",
+            package_uninstalled = "󰝦",
+          },
+        },
+      })
     end,
   },
 }
