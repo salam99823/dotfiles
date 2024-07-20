@@ -27,6 +27,7 @@ return {
     main = "incline",
     dependencies = {},
     opts = function()
+      local separator = vim.g.separators.component
       return {
         ---@param props { buf: number, win: number, focused: boolean }
         ---@return render_result[]
@@ -36,7 +37,6 @@ return {
           local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
           local group = props.focused and "Normal" or "Inactive"
           local modified = vim.api.nvim_get_option_value("modified", { buf = props.buf })
-          local separator = vim.g.separators.component.left .. " "
           local borders = {
             left = {
               ok and vim.g.separators.section.left or vim.g.separators.component.left,
@@ -56,7 +56,7 @@ return {
             vim.api.nvim_set_hl(0, hl_group, value or { link = "NormalFloat" })
           end
           local function get_git_diff()
-            local signs, diff = vim.b[props.buf].gitsigns_status_dict or {}, {}
+            local signs, diff = vim.b[props.buf].gitsigns_status_dict or {}, { " " }
             local icons = {
               added = LazyVim.config.icons.git.added,
               changed = LazyVim.config.icons.git.modified,
@@ -85,36 +85,40 @@ return {
             return diagnostics
           end
           local function expand(render_result)
-            local index, exclude = 2, { borders.right, borders.left, separator, " " }
-            while index <= #render_result do
+            local index, exclude =
+              2, { separator.left, separator.right, borders.left, borders.right, {} }
+            while index < #render_result do
               local value = render_result[index]
-              if value ~= nil and #value ~= 0 then
-                if
-                  not vim.tbl_contains(exclude, render_result[index - 1])
-                  and not vim.tbl_contains(exclude, value)
-                then
-                  table.insert(render_result, index, separator)
-                  index = index + 1
-                end
-                index = index + 1
-              else
-                table.remove(render_result, index)
+              if
+                not (
+                  vim.tbl_contains(exclude, render_result[index - 1])
+                  or vim.tbl_contains(exclude, value)
+                )
+              then
+                table.insert(render_result, index, " ")
+                table.insert(
+                  render_result,
+                  index,
+                  separator[index > vim.fn.round(#render_result / 2) and "left" or "right"]
+                )
+                index = index + 2
               end
+              index = index + 1
             end
             return render_result
           end
           return #filename > 0
               and expand({
                 borders.right,
-                " ",
                 get_git_diff(),
                 {
                   ft_icon and { ft_icon, " ", guifg = ft_color } or "",
                   {
                     filename,
+                    " ",
                     gui = modified and "bold" or nil,
                   },
-                  modified and " ● " or " ",
+                  modified and "● " or "",
                 },
                 get_diagnostic_label(),
                 borders.left,
