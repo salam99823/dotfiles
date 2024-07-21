@@ -6,7 +6,7 @@ deps = [
   { use = "Reledia/hexyl", commit = "64daf93" },
   { use = "yazi-rs/plugins#chmod", commit = "0dc9dcd" },
   { use = "yazi-rs/plugins#hide-preview", commit = "0dc9dcd" },
-  { use = "yazi-rs/plugins#max-preview", commit = "0dc9dcd" }, { use = "imsi32/yatline", commit = "c2b07ca" },
+  { use = "yazi-rs/plugins#max-preview", commit = "0dc9dcd" },
 ]
 
 [flavor]
