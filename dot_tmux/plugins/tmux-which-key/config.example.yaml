@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=config.schema.yaml
 command_alias_start_index: 200
 keybindings:
-  # root_table: C-Space
+  root_table: C-Space
   prefix_table: Space
 title:
   style: align=centre,bold
@@ -245,16 +245,13 @@ items:
         menu:
           - name: Install
             key: i
-            command:
-              run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/install_plugins
+            command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/install_plugins
           - name: Update
             key: u
-            command:
-              run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/update_plugins
+            command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/update_plugins
           - name: Clean
             key: c
-            command:
-              run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/clean_plugins
+            command: run-shell $TMUX_PLUGIN_MANAGER_PATH/tpm/bindings/clean_plugins
       - name: Detach
         key: D
         command: detach
