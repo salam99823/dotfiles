@@ -1,10 +1,4 @@
 {
-  "lspconfig": {
-    "lua_ls": {
-      "Lua.hint.setType": true,
-      "Lua.hint.enable": true
-    }
-  },
   "neoconf": {
     "plugins": {
       "lua_ls": {
