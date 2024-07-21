@@ -36,7 +36,6 @@ return {
         sources = vim.list_extend(
           opts.sources or {},
           utils.sources({
-            "nvim_lsp_signature_help",
             "pypi",
             "npm",
             "nvim_lua",
