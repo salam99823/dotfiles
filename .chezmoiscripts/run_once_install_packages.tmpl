@@ -1,17 +1,22 @@
 #!/bin/bash
-command_exists() {
-  command -v "$@" >/dev/null 2>&1
-}
+{{ if not (isExecutable "pamac") }}
+sudo pacman -Syu pamac-cli
+{{ end }}
 
-if ! command_exists pamac; then
-  sudo pacman -Syu pamac-cli
-fi
+pamac install --no-confirm --as-explicit
+{{- range .packages.linux.pamac.cli }} {{ . | quote }}{{ end }}
+{{- if .hasGUI }}
+{{- range .packages.linux.pamac.gui }} {{ . | quote }}{{ end }}
+{{- end }}
 
-pamac install --no-confirm
-{{- range .packages.linux.pamac }} {{ . | quote }}{{ end }}
-
-snap install
-{{- range .packages.linux.snap }} {{ . | quote }}{{ end }}
+sudo snap install
+{{- range .packages.linux.snap.cli }} {{ . | quote }}{{ end }}
+{{- if .hasGUI }}
+{{- range .packages.linux.snap.gui }} {{ . | quote }}{{ end }}
+{{- end }}
 
 flatpak install
-{{- range .packages.linux.flatpak }} {{ . | quote }}{{ end }}
+{{- range .packages.linux.flatpak.cli }} {{ . | quote }}{{ end }}
+{{- if .hasGUI }}
+{{- range .packages.linux.flatpak.gui }} {{ . | quote }}{{ end }}
+{{- end }}

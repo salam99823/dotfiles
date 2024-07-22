@@ -1,10 +1,17 @@
+
+# chezmoi:template:left-delimiter=<< right-delimiter=>>
+[diff]
+command = "batdiff"
+pager = "delta"
+args = ["{{ .Destination }}", "{{ .Target }}"]
 [merge]
 command = "nvim"
-args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 [data]
-email = {{ promptStringOnce . "email" "Email address" | quote }}
-name = {{ promptStringOnce . "name" "Defult name" | quote }}
-shell = {{ promptStringOnce . "shell" "Default shell" | quote }}
-editor = {{ promptStringOnce . "editor" "Editor" | quote }}
-font.family = {{ promptStringOnce . "font.family" "Font family" | quote }}
-font.size = {{ promptStringOnce . "font.size" "Font size" | quote }}
+hasGUI = << promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
+email = << promptStringOnce . "email" "Email address" | quote >>
+name = << promptStringOnce . "name" "Defult name" | quote >>
+shell = << promptStringOnce . "shell" "Default shell" | quote >>
+editor = << promptStringOnce . "editor" "Editor" | quote >>
+font.family = << promptStringOnce . "font.family" "Font family" | quote >>
+font.size = << promptIntOnce . "font.size" "Font size" >>
