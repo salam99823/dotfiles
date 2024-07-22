@@ -25,7 +25,16 @@ return {
   {
     "b0o/incline.nvim",
     main = "incline",
-    dependencies = {},
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>uN",
+        function()
+          require("incline").toggle()
+        end,
+        desc = "Incline Toggle",
+      },
+    },
     opts = function()
       local separator = vim.g.separators.component
       return {
