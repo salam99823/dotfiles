@@ -1,0 +1,52 @@
+#!/bin/bash
+COMMAND=install
+for arg in "$@"; do
+  case "$arg" in
+  -i | --installed)
+    INSTALLED=--installed
+    COMMAND=remove
+    shift
+    ;;
+  -r | --repos)
+    REPOS=--repos
+    shift
+    ;;
+  -a | --aur)
+    AUR=--aur
+    shift
+    ;;
+  --no-aur)
+    AUR=--no-aur
+    shift
+    ;;
+  -f | --files)
+    FILES=--files
+    shift
+    ;;
+  *)
+    SEARCH+="$arg"
+    shift
+    ;;
+  esac
+done
+
+if [[ $# != 0 ]] || [[ $SEARCH == "" ]]; then
+  printf >&2 "\
+install or remove package
+
+usage:
+  %s [options] <package(s)/file(s)>
+
+options:
+  --installed, -i : only search for installed packages
+  --repos, -r     : only search for packages in repositories
+  --aur, -a       : also search in AUR
+  --no-aur        : do not search in AUR
+  --files, -f     : search for packages which own the given filenames (filenames can be partial)
+" "$0"
+  exit 1
+fi
+
+pamac search -q "$INSTALLED" "$REPOS" "$FILES" "$AUR" "$SEARCH" |
+  fzf --preview="pamac info {}" --prompt="$COMMAND " |
+  xargs -ro pamac $COMMAND
