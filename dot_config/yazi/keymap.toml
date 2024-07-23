@@ -1,6 +1,11 @@
 [manager]
 
 [[manager.prepend_keymap]]
+on = ["C"]
+run = "plugin ouch --args=zip"
+desc = "Compress with ouch"
+
+[[manager.prepend_keymap]]
 on = ["f", "g"]
 run = "plugin fg"
 desc = "find file by content (fuzzy match)"

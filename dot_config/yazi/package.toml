@@ -7,6 +7,8 @@ deps = [
   { use = "yazi-rs/plugins#chmod", commit = "0dc9dcd" },
   { use = "yazi-rs/plugins#hide-preview", commit = "0dc9dcd" },
   { use = "yazi-rs/plugins#max-preview", commit = "0dc9dcd" },
+  { use = "Reledia/glow", commit = "536185a" },
+  { use = "ndtoan96/ouch", commit = "251da69" },
 ]
 
 [flavor]
