@@ -22,9 +22,3 @@ type = "git-repo"
 exact = true
 refreshPeriod = "168h"
 clone.args = ["--depth=1"]
-
-[".tmux/plugins/tpm"]
-url = "https://github.com/tmux-plugins/tpm"
-type = "git-repo"
-exact = true
-refreshPeriod = "168h"
