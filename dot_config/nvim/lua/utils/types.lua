@@ -1,3 +1,4 @@
+---@meta
 ---@class cmp.LazySourceConfig: cmp.SourceConfig
 ---@field public [1] string?
 ---@field public name string?
