@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# ~/.myenv
+# ~/.profile
 #
 export SHELL=/bin/{{ .shell | quote }}
 
@@ -54,16 +54,8 @@ export FZF_ALT_C_OPTS="\
 
 export EDITOR={{ .editor | quote }}
 export VISUAL="$EDITOR"
+export KITTY_CONFIG_DIRECTORY="~/.config/kitty"
 
 alias e="$EDITOR"
 alias c="clear"
 alias lg="lazygit"
-alias plugin_updated="{{ .chezmoi.executable }} re-add ~/.config/nvim/lazy-lock.json ~/.config/nvim/lazyvim.json ~/.config/yazi/package.toml"
-function yy() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    cd -- "$cwd"
-  fi
-  rm -f -- "$tmp"
-}
