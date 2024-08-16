@@ -1,0 +1,15 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+include themes{{ .chezmoi.pathSeparator }}tokyonight_moon.conf
+
+font_size        {{ .font.size }}
+font_family      {{ .font.family | quote }}
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+disable_ligatures always
+
+cursor_shape block
+cursor_shape_unfocused hollow
+enable_audio_bell no
+
+tab_bar_style powerline
