@@ -1,9 +1,13 @@
 #!/bin/bash
-{{ if not (isExecutable "pamac") }}
-sudo pacman -Syu pamac-cli
-{{ end }}
+if ! [[ $- =~ i ]]; then
+  exit
+fi
 
+{{ if isExecutable "/bin/pamac" }}
 pamac install --no-confirm --as-explicit
+{{- else }}
+sudo pacman -Syu --noconfirm --asexplicit
+{{- end }}
 {{- range .packages.linux.pamac.cli }} {{ . | quote }}{{ end }}
 {{- if .hasGUI }}
 {{- range .packages.linux.pamac.gui }} {{ . | quote }}{{ end }}
