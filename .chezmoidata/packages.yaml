@@ -3,6 +3,9 @@ packages:
     pamac:
       gui:
         - "alacritty"
+        - "kitty"
+        - "obsidian"
+        - "wezterm"
       cli:
         - "age"
         - "apparmor"
@@ -42,6 +45,7 @@ packages:
         - "npm"
         - "openssh"
         - "ouch"
+        - "pamac-cli"
         - "podman"
         - "podman-compose"
         - "podman-docker"
@@ -64,6 +68,7 @@ packages:
         - "tree-sitter"
         - "wget"
         - "zsh"
+        - "zoxide"
     snap:
       gui:
       cli:
