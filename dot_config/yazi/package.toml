@@ -1,17 +1,17 @@
 [plugin]
 deps = [
-  { use = "AnirudhG07/custom-shell", commit = "9ac5755" },
-  { use = "dedukun/relative-motions", commit = "73f5542" },
-  { use = "redbeardymcgee/yazi-plugins#fg", commit = "a378f0d" },
-  { use = "Reledia/hexyl", commit = "64daf93" },
-  { use = "yazi-rs/plugins#chmod", commit = "06e5fe1" },
-  { use = "yazi-rs/plugins#hide-preview", commit = "06e5fe1" },
-  { use = "yazi-rs/plugins#max-preview", commit = "06e5fe1" },
-  { use = "Reledia/glow", commit = "536185a" },
-  { use = "ndtoan96/ouch", commit = "251da69" },
-  { use = "imsi32/yatline", commit = "439b9d0" },
-  { use = "imsi32/yatline-githead", commit = "2f2b000" },
+  { use = "AnirudhG07/custom-shell", rev = "9ac5755" },
+  { use = "dedukun/relative-motions", rev = "73f5542" },
+  { use = "redbeardymcgee/yazi-plugins:fg", rev = "a378f0d" },
+  { use = "Reledia/hexyl", rev = "64daf93" },
+  { use = "yazi-rs/plugins:chmod", rev = "06e5fe1" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "06e5fe1" },
+  { use = "yazi-rs/plugins:max-preview", rev = "06e5fe1" },
+  { use = "Reledia/glow", rev = "536185a" },
+  { use = "ndtoan96/ouch", rev = "251da69" },
+  { use = "imsi32/yatline", rev = "439b9d0" },
+  { use = "imsi32/yatline-githead", rev = "2f2b000" },
 ]
 
 [flavor]
-deps = [{ use = "BennyOe/tokyo-night", commit = "024fb09" }]
+deps = [{ use = "BennyOe/tokyo-night", rev = "024fb09" }]
