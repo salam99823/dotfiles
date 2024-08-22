@@ -1,7 +1,4 @@
 #!/bin/bash
-if ! [[ $- =~ i ]]; then
-  exit
-fi
 
 {{ if isExecutable "/bin/pamac" }}
 pamac install --no-confirm --as-explicit
@@ -13,14 +10,18 @@ sudo pacman -Syu --noconfirm --asexplicit
 {{- range .packages.linux.pamac.gui }} {{ . | quote }}{{ end }}
 {{- end }}
 
+{{ if isExecutable "/bin/snap" }}
 sudo snap install
 {{- range .packages.linux.snap.cli }} {{ . | quote }}{{ end }}
 {{- if .hasGUI }}
 {{- range .packages.linux.snap.gui }} {{ . | quote }}{{ end }}
 {{- end }}
+{{- end }}
 
+{{ if isExecutable "/bin/flatpak" }}
 flatpak install
 {{- range .packages.linux.flatpak.cli }} {{ . | quote }}{{ end }}
 {{- if .hasGUI }}
 {{- range .packages.linux.flatpak.gui }} {{ . | quote }}{{ end }}
+{{- end }}
 {{- end }}
