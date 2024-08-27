@@ -1,7 +1,4 @@
-import = ["~/.config/alacritty/themes/tokyonight_moon.toml"]
-shell = {{ .shell | quote }}
-[env]
-TERM_PROGRAM = "alacritty"
+import = ["~/.config/alacritty/themes/{{ .colorscheme }}.toml"]
 [window]
 # "Full" | "None"
 decorations = "None"

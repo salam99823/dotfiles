@@ -7,10 +7,18 @@ args = ["{{ .Destination }}", "{{ .Target }}"]
 command = "nvim"
 args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 [data]
-hasGUI = << promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
 email = << promptStringOnce . "email" "Email address" | quote >>
 name = << promptStringOnce . "name" "Defult name" | quote >>
-shell = << promptStringOnce . "shell" "Default shell" | quote >>
-editor = << promptStringOnce . "editor" "Editor" | quote >>
-font.family = << promptStringOnce . "font.family" "Font family" | quote >>
-font.size = << promptIntOnce . "font.size" "Font size" >>
+editor = "nvim"
+hasGUI = << promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
+<<- if .hasGUI >>
+colorscheme = << promptStringOnce . "colorscheme" "Colorscheme for all programms" | quote >>
+[data.font]
+family = "JetBrainsMono Nerd Font"
+size = << promptIntOnce . "font.size" "Font size" >>
+<<- end >>
+[data.separators]
+<<- $data := . >>
+<<- range $k, $v := (dict "component" (list "left" "right") "section" (list "left" "right")) >><< range $v >>
+<< list $k . | join "." >> = << promptStringOnce $data (list "separators" $k . | join ".") (cat "Separator for" . $k) | quote >>
+<<- end >><< end >>

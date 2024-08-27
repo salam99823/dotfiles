@@ -1,0 +1,109 @@
+set -g default-shell $SHELL
+set -g allow-passthrough on
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+
+set -as terminal-overrides ",$TERM:RGB"
+
+setw -g xterm-keys on
+set -s focus-events on
+
+set -g mouse on
+setw -g monitor-activity on
+
+set -g base-index 1
+setw -g pane-base-index 1
+
+set -g prefix C-Space
+bind C-Space send-prefix
+unbind C-b
+
+unbind %
+unbind '"'
+
+bind S choose-tree -sZ -O name
+
+bind - split-window -v
+bind s split-window -h 
+
+bind -r h select-pane -L  # move left
+bind -r j select-pane -D  # move down
+bind -r k select-pane -U  # move up
+bind -r l select-pane -R  # move right
+bind > swap-pane -D       # swap current pane with the next one
+bind < swap-pane -U       # swap current pane with the previous one
+
+# pane resizing
+bind -r H resize-pane -L 2
+bind -r J resize-pane -D 2
+bind -r K resize-pane -U 2
+bind -r L resize-pane -R 2
+bind -r m resize-pane -Z
+
+bind Enter copy-mode # enter copy mode
+
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+bind -T copy-mode-vi Escape send -X cancel
+bind -T copy-mode-vi H send -X start-of-line
+bind -T copy-mode-vi L send -X end-of-line
+
+# copy to X11 clipboard
+if -b 'command -v xsel > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | xsel -i -b"'
+if -b '! command -v xsel > /dev/null 2>&1 && command -v xclip > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | xclip -i -selection clipboard >/dev/null 2>&1"'
+# copy to Wayland clipboard
+if -b '[ "$XDG_SESSION_TYPE" = "wayland" ] && command -v wl-copy > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | wl-copy"'
+
+set -g @plugin 'tmux-plugins/tpm'
+
+set -g @plugin 'tmux-plugins/tmux-logging'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect' 
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+set -g @continuum-restore "on"
+set -g @resurrect-capture-pane-contents "on"
+set -g @resurrect-strategy-nvim "session"
+
+# TokyoNight colors for Tmux
+set -g mode-style "fg=#82aaff,bg=#3b4261"
+
+set -g message-style "fg=#82aaff,bg=#3b4261"
+set -g message-command-style "fg=#82aaff,bg=#3b4261"
+
+set -g pane-border-style "fg=#3b4261"
+set -g pane-active-border-style "fg=#82aaff"
+
+set -g status "on"
+set -g status-justify "left"
+
+set -g status-style "fg=#82aaff,bg=#1e2030"
+
+set -g status-left-length "100"
+set -g status-right-length "100"
+
+set -g status-left-style NONE
+set -g status-right-style NONE
+
+set -g status-left "#[fg=#1b1d2b,bg=#82aaff,bold] #S #[fg=#82aaff,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+set -g status-right "#[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#82aaff,bg=#1e2030] #{prefix_highlight} #[fg=#3b4261,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#82aaff,bg=#3b4261] %A, %d %B {{ .separators.component.right }} %R #[fg=#82aaff,bg=#3b4261,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#1b1d2b,bg=#82aaff,bold] #h "
+
+setw -g window-status-activity-style "underscore,fg=#828bb8,bg=#1e2030"
+setw -g window-status-separator ""
+setw -g window-status-style "NONE,fg=#828bb8,bg=#1e2030"
+setw -g window-status-format "#[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}#[default] #I {{ .separators.component.left }} #W #F #[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+setw -g window-status-current-format "#[fg=#1e2030,bg=#3b4261,nobold,nounderscore,noitalics]{{ .separators.section.left }}#[fg=#82aaff,bg=#3b4261,bold] #I {{ .separators.component.left }} #W #F #[fg=#3b4261,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+
+# tmux-plugins/tmux-prefix-highlight support
+set -g @prefix_highlight_output_prefix "#[fg=#ffc777]#[bg=#1e2030]{{ .separators.section.right }}#[fg=#1e2030]#[bg=#ffc777]"
+set -g @prefix_highlight_output_suffix " {{ .separators.section.right }}"
+# TokyoNight colors for Tmux
+
+setenv -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.config/tmux/plugins/"
+if "test ! -d ~/.config/tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm && ~/.config/tmux/plugins/tpm/bin/install_plugins'"
+
+run "~/.config/tmux/plugins/tpm/tpm"

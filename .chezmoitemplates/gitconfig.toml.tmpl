@@ -1,0 +1,25 @@
+[init]
+defaultBranch = "main"
+
+[core]
+editor = {{ .editor | quote }}
+pager = "delta"
+
+[user]
+email = {{ .email | quote }}
+name = {{ .name | quote }}
+
+[pull]
+rebase = true
+
+[include]
+path = "~/.config/git/themes/{{ .colorscheme }}.gitconfig"
+
+[merge]
+conflictstyle = "diff3"
+
+[diff]
+colorMoved = "default"
+
+[interactive]
+diffFilter = "delta --color-only"

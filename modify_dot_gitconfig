@@ -1,0 +1,2 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- includeTemplate "gitconfig.toml.tmpl" . | fromToml | merge (fromToml .chezmoi.stdin) | toToml | replaceAllRegex "'(.*)'" "\"${1}\"" -}}

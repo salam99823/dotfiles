@@ -1,9 +1,10 @@
+-- chezmoi:template:left-delimiter=<< right-delimiter=>>
 require("relative-motions"):setup({ show_numbers = "relative_absolute" })
 require("yatline"):setup({
   theme = {
-    section_separator = { open = "", close = "" },
-    part_separator = { open = "", close = "" },
-    inverse_separator = { open = "", close = "" },
+    section_separator = { open = << .separators.section.right | squote >>, close = << .separators.section.left | squote >> },
+    part_separator = { open = << .separators.component.right | squote >>, close = << .separators.component.left | squote >> },
+    inverse_separator = { open = "", close = "" },
 
     style_a = {
       fg = "bright black",
@@ -34,39 +35,23 @@ require("yatline"):setup({
   },
   tab_width = 10,
   tab_use_inverse = true,
-  show_background = true,
+  show_background = false,
   header_line = {
     left = {
       section_a = {},
-      section_b = {
-        { type = "string", custom = false, name = "tab_path" },
-      },
+      section_b = {{ type = "string", custom = false, name = "tab_path" }},
       section_c = {},
     },
-    right = {
-      section_a = {
-        { type = "line", custom = false, name = "tabs" },
-      },
-      section_b = {},
-      section_c = {},
-    },
+    right = { section_a = {}, section_b = {}, section_c = {} },
   },
   status_line = {
     left = {
-      section_a = {
-        { type = "string", custom = false, name = "tab_mode" },
-      },
-      section_b = {
-        { type = "coloreds", custom = false, name = "githead" },
-      },
-      section_c = {
-        { type = "coloreds", custom = false, name = "count" },
-      },
+      section_a = {{ type = "string", custom = false, name = "tab_mode" }},
+      section_b = {{ type = "coloreds", custom = false, name = "githead" }},
+      section_c = {{ type = "coloreds", custom = false, name = "count" }},
     },
     right = {
-      section_a = {
-        { type = "string", custom = false, name = "cursor_position" },
-      },
+      section_a = {{ type = "string", custom = false, name = "cursor_position" }},
       section_b = {
         { type = "string", custom = false, name = "hovered_size" },
         { type = "coloreds", custom = false, name = "permissions" },

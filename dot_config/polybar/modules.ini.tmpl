@@ -1,0 +1,143 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;      __  ___          __      __
+;     /  |/  ____  ____/ __  __/ ___  _____
+;    / /|_/ / __ \/ __  / / / / / _ \/ ___/
+;   / /  / / /_/ / /_/ / /_/ / /  __(__  )
+;  /_/  /_/\____/\__,_/\__,_/_/\___/____/
+;
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+{{- define "key" }}{{ prepend . "format" | compact | join "-" }}{{ end }}
+[module/cava]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/info-cava.py -f 32 -b 16 -c average -e=""
+tail = true
+{{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "" }}
+{{ template "key" list .name "background" }} = ${colors.{{ ($bg := index (list "blue" "fg_gutter") .section) }}}
+{{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
+{{ template "key" list .name "prefix" }} = {{ eq .side "l" | ternary "\" \"" (list "\"%{T2}" .separator (hasKey . "component" | ternary "%{T-} " "█%{T-}") "\"" | join "") }}
+{{ template "key" list .name "suffix" }} = {{ ne .side "l" | ternary "\" \"" (list "\"" (hasKey . "component" | ternary " %{T2}" "%{T2}█") .separator "%{T-}\"" | join "") }}
+{{ if hasKey . "component" | not }}
+{{- if eq .side "l" }}
+{{ template "key" list .name "suffix" "foreground" }} = "${colors.{{ $bg }}}"
+{{ template "key" list .name "suffix" "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
+{{- else }}
+{{ template "key" list .name "prefix" "foreground" }} = "${colors.{{ $bg }}}"
+{{ template "key" list .name "prefix" "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
+{{- end }}{{- end }}{{- end }}
+
+[module/keyboard]
+type = internal/xkeyboard
+format =   <label-layout><label-indicator>
+blacklist-0 = caps lock
+label-indicator-on-numlock = " 󰎠"
+label-indicator-on-scrolllock = " "
+{{ template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "" "component" true }}
+
+[module/backlight]
+type = internal/backlight
+format = <ramp> <label>
+ramp-0 = 󰛩
+ramp-1 = 󱩎
+ramp-2 = 󱩏
+ramp-3 = 󱩐
+ramp-4 = 󱩑
+ramp-5 = 󱩒
+ramp-6 = 󱩓
+ramp-7 = 󱩔
+ramp-8 = 󱩕
+ramp-9 = 󱩖
+ramp-10 = 󰛨
+{{ template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "" "component" true }}
+
+[module/alsa]
+type = internal/alsa
+format-volume = <ramp-volume> <label-volume> 
+ramp-volume-0 = 
+ramp-volume-1 = 
+format-muted = " "
+{{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "volume" }}
+{{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "muted" }}
+
+[module/temperature]
+type = internal/temperature
+format-prefix = " "
+format-suffix = " "
+format-prefix-foreground = ${colors.cyan}
+
+[module/memory]
+type = internal/memory
+format-prefix = " "
+format-suffix = " "
+format-prefix-foreground = ${colors.yellow}
+label = %used%
+
+[module/cpu]
+type = internal/cpu
+format-prefix = " "
+format-suffix = " "
+format-prefix-foreground = ${colors.blue}
+
+[module/bluetooth]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/bluetooth.py
+interval = 1
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "" }}
+
+[module/wlan]
+type = internal/network
+interface-type = wireless
+format-connected = <ramp-signal> <label-connected>
+ramp-signal-0 = 󰤯
+ramp-signal-1 = 󰤟
+ramp-signal-2 = 󰤢
+ramp-signal-3 = 󰤥
+ramp-signal-4 = 󰤨
+label-connected = %essid%
+label-disconnected = 󰤭
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
+
+[module/battery]
+type = internal/battery
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+format-low = <animation-low> <label-low>
+ramp-capacity-0 = 󰂎
+ramp-capacity-1 = 󰁺
+ramp-capacity-2 = 󰁻
+ramp-capacity-3 = 󰁼
+ramp-capacity-4 = 󰁽
+ramp-capacity-5 = 󰁾
+ramp-capacity-6 = 󰁿
+ramp-capacity-7 = 󰂀
+ramp-capacity-8 = 󰂁
+ramp-capacity-9 = 󰂂
+ramp-capacity-10 = 󰁹
+animation-charging-0 = 󰢟
+animation-charging-1 = 󰢜
+animation-charging-2 = 󰂆
+animation-charging-3 = 󰂇
+animation-charging-4 = 󰂈
+animation-charging-5 = 󰢝
+animation-charging-6 = 󰂉
+animation-charging-7 = 󰢞
+animation-charging-8 = 󰂊
+animation-charging-9 = 󰂋
+animation-charging-10 = 󰂅
+animation-charging-framerate = 300
+animation-low-0 = 󱃍
+animation-low-1 = 󱃌
+animation-low-framerate = 500
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "charging" "component" true }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "discharging" "component" true }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "full" "component" true }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "low" "component" true }}
+
+[module/time]
+type = internal/date
+time = %T
+label = %time%  
+{{ template "style" dict "separator" .separators.section.right "section" 0 "side" "r" "name" "" }}

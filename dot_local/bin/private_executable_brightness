@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "--get" ]]; then
+  brightnessctl g
+elif [[ "$1" == "--up" ]]; then
+  brightnessctl s +5
+elif [[ "$1" == "--down" ]]; then
+  brightnessctl s 5-
+else
+  brightnessctl g
+fi

@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;     ______      __
+;    / ________  / ____  __________
+;   / /   / __ \/ / __ \/ ___/ ___/
+;  / /___/ /_/ / / /_/ / /  (__  )
+;  \____/\____/_/\____/_/  /____/
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+{{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme }}
+{{- block "colors" (get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)) -}}
+{{ dict "colors" (unset (unset (unset . "git") "diff") "rainbow") | toIni }}
+{{- end }}
+{{- else if stat ($path := joinPath .chezmoi.homeDir ".config/polybar/" .colorscheme) }}
+{{- include $path }}
+{{- end -}}

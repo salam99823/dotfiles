@@ -18,15 +18,7 @@ return {
           section_separators = section_separators,
         }),
         sections = {
-          lualine_a = {
-            {
-              "mode",
-              separator = {
-                left = vim.g.isolation.statusline and section_separators.right or "",
-                right = section_separators.left,
-              },
-            },
-          },
+          lualine_a = { "mode" },
           lualine_b = { "branch" },
           lualine_c = {
             LazyVim.lualine.root_dir(),
@@ -44,11 +36,7 @@ return {
           lualine_z = {
             {
               "datetime",
-              style = "%A, %d %B " .. component_separators.right .. " %T",
-              separator = {
-                left = section_separators.right,
-                right = vim.g.isolation.statusline and section_separators.left or "",
-              },
+              style = "%T",
             },
           },
         },
