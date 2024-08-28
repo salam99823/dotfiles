@@ -3,7 +3,7 @@
 pgrep -x sxhkd >/dev/null || sxhkd &
 
 # workspaces
-bspc monitor -d I II III IV V
+bspc monitor -d   󰈹    󰖂
 bspc monitor LVDS-1 -d 5
 
 # focus
@@ -37,7 +37,7 @@ bspc config pointer_action3 resize_corner
 
 # rules
 bspc rule -a feh floating=on
-bspc rule -a firefox desktop='^2' follow=on
+bspc rule -a firefox follow=on
 
 # start resources
 xrdb merge ~/.Xresources
