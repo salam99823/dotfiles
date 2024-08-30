@@ -3,7 +3,7 @@
 pgrep -x sxhkd >/dev/null || sxhkd &
 
 # workspaces
-bspc monitor -d   󰈹    󰖂
+bspc monitor -d      
 bspc monitor LVDS-1 -d 5
 
 # focus
@@ -36,23 +36,16 @@ bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
 
 # rules
-bspc rule -a feh floating=on
-bspc rule -a firefox follow=on
 
 # start resources
 xrdb merge ~/.Xresources
 
 # script to always initialize with a different wallpaper:
-feh --randomize --no-fehbg --bg-fill $HOME/.config/Wallpaper
+feh --bg-fill $HOME/.config/Wallpaper/Wallpaper.jpg
 ~/.config/polybar/launch
 
 # launch notification daemon
 dunst &
-
-# launch battery tracker and redshift
-pkill battery-alert
-~/.local/bin/battery-alert &
-pgrep -x redshift >/dev/null || redshift &
 
 # start compositor
 picom &
