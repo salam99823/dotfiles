@@ -1,11 +1,6 @@
 import = ["~/.config/alacritty/themes/{{ .colorscheme }}.toml"]
 [window]
-# "Full" | "None"
-decorations = "None"
-# "Windowed" | "Maximized" | "Fullscreen"
-startup_mode = "Maximized"
-decorations_theme_variant = "Dark"
-opacity = 0.5
+opacity = 0
 
 [font]
 normal.family = {{ .font.family | quote }}
