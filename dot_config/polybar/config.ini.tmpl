@@ -17,13 +17,13 @@ include-file = modules.ini
 
 [bar/top]
 background = ${colors.bg_statusline}
-foreground = ${colors.fg_sidebar}
+foreground = ${colors.fg}
 line-size = 3
 fixed-center = true
 wm-restack = bspwm
-modules-left   = cava keyboard backlight alsa
+modules-left   = mpd cava keyboard backlight alsa
 modules-center = temperature memory cpu
-modules-right  = bluetooth wlan battery time
+modules-right  = battery wlan bluetooth time bspwm
 
 font-0 = {{ .font.family }}:pixelsize=11;3
 font-1 = {{ .font.family }}:pixelsize=15;3

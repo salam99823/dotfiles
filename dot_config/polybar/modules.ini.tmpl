@@ -9,23 +9,34 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 {{- define "key" }}{{ prepend . "format" | compact | join "-" }}{{ end }}
-[module/cava]
-type = custom/script
-exec = python3 ~/.config/polybar/scripts/info-cava.py -f 32 -b 16 -c average -e=""
-tail = true
-{{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "" }}
-{{ template "key" list .name "background" }} = ${colors.{{ ($bg := index (list "blue" "fg_gutter") .section) }}}
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+format-online = <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random> %{T2}{{ .separators.component.left }}%{T-} <label-time> %{T2}{{ .separators.component.left }}%{T-} <label-song>
+icon-play = " "
+icon-pause = " "
+icon-prev = " "
+icon-next = " "
+icon-random = " "
+icon-repeat = " "
+{{- block "style" dict "separator" .separators.component.left "section" 0 "side" "l" "name" "online" "component" true }}
+{{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
 {{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
 {{ template "key" list .name "prefix" }} = {{ eq .side "l" | ternary "\" \"" (list "\"%{T2}" .separator (hasKey . "component" | ternary "%{T-} " "█%{T-}") "\"" | join "") }}
 {{ template "key" list .name "suffix" }} = {{ ne .side "l" | ternary "\" \"" (list "\"" (hasKey . "component" | ternary " %{T2}" "%{T2}█") .separator "%{T-}\"" | join "") }}
 {{ if hasKey . "component" | not }}
-{{- if eq .side "l" }}
-{{ template "key" list .name "suffix" "foreground" }} = "${colors.{{ $bg }}}"
-{{ template "key" list .name "suffix" "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
-{{- else }}
-{{ template "key" list .name "prefix" "foreground" }} = "${colors.{{ $bg }}}"
-{{ template "key" list .name "prefix" "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
-{{- end }}{{- end }}{{- end }}
+{{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "foreground" }} = "${self.{{ template "key" list .name "background" }}}"
+{{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
+{{- end }}{{- end }}
+
+[module/cava]
+type = custom/script
+exec = ~/.config/polybar/scripts/info-cava.py -C"
+{{- regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme | ternary (list ($colors := get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)).black $colors.yellow $colors.orange $colors.red | join ",") "" -}}
+"
+tail = true
+{{ template "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "" }}
 
 [module/keyboard]
 type = internal/xkeyboard
@@ -79,26 +90,6 @@ format-prefix = " "
 format-suffix = " "
 format-prefix-foreground = ${colors.blue}
 
-[module/bluetooth]
-type = custom/script
-exec = python3 ~/.config/polybar/scripts/bluetooth.py
-interval = 1
-{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "" }}
-
-[module/wlan]
-type = internal/network
-interface-type = wireless
-format-connected = <ramp-signal> <label-connected>
-ramp-signal-0 = 󰤯
-ramp-signal-1 = 󰤟
-ramp-signal-2 = 󰤢
-ramp-signal-3 = 󰤥
-ramp-signal-4 = 󰤨
-label-connected = %essid%
-label-disconnected = 󰤭
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
-
 [module/battery]
 type = internal/battery
 format-charging = <animation-charging> <label-charging>
@@ -131,13 +122,46 @@ animation-charging-framerate = 300
 animation-low-0 = 󱃍
 animation-low-1 = 󱃌
 animation-low-framerate = 500
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "charging" "component" true }}
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "discharging" "component" true }}
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "full" "component" true }}
-{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "low" "component" true }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "charging" }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "discharging" }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "full" }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "low" }}
+
+[module/wlan]
+type = internal/network
+interface-type = wireless
+format-connected = <ramp-signal> <label-connected>
+ramp-signal-0 = 󰤯
+ramp-signal-1 = 󰤟
+ramp-signal-2 = 󰤢
+ramp-signal-3 = 󰤥
+ramp-signal-4 = 󰤨
+label-connected = %essid%
+label-disconnected = 󰤭
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
+
+[module/bluetooth]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/bluetooth.py
+interval = 2
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 
 [module/time]
 type = internal/date
 time = %T
-label = %time%  
+label = "%time%  "
 {{ template "style" dict "separator" .separators.section.right "section" 0 "side" "r" "name" "" }}
+
+[module/bspwm]
+type = internal/bspwm
+pin-workspaces = true
+inline-mode = true
+label-separator = %{T2}{{ .separators.component.right }}%{T-}
+label-separator-padding = 1
+label-focused = %name%
+label-focused-underline = ${colors.black}
+label-occupied = %name%
+label-empty = %name%
+label-urgent = %name%
+{{ template "style" dict "separator" .separators.component.right "section" 0 "side" "r" "name" "" "component" true }}

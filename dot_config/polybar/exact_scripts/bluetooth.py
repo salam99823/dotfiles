@@ -12,13 +12,9 @@ class BTdevice:
     def __init__(self, info: re.Match[str]):
         self.name = info.group("name")
         self.mac = info.group("mac")
-        extra_info = bluetoothctl("info", self.mac)
-        self.connected = extra_info.find("\n\tConnected: yes\n") != -1
-        if not self.connected:
-            return
         percentage = re.search(
             r"\tBattery Percentage: 0x(?P<percentage>[0-9a-fA-F]{2}).*$",
-            extra_info,
+            bluetoothctl("info", self.mac),
         )
         if percentage is None:
             return
@@ -40,20 +36,17 @@ def main():
     ):
         return "󰂲"
 
-    bt_devices = filter(
-        lambda device: device.connected,
-        (
-            BTdevice(info)
-            for info in (
-                re.search(
-                    r"Device (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)",
-                    line,
-                )
-                for line in bluetoothctl("devices", "Trusted").split("\n")
-                if line
+    bt_devices = (
+        BTdevice(info)
+        for info in (
+            re.search(
+                r"Device (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)",
+                line,
             )
-            if info
-        ),
+            for line in bluetoothctl("devices", "Connected").split("\n")
+            if line
+        )
+        if info
     )
     icons = "󰥇󰤾󰤿󰥀󰥁󰥂󰥃󰥄󰥅󰥆󰥈"
     for device in bt_devices:

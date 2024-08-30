@@ -4,3 +4,5 @@
 local keymaps = require("utils.maper")
 
 keymaps.Im("jk", "<esc>")
+keymaps.Nm("<leader>e", LazyVim.pick("files"))
+keymaps.Nm("<leader>E", LazyVim.pick("files", { root = false }))
