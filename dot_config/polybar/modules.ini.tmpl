@@ -13,14 +13,14 @@
 type = internal/mpd
 host = 127.0.0.1
 port = 6600
-format-online = <icon-prev> <toggle> <icon-next> <icon-repeat> <icon-random> %{T2}{{ .separators.component.left }}%{T-} <label-time> %{T2}{{ .separators.component.left }}%{T-} <label-song>
+format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-time>
 icon-play = " "
 icon-pause = " "
 icon-prev = " "
 icon-next = " "
 icon-random = " "
 icon-repeat = " "
-{{- block "style" dict "separator" .separators.component.left "section" 0 "side" "l" "name" "online" "component" true }}
+{{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "online" }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
 {{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
 {{ template "key" list .name "prefix" }} = {{ eq .side "l" | ternary "\" \"" (list "\"%{T2}" .separator (hasKey . "component" | ternary "%{T-} " "█%{T-}") "\"" | join "") }}
@@ -29,14 +29,6 @@ icon-repeat = " "
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "foreground" }} = "${self.{{ template "key" list .name "background" }}}"
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
 {{- end }}{{- end }}
-
-[module/cava]
-type = custom/script
-exec = ~/.config/polybar/scripts/info-cava.py -C"
-{{- regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme | ternary (list ($colors := get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)).black $colors.yellow $colors.orange $colors.red | join ",") "" -}}
-"
-tail = true
-{{ template "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "" }}
 
 [module/keyboard]
 type = internal/xkeyboard
@@ -71,24 +63,12 @@ format-muted = 
 {{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "volume" }}
 {{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "muted" }}
 
-[module/temperature]
-type = internal/temperature
-format-prefix = " "
-format-suffix = " "
-format-prefix-foreground = ${colors.cyan}
-
-[module/memory]
-type = internal/memory
-format-prefix = " "
-format-suffix = " "
-format-prefix-foreground = ${colors.yellow}
-label = %used%
-
-[module/cpu]
-type = internal/cpu
-format-prefix = " "
-format-suffix = " "
-format-prefix-foreground = ${colors.blue}
+[module/cava]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/info-cava.py -C"
+{{- regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme | ternary (list ($colors := get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)).fg $colors.yellow $colors.orange $colors.red | join ",") "" -}}
+" -b64
+tail = true
 
 [module/battery]
 type = internal/battery
