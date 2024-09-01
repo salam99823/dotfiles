@@ -14,8 +14,8 @@ Shift_L + alt
 	change_language
 
 # Launch Rofi Menu
-super + {r,d}
-  {rofi -show drun,powermenu}
+super + r
+  rofi -show drun
 
 # Launch Applications
 super + shift + {f,p,t,v,i,x,w}
