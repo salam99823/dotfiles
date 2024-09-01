@@ -1,7 +1,6 @@
 * {
     bg:  #222436;
     bg-dark: #1e2030;
-    border: #589ed7;
     selected-col: #444a73;
     blue: #82aaff;
     fg-col: #c8d3f5;
