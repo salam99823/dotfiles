@@ -1,22 +1,22 @@
 [init]
-defaultBranch = "main"
+  defaultBranch = "main"
 
 [core]
-editor = {{ .editor | quote }}
-pager = "delta"
+  editor = {{ .editor | quote }}
+  pager = "delta"
 
 [user]
-email = {{ .email | quote }}
-name = {{ .name | quote }}
+  email = {{ .email | quote }}
+  name = {{ .name | quote }}
 
 [pull]
-rebase = true
+  rebase = true
 
 [merge]
-conflictstyle = "diff3"
+  conflictstyle = "diff3"
 
 [diff]
-colorMoved = "default"
+  colorMoved = "default"
 
 [interactive]
-diffFilter = "delta --color-only"
+  diffFilter = "delta --color-only"
