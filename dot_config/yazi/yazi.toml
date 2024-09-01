@@ -13,6 +13,7 @@ extract = [
 
 [plugin]
 prepend_previewers = [
+  { mime = "audio/*", run = "exifaudio" },
   { name = "*.md", run = "glow" },
   { mime = "application/*zip", run = "ouch" },
   { mime = "application/x-tar", run = "ouch" },

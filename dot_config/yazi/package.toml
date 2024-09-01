@@ -10,7 +10,7 @@ deps = [
   { use = "Reledia/glow", rev = "536185a" },
   { use = "ndtoan96/ouch", rev = "251da69" },
   { use = "imsi32/yatline", rev = "f5a56cb" },
-  { use = "imsi32/yatline-githead", rev = "2f2b000" },
+  { use = "imsi32/yatline-githead", rev = "2f2b000" }, { use = "Sonico98/exifaudio", rev = "6205460" },
 ]
 
 [flavor]
