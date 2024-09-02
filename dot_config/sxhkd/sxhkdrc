@@ -1,6 +1,9 @@
 # reloads sxhkd configuration:
 super + alt + r
-  pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config' -t 1500
+  pkill -x sxhkd; notify-send 'sxhkd' 'Reloaded config' -t 1500
+
+super + q
+  alacritty
 
 # Spawn terminal + tmux
 super + t
@@ -18,12 +21,11 @@ super + r
   rofi -show drun
 
 # Launch Applications
-super + shift + {f,p,t,v,i,x,w}
+super + shift + {f,p,t,i,x,w}
 	{\
     firefox, \
     pavucontrol, \
     telegram-desktop, \
-    virtualbox, \
     firefox --private-window, \
     xcolor-pick, \
     random_wallpaper, \
@@ -43,6 +45,12 @@ XF86Audio{RaiseVolume,LowerVolume,Mute}
 # Brightness controls
 XF86MonBrightness{Up,Down}
   sh $HOME/.local/bin/brightness {--up,--down}
+
+XF86Audio{Prev,Next}
+	mpc -q {prev,next}
+
+XF86AudioPlay
+  mpc -q toggle
 
 # screenshot
 shift + Print
