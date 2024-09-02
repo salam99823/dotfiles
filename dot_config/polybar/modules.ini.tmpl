@@ -11,15 +11,7 @@
 {{- define "key" }}{{ prepend . "format" | compact | join "-" }}{{ end }}
 [module/mpd]
 type = internal/mpd
-host = 127.0.0.1
-port = 6600
 format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-time>
-icon-play = " "
-icon-pause = " "
-icon-prev = " "
-icon-next = " "
-icon-random = " "
-icon-repeat = " "
 {{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "online" }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
 {{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
@@ -57,9 +49,10 @@ ramp-10 = 󰛨
 [module/alsa]
 type = internal/alsa
 format-volume = <ramp-volume> <label-volume> 
-ramp-volume-0 = 
-ramp-volume-1 = 
-format-muted = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+format-muted =  
 {{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "volume" }}
 {{ template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "muted" }}
 
@@ -67,9 +60,10 @@ format-muted = 
 type = custom/script
 exec = python3 ~/.config/polybar/scripts/info-cava.py -C"
 {{- regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme | ternary (list ($colors := get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)).fg $colors.yellow $colors.orange $colors.red | join ",") "" -}}
-" -b64
+" -b80
 tail = true
 
+{{ if output "ls" "/sys/class/power_supply/" }}
 [module/battery]
 type = internal/battery
 format-charging = <animation-charging> <label-charging>
@@ -106,7 +100,9 @@ animation-low-framerate = 500
 {{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "discharging" }}
 {{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "full" }}
 {{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "low" }}
+{{ end }}
 
+{{ if output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1" }}
 [module/wlan]
 type = internal/network
 interface-type = wireless
@@ -118,13 +114,28 @@ ramp-signal-3 = 󰤥
 ramp-signal-4 = 󰤨
 label-connected = %essid%
 label-disconnected = 󰤭
+{{ if output "ls" "/sys/class/power_supply/" }}
 {{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
 {{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
+{{ else }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "disconnected" }}
+{{ end }}
+{{ end }}
+
+[module/ethernet]
+type = internal/network
+interface-type = wired
+format-connected = 󱘖 <label-connected>
+{{ if output "/bin/ls" "/sys/class/power_supply/" | or (output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1") }}
+{{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
+{{ else }}
+{{ template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
+{{ end }}
 
 [module/bluetooth]
 type = custom/script
 exec = python3 ~/.config/polybar/scripts/bluetooth.py
-interval = 2
 {{ template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 
 [module/time]
