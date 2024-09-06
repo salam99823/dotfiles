@@ -1,6 +1,6 @@
 # reloads sxhkd configuration:
 super + alt + r
-  pkill -x sxhkd; notify-send 'sxhkd' 'Reloaded config' -t 1500
+  pkill -x sxhkd; notify-send 'sxhkd' 'Reloaded config' -t 1500; sxhkd
 
 super + q
   alacritty
