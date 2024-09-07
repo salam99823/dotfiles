@@ -36,15 +36,15 @@ super + p
 
 # Select window to close
 ctrl + super + alt + k
-	{xkill}
+	xkill
 
 # Volume controls
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-  sh $HOME/.local/bin/volume {--up,--down,--toggle}
+  volume {--up,--down,--toggle}
 
 # Brightness controls
 XF86MonBrightness{Up,Down}
-  sh $HOME/.local/bin/brightness {--up,--down}
+  brightness {--up,--down}
 
 XF86Audio{Prev,Next}
 	mpc -q {prev,next}
