@@ -35,14 +35,8 @@ bspc config pointer_action1 move
 bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
 
-# rules
-
-# start resources
-xrdb merge ~/.Xresources
-
 # script to always initialize with a different wallpaper:
 feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
-~/.config/polybar/launch
 
 # launch notification daemon
 dunst &
@@ -51,5 +45,6 @@ dunst &
 picom &
 
 # autostart
+~/.config/polybar/launch &
 flameshot &
 mpd &
