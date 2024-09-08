@@ -1,7 +1,5 @@
 #!/bin/sh
-pgrep -x polybar
-status=$?
-if test $status -eq 0; then
+if test $(pgrep -cx polybar) -ne 0; then
   killall polybar && bspc config -m focused top_padding 0
 else
   ~/.config/polybar/launch
