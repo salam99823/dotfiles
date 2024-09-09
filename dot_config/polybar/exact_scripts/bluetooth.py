@@ -22,7 +22,7 @@ class BTdevice:
 
 
 def bluetoothctl(*args) -> str:
-    return subprocess.check_output(["bluetoothctl", *args]).decode()
+    return subprocess.check_output(("bluetoothctl", *args)).decode()
 
 
 def main():
