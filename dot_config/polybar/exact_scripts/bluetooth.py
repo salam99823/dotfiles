@@ -9,14 +9,14 @@ if shutil.which("bluetoothctl") is None:
 
 
 class BTdevice:
-    def __init__(self, info: re.Match[str]):
-        self.name = info.group("name")
-        self.mac = info.group("mac")
+    def __init__(self, name: str, mac: str):
+        self.name, self.mac = name, mac
         percentage = re.search(
             r"\tBattery Percentage: 0x(?P<percentage>[0-9a-fA-F]{2}).*$",
             bluetoothctl("info", self.mac),
         )
         if percentage is None:
+            self.percentage = None
             return
         self.percentage = int(percentage.group("percentage"), 16)
 
@@ -37,7 +37,7 @@ def main():
         return "󰂲"
 
     bt_devices = (
-        BTdevice(info)
+        BTdevice(info.group("name"), info.group("mac"))
         for info in (
             re.search(
                 r"Device (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)",
@@ -50,10 +50,12 @@ def main():
     )
     icons = "󰥇󰤾󰤿󰥀󰥁󰥂󰥃󰥄󰥅󰥆󰥈"
     for device in bt_devices:
-        return f"{icons[device.percentage // 10]}", f"{device.percentage}%"
+        if device.percentage is None:
+            return device.name
+        return f"{device.name} {icons[device.percentage // 10]} {device.percentage}%"
     else:
         return ""
 
 
 if __name__ == "__main__":
-    print(" ".join(main()))
+    print(main())
