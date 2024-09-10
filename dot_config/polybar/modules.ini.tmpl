@@ -13,6 +13,7 @@
 {{ if findExecutable "mpd" $path }}
 [module/mpd]
 type = internal/mpd
+label-song = %title%
 format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-time>
 {{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "online" }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
@@ -84,7 +85,7 @@ ramp-signal-2 = 󰤢
 ramp-signal-3 = 󰤥
 ramp-signal-4 = 󰤨
 label-connected = %essid%
-label-disconnected = 󰤭
+label-disconnected = "󰤭 Disconnected"
 {{- if output "ls" "/sys/class/power_supply/" }}
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
@@ -107,7 +108,14 @@ format-connected = 󱘖 <label-connected>
 {{- if and (findExecutable "python3" $path) (findExecutable "bluetoothctl" $path) }}
 [module/bluetooth]
 type = custom/script
-exec = python3 ~/.config/polybar/scripts/bluetooth.py
+exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{name}"
+interval = 3
+{{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
+
+[module/bluetooth-battery]
+type = custom/script
+exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{battery} {percentage}%"
+interval = 3
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 {{- end }}
 

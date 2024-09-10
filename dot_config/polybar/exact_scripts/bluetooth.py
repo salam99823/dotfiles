@@ -1,61 +1,145 @@
+import argparse
 import re
 import shutil
 import subprocess
-import sys
-
-if shutil.which("bluetoothctl") is None:
-    print("bluetoothctl missing", file=sys.stderr)
-    exit(-1)
+from enum import StrEnum
+from typing import overload
 
 
-class BTdevice:
-    def __init__(self, name: str, mac: str):
-        self.name, self.mac = name, mac
-        percentage = re.search(
-            r"\tBattery Percentage: 0x(?P<percentage>[0-9a-fA-F]{2}).*$",
-            bluetoothctl("info", self.mac),
-        )
-        if percentage is None:
-            self.percentage = None
-            return
-        self.percentage = int(percentage.group("percentage"), 16)
+class Filters(StrEnum):
+    Paired = "Paired"
+    Bounded = "Bounded"
+    Trusted = "Trusted"
+    Connected = "Connected"
+    none = ""
 
 
-def bluetoothctl(*args) -> str:
-    return subprocess.check_output(("bluetoothctl", *args)).decode()
-
-
-def main():
-    controller = re.search(
-        r"Controller (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)\s+\[default\]",
-        bluetoothctl("list"),
+class Bluetoothctl:
+    ControllerRegex = re.compile(
+        r"^Controller (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+?)"
+        r"(?P<default> \[default\])?$",
     )
-    if controller is None or re.search(
-        r"\tPower(ed: no|State: off)",
-        bluetoothctl("show", controller.group("mac")),
+    DeviceRegex = re.compile(
+        r"^Device (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)$",
+    )
+    InfoRegex = re.compile(
+        r"^\t(?P<key>[\w\s]+): (?P<value>.+)$",
+    )
+
+    def __init__(self):
+        if shutil.which("bluetoothctl") is None:
+            raise EnvironmentError("bluetoothctl missing")
+
+    def __call__(self, *args: str) -> str:
+        return subprocess.check_output(("bluetoothctl", *args)).decode()
+
+    @overload
+    def show(self, ctrl: str = "") -> str: ...
+    @overload
+    def show(self, ctrl: dict[str, str]) -> dict[str, str]: ...
+
+    def show(self, ctrl=""):
+        if isinstance(ctrl, str):
+            return self("show", ctrl)
+        return self.parse_info(self("show", ctrl.get("mac", "")))
+
+    @overload
+    def info(self, dev: str = "") -> str: ...
+    @overload
+    def info(self, dev: dict[str, str]) -> dict[str, str]: ...
+
+    def info(self, dev=""):
+        if isinstance(dev, str):
+            return self("info", dev)
+        return self.parse_info(self("info", dev.get("mac", "")))
+
+    def parse_info(self, info: str) -> dict[str, str]:
+        result = {}
+        for line in info.splitlines():
+            match = self.InfoRegex.match(line)
+            if match is None:
+                continue
+            key, value = match.group("key").lower(), match.group("value")
+            if key in result:
+                result[key] = ""
+                continue
+            result[key] = value
+        return {key: value for key, value in result.items() if value}
+
+    def list(self):
+        return (
+            {
+                "mac": m.group("mac"),
+                "name": m.group("name"),
+                "default": bool(m.group("default")),
+            }
+            for m in self.ControllerRegex.finditer(self("list"))
+        )
+
+    def devices(self, filter: Filters = Filters.none):
+        return (
+            {"mac": m.group("mac"), "name": m.group("name")}
+            for m in self.DeviceRegex.finditer(self("devices", filter))
+        )
+
+    def controller(self):
+        for ctrl in self.list():
+            if ctrl["default"]:
+                return ctrl
+
+
+def main(online: str, offline: str, connected: str, icons: str):
+    bluetoothctl = Bluetoothctl()
+    controller = bluetoothctl.controller()
+    if controller is None:
+        return ""
+    info = bluetoothctl.show(controller)
+    if info.get("powered") == "no":
+        return offline.format(**info)
+    for device in map(
+        bluetoothctl.info,
+        bluetoothctl.devices(Filters.Connected),
     ):
-        return "󰂲"
-
-    bt_devices = (
-        BTdevice(info.group("name"), info.group("mac"))
-        for info in (
-            re.search(
-                r"Device (?P<mac>(?::?[0-9A-F]{2})+) (?P<name>.+)",
-                line,
-            )
-            for line in bluetoothctl("devices", "Connected").split("\n")
-            if line
+        percentage = re.search(
+            r"(?<=\()\d+(?=\))",
+            device.get("battery percentage", ""),
         )
-        if info
-    )
-    icons = "󰥇󰤾󰤿󰥀󰥁󰥂󰥃󰥄󰥅󰥆󰥈"
-    for device in bt_devices:
-        if device.percentage is None:
-            return device.name
-        return f"{device.name} {icons[device.percentage // 10]} {device.percentage}%"
+        if percentage:
+            device["percentage"] = percentage.group()
+            device["battery"] = icons[int(device["percentage"]) // len(icons)]
+        try:
+            return connected.format(**device)
+        except KeyError:
+            return ""
     else:
-        return ""
+        return online.format(**info)
 
 
 if __name__ == "__main__":
-    print(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-n",
+        "--online",
+        default="",
+        help='Format of output when online. Default: ""',
+    )
+    parser.add_argument(
+        "-f",
+        "--offline",
+        default="󰂲",
+        help='Format of output when offline. Default: "󰂲"',
+    )
+    parser.add_argument(
+        "-c",
+        "--connected",
+        default="{name}",
+        help='Format of output for connected devices. Default: "{name}"',
+    )
+    parser.add_argument(
+        "-i",
+        "--icons",
+        default="󰥇󰤾󰤿󰥀󰥁󰥂󰥃󰥄󰥅󰥆󰥈",
+        help='Format of output. Default: "󰥇󰤾󰤿󰥀󰥁󰥂󰥃󰥄󰥅󰥆󰥈"',
+    )
+    opts = parser.parse_args()
+    print(main(**vars(opts)))
