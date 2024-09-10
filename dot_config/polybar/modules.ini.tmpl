@@ -13,7 +13,7 @@
 {{ if findExecutable "mpd" $path }}
 [module/mpd]
 type = internal/mpd
-label-song = %title%
+label-song = %title:0:25:..%
 format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-time>
 {{- block "style" dict "separator" .separators.section.left "section" 0 "side" "l" "name" "online" }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
@@ -26,6 +26,26 @@ format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-t
 {{- end }}
 {{ end }}
 {{ end }}
+
+{{- if output "ls" "/sys/class/power_supply/" }}
+[module/battery]
+type = internal/battery
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+format-low = <animation-low> <label-low>
+{{ range $i, $e := splitList "" "󰂎󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹" }}ramp-capacity-{{ println $i "=" $e }}{{ end }}
+{{- range $i, $e := splitList "" "󰢟󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅" }}animation-charging-{{ println $i "=" $e }}{{ end }}
+animation-charging-framerate = 300
+animation-low-0 = 󱃍
+animation-low-1 = 󱃌
+animation-low-framerate = 500
+{{- template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "charging" "component" true }}
+{{- template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "discharging" "component" true }}
+{{- template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "full" "component" true }}
+{{- template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "low" "component" true }}
+{{- end }}
+
 [module/keyboard]
 type = internal/xkeyboard
 format =   <label-layout><label-indicator>
@@ -55,25 +75,6 @@ exec = python3 ~/.config/polybar/scripts/info-cava.py -C"{{ regexMatch "^tokyoni
 tail = true
 {{- end }}
 
-{{- if output "ls" "/sys/class/power_supply/" }}
-[module/battery]
-type = internal/battery
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <ramp-capacity> <label-full>
-format-low = <animation-low> <label-low>
-{{ range $i, $e := splitList "" "󰂎󰁺󰁻󰁼󰁽󰁾󰁿󰂀󰂁󰂂󰁹" }}ramp-capacity-{{ println $i "=" $e }}{{ end }}
-{{- range $i, $e := splitList "" "󰢟󰢜󰂆󰂇󰂈󰢝󰂉󰢞󰂊󰂋󰂅" }}animation-charging-{{ println $i "=" $e }}{{ end }}
-animation-charging-framerate = 300
-animation-low-0 = 󱃍
-animation-low-1 = 󱃌
-animation-low-framerate = 500
-{{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "charging" }}
-{{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "discharging" }}
-{{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "full" }}
-{{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "low" }}
-{{- end }}
-
 {{- if output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1" }}
 [module/wlan]
 type = internal/network
@@ -84,22 +85,17 @@ ramp-signal-1 = 󰤟
 ramp-signal-2 = 󰤢
 ramp-signal-3 = 󰤥
 ramp-signal-4 = 󰤨
-label-connected = %essid%
+label-connected = %essid:0:15:..%
 label-disconnected = "󰤭 Disconnected"
-{{- if output "ls" "/sys/class/power_supply/" }}
-{{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
-{{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "disconnected" "component" true }}
-{{- else }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "disconnected" }}
-{{- end }}
 {{- end }}
 
 [module/ethernet]
 type = internal/network
 interface-type = wired
 format-connected = 󱘖 <label-connected>
-{{- if output "/bin/ls" "/sys/class/power_supply/" | or (output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1") }}
+{{- if output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1" }}
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
 {{- else }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
@@ -110,6 +106,7 @@ format-connected = 󱘖 <label-connected>
 type = custom/script
 exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{name}"
 interval = 3
+label = %output:0:15:...%
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 
 [module/bluetooth-battery]
