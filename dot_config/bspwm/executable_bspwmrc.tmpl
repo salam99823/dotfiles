@@ -11,7 +11,7 @@ bspc config history_aware_focus true
 bspc config focus_by_distance true
 
 # Window borders
-bspc config border_width 5
+bspc config border_width 1
 bspc config borderless_monocle true
 {{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme -}}
 {{- block "bspwmrc" (get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)) -}}
