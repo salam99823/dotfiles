@@ -111,7 +111,7 @@ label = %output:0:15:...%
 
 [module/bluetooth-battery]
 type = custom/script
-exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{battery} {percentage}%"
+exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{battery} {percentage}%" -n "" -f ""
 interval = 3
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 {{- end }}
