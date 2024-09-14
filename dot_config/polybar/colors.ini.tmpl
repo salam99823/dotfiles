@@ -7,7 +7,7 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 {{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme }}
-{{- block "colors" (get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)) -}}
+{{- with get . .colorscheme -}}
 {{ dict "colors" (unset (unset (unset . "git") "diff") "rainbow") | toIni }}
 {{- end }}
 {{- else if stat ($path := joinPath .chezmoi.homeDir ".config/polybar/" .colorscheme) }}

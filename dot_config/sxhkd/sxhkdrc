@@ -1,100 +1,74 @@
-super + {shift + t,t}
-  {alacritty,alacritty -e "tmux"}
+# Launch Applications
+super + {t,shift + t,f,i,v}
+  {\
+    alacritty,\
+    alacritty -e "tmux",\
+    firefox,\
+    firefox --private-window,\
+    pavucontrol,\
+  }
+
+# Launch scripts
+super + {x,shift + w,p}
+  ~/.local/bin/{\
+    xcolor-pick,\
+    random_wallpaper,\
+    toggle-polybar,\
+  }
 
 Alt_L + shift
   ~/.local/bin/change_language
 Shift_L + alt
   ~/.local/bin/change_language
 
-super + space
-  rofi -show drun
+super + {shift + ,_}space
+  {\
+    rofi -show run,\
+    rofi -show drun,\
+  }
 
-# Launch Applications
-super + {f,v,i}
-  {firefox,pavucontrol,firefox --private-window}
-
-# Launch scripts
-super + {x,shift + w,p}
-  ~/.local/bin/{xcolor-pick,random_wallpaper,toggle-polybar}
-
-# Volume controls
 XF86Audio{RaiseVolume,LowerVolume,Mute}
   ~/.local/bin/volume {--up,--down,--toggle}
 
-# Brightness controls
 XF86MonBrightness{Up,Down}
   ~/.local/bin/brightness {--up,--down}
 
 XF86Audio{Prev,Next,Play}
   mpc -q {prev,next,toggle}
 
-# screenshot
 Print
   flameshot gui
-
-# reloads sxhkd configuration:
-super + u
-  pkill --signal 12 sxhkd && notify-send 'sxhkd' 'Reloaded config'
 
 #
 # BSPWM HOTKEYS
 #
 
-# quit/restart bspwm
-super + shift + u
-  bspc wm -r && notify-send 'bspwm' 'Reloaded config' -t 1500
+super + {shift,_} + u
+  {\
+    bspc wm -r && notify-send 'bspwm',\
+    pkill -USR1 -x sxhkd && notify-send 'sxhkd',\
+  } 'Reloaded config' -t 1500
 
-# close and kill
 super + d
   bspc node -c
 
-#
-# state/flags
-#
+super + alt + {space,ctrl + space,f}
+  bspc node -t {"~tiled","~fullscreen","~floating"}
 
-super + alt + {f,space}
-  bspc node -t {"~floating","~fullscreen"}
-
-# Change focus to next window, including floating window
 alt + {_,shift + }Tab
   bspc node -f {next.local,prev.local}
  
-#
-# focus/swap
-#
-
-# focus the last node/desktop
 super + {grave,Tab}
   bspc {node,desktop} -f last
 
-# send focus window to current desktop
-super + {_,shift + }{1-9,0}
-  bspc {desktop -f,node -d} '^{1-9,10}'
+super + {_,shift + }{1-9}
+  bspc {desktop -f,node -d} '^{1-9}'
 
-#
-# preselect
-#
-
-# preselect the ratio
 super + ctrl + {1-9}
   bspc node -o 0.{1-9}
 
-# cancel the preselection for the focused node
-super + ctrl + space
+super + ctrl + 0
   bspc node -p cancel
 
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-  bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-#
-# move/resize
-#
-
-# Send the window to another edge of the screen
 super + {_,alt + }{h,j,k,l}
   bspc node -{f,s} {west,south,north,east}
-
-# Rotate layout by 90 degrees
-super + ctrl + r
-  bspc node @/ -R 90

@@ -7,8 +7,6 @@ args = ["{{ .Destination }}", "{{ .Target }}"]
 command = "nvim"
 args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 [data]
-email = << promptStringOnce . "email" "Email address" | quote >>
-name = << promptStringOnce . "name" "Defult name" | quote >>
 editor = "nvim"
 hasGUI = << promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
 <<- if .hasGUI >>

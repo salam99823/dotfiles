@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # workspaces
 bspc monitor -d      
 
@@ -12,13 +11,12 @@ bspc config focus_by_distance true
 # Window borders
 bspc config border_width 1
 bspc config borderless_monocle true
-{{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme -}}
-{{- block "bspwmrc" (get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)) -}}
-bspc config normal_border_color {{ .fg_dark | quote }}
-bspc config focused_border_color {{ .blue | quote }}
-bspc config urgent_border_color {{ .orange | quote }}
-bspc config presel_border_color {{ .blue | quote }}
-{{- end }}{{ end }}
+{{- with get . .colorscheme -}}
+bspc config normal_border_color {{ .border | quote }}
+bspc config focused_border_color {{ .border_highlight | quote }}
+bspc config urgent_border_color {{ .border_highlight | quote }}
+bspc config presel_border_color {{ .border_highlight | quote }}
+{{- end }}
 
 # gaps
 bspc config gapless_monocle true
@@ -35,17 +33,10 @@ bspc config pointer_action3 resize_corner
 
 pgrep -x sxhkd >/dev/null || sxhkd &
 
-# script to always initialize with a different wallpaper:
 feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
-
-# launch notification daemon
 dunst &
-
-# start compositor
 picom &
-
-# autostart
 ~/.config/polybar/launch &
 flameshot &
 mpd &
-alacritty -e "tmux" &
+pgrep -x alacritty >/dev/null || alacritty -e "tmux" &

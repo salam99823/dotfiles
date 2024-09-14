@@ -34,8 +34,7 @@
   mouse_middle_click = do_action
   mouse_right_click = close_all
 
-{{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme }}
-{{- with (get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)) -}}
+{{- with get . .colorscheme -}}
 [urgency_low]
   background = {{ .bg_dark | quote }}
   foreground = {{ .fg | quote }}
@@ -50,5 +49,4 @@
   background = {{ .bg_highlight | quote }}
   foreground = {{ .red1 | quote }}
   frame_color = {{ .red1 | quote }}
-{{ end }}
 {{ end }}
