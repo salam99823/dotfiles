@@ -41,31 +41,21 @@ return {
         ---@param props { buf: number, win: number, focused: boolean }
         ---@return render_result[]
         render = function(props)
-          local ok, theme = pcall(require, "lualine.themes." .. vim.g.colors_name)
+          local theme = require("lualine.themes." .. vim.g.colors_name)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
           local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
           local group = props.focused and "Normal" or "Inactive"
           local modified = vim.api.nvim_get_option_value("modified", { buf = props.buf })
-          local borders = {
-            left = {
-              ok and vim.g.separators.section.left or vim.g.separators.component.left,
-              group = "InclineBorder" .. group,
-            },
-            right = {
-              ok and vim.g.separators.section.right or vim.g.separators.component.right,
-              group = "InclineBorder" .. group,
-            },
-          }
           for hl_group, value in pairs({
-            InclineNormal = ok and { fg = theme.normal.b.fg, bg = theme.normal.b.bg },
-            InclineInactive = ok and { bg = theme.inactive.b.bg, fg = theme.normal.b.fg },
-            InclineBorderNormal = ok and { fg = theme.normal.b.bg, bg = "bg" },
-            InclineBorderInactive = ok and { fg = theme.inactive.b.bg, bg = "bg" },
+            InclineBorderNormal = { fg = theme.normal.b.bg, bg = "NONE" },
+            InclineBorderInactive = { fg = theme.inactive.b.bg, bg = "NONE" },
+            InclineTextNormal = { fg = theme.normal.b.fg, bg = theme.normal.b.bg },
+            InclineTextInactive = { bg = theme.inactive.b.bg, fg = theme.normal.b.fg },
           }) do
-            vim.api.nvim_set_hl(0, hl_group, value or { link = "NormalFloat" })
+            vim.api.nvim_set_hl(0, hl_group, value)
           end
           local function get_git_diff()
-            local signs, diff = vim.b[props.buf].gitsigns_status_dict or {}, { " " }
+            local signs, diff = vim.b[props.buf].gitsigns_status_dict or {}, {}
             local icons = {
               added = LazyVim.config.icons.git.added,
               changed = LazyVim.config.icons.git.modified,
@@ -75,6 +65,9 @@ return {
               if signs[key] and signs[key] ~= 0 then
                 table.insert(diff, { icon .. signs[key] .. " ", group = "Diff" .. key })
               end
+            end
+            if #diff > 0 then
+              table.insert(diff, 1, " ")
             end
             return diff
           end
@@ -91,54 +84,56 @@ return {
                 })
               end
             end
+            if #diagnostics > 0 then
+              table.insert(diagnostics, 1, " ")
+            end
             return diagnostics
           end
           local function expand(render_result)
-            local index, exclude =
-              2, { separator.left, separator.right, borders.left, borders.right, {} }
+            local index = 1
             while index < #render_result do
               local value = render_result[index]
-              if
-                not (
-                  vim.tbl_contains(exclude, render_result[index - 1])
-                  or vim.tbl_contains(exclude, value)
-                )
-              then
-                table.insert(render_result, index, " ")
-                table.insert(
-                  render_result,
-                  index,
-                  separator[index > vim.fn.round(#render_result / 2) and "left" or "right"]
-                )
-                index = index + 2
+              if #value > 0 then
+                table.insert(render_result, index + 1, separator.right)
+                index = index + 1
               end
               index = index + 1
             end
             return render_result
           end
           return #filename > 0
-              and expand({
-                borders.right,
-                get_git_diff(),
+              and {
                 {
-                  ft_icon and { ft_icon, " ", guifg = ft_color } or "",
-                  {
-                    filename,
-                    " ",
-                    gui = modified and "bold" or nil,
-                  },
-                  modified and "● " or "",
+                  vim.g.separators.section.right,
+                  group = "InclineBorder" .. group,
                 },
-                get_diagnostic_label(),
-                borders.left,
-                group = "Incline" .. group,
-              })
+                expand({
+                  get_diagnostic_label(),
+                  get_git_diff(),
+                  {
+                    ft_icon and { " ", ft_icon, " ", guifg = ft_color } or "",
+                    {
+                      filename,
+                      " ",
+                      gui = modified and "bold" or nil,
+                    },
+                    modified and "● " or "",
+                  },
+                  group = "InclineText" .. group,
+                }),
+              }
             or {}
         end,
+        highlight = {
+          groups = {
+            InclineNormal = { default = false, guifg = "NONE", guibg = "NONE" },
+            InclineNormalNC = { default = false, guifg = "NONE", guibg = "NONE" },
+          },
+        },
         window = {
           padding = 0,
           margin = { vertical = 0, horizontal = 0 },
-          placement = { vertical = "top", horizontal = "center" },
+          placement = { vertical = "top", horizontal = "right" },
         },
       }
     end,
