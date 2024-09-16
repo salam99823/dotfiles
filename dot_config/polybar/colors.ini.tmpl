@@ -6,10 +6,19 @@
 ;  \____/\____/_/\____/_/  /____/
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-{{ if regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme }}
-{{- with get . .colorscheme -}}
-{{ dict "colors" (unset (unset (unset . "git") "diff") "rainbow") | toIni }}
+{{- block "colors" dict "colors" (get . .colorscheme) "name" "colors" }}
+{{- $name := .name }}
+[{{ $name }}]
+{{- range $k, $v := .colors }}
+{{- if kindIs "string" $v }}
+{{ print $k " = " $v }}
+{{- else if kindIs "slice" $v }}
+{{- range $i, $e := $v }}
+{{ printf "%s-%d = %s" $k $i $e }}
 {{- end }}
-{{- else if stat ($path := joinPath .chezmoi.homeDir ".config/polybar/" .colorscheme) }}
-{{- include $path }}
-{{- end -}}
+{{- else if kindIs "map" $v }}
+{{- template "colors" dict "colors" $v "name" (list $name "/" $k | join "") }}
+[{{ $name }}]
+{{- end }}
+{{- end }}
+{{- end }}

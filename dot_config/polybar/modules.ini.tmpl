@@ -10,7 +10,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 {{- define "key" }}{{ prepend . "format" | compact | join "-" }}{{ end }}
 {{ $path := env "PATH" | splitList ":" }}
-{{ if findExecutable "mpd" $path }}
 [module/mpd]
 type = internal/mpd
 label-song = %title:0:25:..%
@@ -24,7 +23,6 @@ format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-t
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "foreground" }} = "${self.{{ template "key" list .name "background" }}}"
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
 {{- end }}
-{{ end }}
 {{ end }}
 
 [module/tray]
@@ -77,7 +75,7 @@ format-muted =  
 {{- if and (findExecutable "python3" $path) (findExecutable "cava" $path) }}
 [module/cava]
 type = custom/script
-exec = python3 ~/.config/polybar/scripts/info-cava.py -C"{{ regexMatch "^tokyonight-(moon|night|storm)$" .colorscheme | ternary (list ($colors := get .tokyonight (regexFind "(moon|night|storm)$" .colorscheme)).fg $colors.yellow $colors.orange $colors.red | join ",") "" -}}" -b64
+exec = python3 ~/.config/polybar/scripts/info-cava.py -C"{{ list ($colors := get . .colorscheme).fg $colors.yellow $colors.orange $colors.red | join "," }}" -b64
 tail = true
 {{- end }}
 
