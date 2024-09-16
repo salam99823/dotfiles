@@ -8,7 +8,7 @@ configuration{
   display-window: "  window ";
 }
 
-@theme "{{ .colorscheme }}"
+@theme "colorscheme"
 
 element-text, element-icon , mode-switcher {
   background-color: inherit;
@@ -37,7 +37,7 @@ prompt {
 entry {
   padding: 5px;
   margin: 5px 0px 0px 5px;
-  text-color: @fg-col;
+  text-color: @fg;
   background-color: @bg-dark;
   border-radius: 5px;
   placeholder:"Search";
@@ -51,10 +51,10 @@ element {
   padding: 5px;
   border-radius: 5px;
   background-color: @bg;
-  text-color: @fg-col;
+  text-color: @fg;
 }
 
 element selected {
   background-color:  @selected-col;
-  text-color: @fg-col2;
+  text-color: @fg2;
 }
