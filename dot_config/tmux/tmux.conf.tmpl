@@ -21,10 +21,8 @@ unbind C-b
 unbind %
 unbind '"'
 
-bind S choose-tree -sZ -O name
-
-bind - split-window -v
-bind s split-window -h 
+bind S split-window -v
+bind s split-window -h
 
 bind -r h select-pane -L  # move left
 bind -r j select-pane -D  # move down
@@ -59,7 +57,7 @@ set -g @plugin 'tmux-plugins/tpm'
 
 set -g @plugin 'tmux-plugins/tmux-logging'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect' 
+set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-continuum'
@@ -68,39 +66,39 @@ set -g @continuum-restore "off"
 set -g @resurrect-capture-pane-contents "off"
 set -g @resurrect-strategy-nvim "session"
 
-# TokyoNight colors for Tmux
-set -g mode-style "fg=#82aaff,bg=#3b4261"
+{{ with set (get . .colorscheme) "separators" .separators }}
+set -g mode-style "fg={{ .blue }},bg={{ .fg_gutter }}"
 
-set -g message-style "fg=#82aaff,bg=#3b4261"
-set -g message-command-style "fg=#82aaff,bg=#3b4261"
+set -g message-style "fg={{ .blue }},bg={{ .fg_gutter }}"
+set -g message-command-style "fg={{ .blue }},bg={{ .fg_gutter }}"
 
-set -g pane-border-style "fg=#3b4261"
-set -g pane-active-border-style "fg=#82aaff"
+set -g pane-border-style "fg={{ .fg_gutter }}"
+set -g pane-active-border-style "fg={{ .blue }}"
 
 set -g status "on"
 set -g status-justify "left"
 
-set -g status-style "fg=#82aaff,bg=#1e2030"
+set -g status-style "fg={{ .blue }},bg={{ .bg_statusline }}"
 
 set -g status-left-length "100"
 set -g status-right-length "100"
 
-set -g status-left-style NONE
-set -g status-right-style NONE
+set -g status-left-style {{ .none }}
+set -g status-right-style {{ .none }}
 
-set -g status-left "#[fg=#1b1d2b,bg=#82aaff,bold] #S #[fg=#82aaff,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
-set -g status-right "#[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#82aaff,bg=#1e2030] #{prefix_highlight} #[fg=#3b4261,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#82aaff,bg=#3b4261] %A, %d %B {{ .separators.component.right }} %R #[fg=#82aaff,bg=#3b4261,nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg=#1b1d2b,bg=#82aaff,bold] #h "
+set -g status-left "#[fg={{ .black }},bg={{ .blue }},bold] #S #[fg={{ .blue }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+set -g status-right "#[fg={{ .bg_statusline }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg={{ .blue }},bg={{ .bg_statusline }}] #{prefix_highlight} #[fg={{ .fg_gutter }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg={{ .blue }},bg={{ .fg_gutter }}] %A, %d %B {{ .separators.component.right }} %R #[fg={{ .blue }},bg={{ .fg_gutter }},nobold,nounderscore,noitalics]{{ .separators.section.right }}#[fg={{ .black }},bg={{ .blue }},bold] #h "
 
-setw -g window-status-activity-style "underscore,fg=#828bb8,bg=#1e2030"
+setw -g window-status-activity-style "underscore,fg={{ .fg_sidebar }},bg={{ .bg_statusline }}"
 setw -g window-status-separator ""
-setw -g window-status-style "NONE,fg=#828bb8,bg=#1e2030"
-setw -g window-status-format "#[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}#[default] #I {{ .separators.component.left }} #W #F #[fg=#1e2030,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
-setw -g window-status-current-format "#[fg=#1e2030,bg=#3b4261,nobold,nounderscore,noitalics]{{ .separators.section.left }}#[fg=#82aaff,bg=#3b4261,bold] #I {{ .separators.component.left }} #W #F #[fg=#3b4261,bg=#1e2030,nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+setw -g window-status-style "{{ .none }},fg={{ .fg_sidebar }},bg={{ .bg_statusline }}"
+setw -g window-status-format "#[fg={{ .bg_statusline }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.left }}#[default] #I {{ .separators.component.left }} #W #F #[fg={{ .bg_statusline }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.left }}"
+setw -g window-status-current-format "#[fg={{ .bg_statusline }},bg={{ .fg_gutter }},nobold,nounderscore,noitalics]{{ .separators.section.left }}#[fg={{ .blue }},bg={{ .fg_gutter }},bold] #I {{ .separators.component.left }} #W #F #[fg={{ .fg_gutter }},bg={{ .bg_statusline }},nobold,nounderscore,noitalics]{{ .separators.section.left }}"
 
 # tmux-plugins/tmux-prefix-highlight support
-set -g @prefix_highlight_output_prefix "#[fg=#ffc777]#[bg=#1e2030]{{ .separators.section.right }}#[fg=#1e2030]#[bg=#ffc777]"
-set -g @prefix_highlight_output_suffix " {{ .separators.section.right }}"
-# TokyoNight colors for Tmux
+set -g @prefix_highlight_output_prefix "#[fg={{ .yellow }}]#[bg={{ .bg_statusline }}]{{ .separators.section.right }}#[fg={{ .bg_statusline }}]#[bg={{ .yellow }}]"
+set -g @prefix_highlight_output_suffix "{{ .separators.section.right }}"
+{{ end }}
 
 setenv -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.config/tmux/plugins/"
 if "test ! -d ~/.config/tmux/plugins/tpm" \
