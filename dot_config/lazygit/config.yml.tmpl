@@ -4,32 +4,6 @@ gui:
   scrollHeight: 2
   scrollPastBottom: true
   mouseEvents: true
-  nerdFontsVersion: "3"
-  theme:
-    activeBorderColor:
-      - "#82aaff"
-      - "bold"
-    inactiveBorderColor:
-      - "#3b4261"
-    searchingActiveBorderColor:
-      - "#ff966c"
-      - "bold"
-    optionsTextColor:
-      - "#82aaff"
-    selectedLineBgColor:
-      - "#2d3f76"
-    cherryPickedCommitFgColor:
-      - "#82aaff"
-    cherryPickedCommitBgColor:
-      - "#c099ff"
-    markedBaseCommitFgColor:
-      - "#82aaff"
-    markedBaseCommitBgColor:
-      - "#ffc777"
-    unstagedChangesColor:
-      - "#c53b53"
-    defaultFgColor:
-      - "#c8d3f5"
   skipDiscardChangeWarning: false
   skipStashWarning: false
   sidePanelWidth: 0.3333
@@ -46,6 +20,34 @@ gui:
   showBottomLine: true
   commandLogSize: 8
   splitDiff: auto
+  nerdFontsVersion: "3"
+{{ with get . .colorscheme }}
+  theme:
+    activeBorderColor:
+      - {{ .orange | quote }}
+      - "bold"
+    inactiveBorderColor:
+      - {{ .border_highlight | quote }}
+    searchingActiveBorderColor:
+      - {{ .orange | quote }}
+      - "bold"
+    optionsTextColor:
+      - {{ .blue | quote }}
+    selectedLineBgColor:
+      - {{ .bg_visual | quote }}
+    cherryPickedCommitFgColor:
+      - {{ .blue | quote }}
+    cherryPickedCommitBgColor:
+      - {{ .magenta | quote }}
+    markedBaseCommitFgColor:
+      - {{ .blue | quote }}
+    markedBaseCommitBgColor:
+      - {{ .yellow | quote }}
+    unstagedChangesColor:
+      - {{ .red1 | quote }}
+    defaultFgColor:
+      - {{ .fg | quote }}
+{{ end }}
 git:
   paging:
     colorArg: always
@@ -59,7 +61,7 @@ git:
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: true
-  branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
+  branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{"{{branchName}}"}} --
   allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium
   overrideGpg: false
   disableForcePushing: false
@@ -221,7 +223,7 @@ customCommands:
     command: "gh browse"
     context: "files"
   - key: "b"
-    command: 'gh browse "{{.SelectedLocalCommit.Sha}}"'
+    command: 'gh browse "{{"{{.SelectedLocalCommit.Sha}}"}}"'
     context: "commits"
 services: {}
 notARepository: skip
