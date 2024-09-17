@@ -111,12 +111,13 @@ return {
                   get_diagnostic_label(),
                   get_git_diff(),
                   {
-                    ft_icon and { " ", ft_icon, " ", guifg = ft_color } or "",
+                    ft_icon and { " ", ft_icon, guifg = ft_color } or "",
+                    " ",
                     {
                       filename,
-                      " ",
                       gui = modified and "bold" or nil,
                     },
+                    " ",
                     modified and "● " or "",
                   },
                   group = "InclineText" .. group,
