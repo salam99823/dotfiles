@@ -79,7 +79,6 @@ exec = python3 ~/.config/polybar/scripts/info-cava.py -C"{{ list ($colors := get
 tail = true
 {{- end }}
 
-{{- if output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1" }}
 [module/wlan]
 type = internal/network
 interface-type = wireless
@@ -93,7 +92,6 @@ label-connected = %essid:0:11:..%
 label-disconnected = "󰤭 Disconnected"
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "disconnected" }}
-{{- end }}
 
 [module/ethernet]
 type = internal/network
