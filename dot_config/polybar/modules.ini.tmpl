@@ -83,7 +83,7 @@ tail = true
 [module/wlan]
 type = internal/network
 interface-type = wireless
-format-connected = <ramp-signal> <label-connected>
+format-connected = %{A1:alacritty -e nmtui:}<ramp-signal> <label-connected>%{A}
 ramp-signal-0 = 󰤯
 ramp-signal-1 = 󰤟
 ramp-signal-2 = 󰤢
@@ -105,7 +105,7 @@ format-connected = 󱘖 <label-connected>
 type = custom/script
 exec = python3 ~/.config/polybar/scripts/bluetooth.py -c"{name}"
 interval = 3
-label = %output:0:10:...%
+label = %{A1:alacritty -e bluetoothctl:}%output:0:10:...%%{A}
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 
 [module/bluetooth-battery]
