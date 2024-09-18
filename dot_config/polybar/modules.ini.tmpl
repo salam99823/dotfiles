@@ -64,12 +64,13 @@ format = <ramp> <label>
 {{- template "style" dict "separator" .separators.component.left "section" 1 "side" "l" "name" "" "component" true }}
 {{- range $i, $e := splitList "" "󰛩󱩎󱩏󱩐󱩑󱩒󱩓󱩔󱩕󱩖󰛨" }}ramp-{{ println $i "=" $e }}{{ end }}
 
-[module/alsa]
-type = internal/alsa
+[module/sound]
+type = internal/pulseaudio
 format-volume = 󰝚 <label-volume> 
 format-muted =  
 {{- template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "volume" }}
 {{- template "style" dict "separator" .separators.section.left "section" 1 "side" "l" "name" "muted" }}
+click-right = pavucontrol
 
 
 {{- if and (findExecutable "python3" $path) (findExecutable "cava" $path) }}
@@ -97,11 +98,7 @@ label-disconnected = "󰤭 Disconnected"
 type = internal/network
 interface-type = wired
 format-connected = 󱘖 <label-connected>
-{{- if output "/bin/ls" "-1" "/sys/class/net/" | splitList "\n" | has "wlo1" }}
-{{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "connected" "component" true }}
-{{- else }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
-{{- end }}
 
 {{- if and (findExecutable "python3" $path) (findExecutable "bluetoothctl" $path) }}
 [module/bluetooth]
