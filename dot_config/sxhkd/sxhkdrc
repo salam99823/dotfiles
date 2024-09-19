@@ -9,17 +9,13 @@ super + {t,shift + t,f,i,v}
   }
 
 # Launch scripts
-super + {x,shift + w,p}
+super + {x,shift + w,p,shift + c}
   ~/.local/bin/{\
     xcolor-pick,\
     random_wallpaper,\
     toggle-polybar,\
+    change_language,\
   }
-
-Alt_L + shift
-  ~/.local/bin/change_language
-Shift_L + alt
-  ~/.local/bin/change_language
 
 super + {shift + ,_}space
   {\
@@ -33,11 +29,14 @@ XF86Audio{RaiseVolume,LowerVolume,Mute}
 XF86MonBrightness{Up,Down}
   ~/.local/bin/brightness {--up,--down}
 
-XF86Audio{Prev,Next,Play}
-  mpc -q {prev,next,toggle}
+XF86Audio{Prev,Next,Play,Pause}
+  mpc -q {prev,next,toggle,pause}
 
-{_,shift} + Print
-  flameshot {full,gui}
+super + {n,m,comma,period,slash}
+	mpc {seek -5%,seek +5%,prev,next,toggle}
+
+shift + Print
+  flameshot gui
 
 #
 # BSPWM HOTKEYS
@@ -49,8 +48,8 @@ super + {shift,_} + u
     pkill -USR1 -x sxhkd && notify-send 'sxhkd',\
   } 'Reloaded config' -t 1500
 
-super + d
-  bspc node -c
+super + {_,shift} + d
+  bspc node -{c,k}
 
 super + alt + {space,ctrl + space,f}
   bspc node -t {"~tiled","~fullscreen","~floating"}
@@ -70,5 +69,14 @@ super + ctrl + {1-9}
 super + ctrl + 0
   bspc node -p cancel
 
-super + {_,alt + }{h,j,k,l}
-  bspc node -{f,s} {west,south,north,east}
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+super + {h,j,k,l}
+  bspc node -f {west,south,north,east}
+
+super + {_, shift +} r
+	bspc node @parent -R {+,-}90
