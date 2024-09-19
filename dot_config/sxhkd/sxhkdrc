@@ -36,8 +36,8 @@ XF86MonBrightness{Up,Down}
 XF86Audio{Prev,Next,Play}
   mpc -q {prev,next,toggle}
 
-Print
-  flameshot gui
+{_,shift} + Print
+  flameshot {full,gui}
 
 #
 # BSPWM HOTKEYS
