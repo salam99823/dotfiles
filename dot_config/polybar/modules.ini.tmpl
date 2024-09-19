@@ -13,7 +13,7 @@
 [module/mpd]
 type = internal/mpd
 label-song = %title:0:20:..%
-format-online = <label-song> %{T2}{{ .separators.component.left }}%{T-} <label-time>
+format-online = <label-song>
 {{- block "style" dict "separator" .separators.component.left "section" 0 "side" "l" "name" "online" "component" true }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
 {{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
@@ -89,7 +89,7 @@ ramp-signal-1 = 󰤟
 ramp-signal-2 = 󰤢
 ramp-signal-3 = 󰤥
 ramp-signal-4 = 󰤨
-label-connected = %essid:0:12:..%
+label-connected = %essid:0:8:..%
 label-disconnected = "󰤭 Disconnected"
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "connected" }}
 {{- template "style" dict "separator" .separators.section.right "section" 1 "side" "r" "name" "disconnected" }}
@@ -105,7 +105,7 @@ format-connected = 󱘖 <label-connected>
 type = custom/script
 exec = python3 ~/.config/polybar/scripts/bluetooth.py -c" {name}"
 interval = 3
-label = %{A1:alacritty -e bluetoothctl:}%output:0:10:..%%{A}
+label = %{A1:alacritty -e bluetoothctl:}%output:0:8:..%%{A}
 {{- template "style" dict "separator" .separators.component.right "section" 1 "side" "r" "name" "" "component" true }}
 
 [module/bluetooth-battery]
@@ -118,7 +118,8 @@ interval = 3
 [module/time]
 type = internal/date
 time = %T
-label = "%time%"
+date-alt = %A, %d %B
+label = "%time%%date%"
 {{- template "style" dict "separator" .separators.section.right "section" 0 "side" "r" "name" "" }}
 
 [module/bspwm]
