@@ -9,7 +9,7 @@ bspc config history_aware_focus true
 bspc config focus_by_distance true
 
 # Window borders
-bspc config border_width 1
+bspc config border_width 2
 bspc config borderless_monocle true
 {{- with get . .colorscheme -}}
 bspc config normal_border_color {{ .border | quote }}
@@ -20,7 +20,7 @@ bspc config presel_border_color {{ .border_highlight | quote }}
 
 # gaps
 bspc config gapless_monocle true
-bspc config window_gap 0
+bspc config window_gap 2
 
 # fix pointer
 xsetroot -cursor_name left_ptr
@@ -36,7 +36,7 @@ pgrep -x sxhkd >/dev/null || sxhkd &
 feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
 dunst &
 picom &
-~/.config/polybar/launch &
 flameshot &
-mpd &
+~/.config/polybar/launch &
+pgrep -x mpd >/dev/null || mpd &
 pgrep -x alacritty >/dev/null || alacritty -e "tmux" &
