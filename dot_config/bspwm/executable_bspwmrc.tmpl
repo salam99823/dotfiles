@@ -31,6 +31,8 @@ bspc config pointer_action1 move
 bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
 
+bspc rule -a Screenkey manage=off
+
 pgrep -x sxhkd >/dev/null || sxhkd &
 
 feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
