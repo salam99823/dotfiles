@@ -1,5 +1,5 @@
 # Launch Applications
-super + {t,shift + t,f,i,v}
+super + {t,shift + t,f,shift + f,v}
   {\
     alacritty,\
     alacritty -e "tmux",\
