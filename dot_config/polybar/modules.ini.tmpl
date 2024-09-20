@@ -16,7 +16,7 @@
 {{ template "key" list .name "suffix" }} = {{ ne .side "l" | ternary "\" \"" (list "\"" (hasKey . "component" | ternary " %{T2}" "%{T2}█") .separator "%{T-}\"" | join "") }}
 {{- if hasKey . "component" | not }}
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "foreground" }} = "${self.{{ template "key" list .name "background" }}}"
-{{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "bg_statusline") .section }}}"
+{{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "none") .section }}}"
 {{- end }}
 {{ end }}
 {{ $path := env "PATH" | splitList ":" }}
