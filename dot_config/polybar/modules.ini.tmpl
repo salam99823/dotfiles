@@ -9,12 +9,7 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 {{- define "key" }}{{ prepend . "format" | compact | join "-" }}{{ end }}
-{{ $path := env "PATH" | splitList ":" }}
-[module/mpd]
-type = internal/mpd
-label-song = %title:0:20:..%
-format-online = <label-song>
-{{- block "style" dict "separator" .separators.component.left "section" 0 "side" "l" "name" "online" "component" true }}
+{{- define "style" }}
 {{ template "key" list .name "background" }} = ${colors.{{ index (list "blue" "fg_gutter") .section }}}
 {{ template "key" list .name "foreground" }} = ${colors.{{ index (list "black" "blue") .section }}}
 {{ template "key" list .name "prefix" }} = {{ eq .side "l" | ternary "\" \"" (list "\"%{T2}" .separator (hasKey . "component" | ternary "%{T-} " "█%{T-}") "\"" | join "") }}
@@ -24,6 +19,12 @@ format-online = <label-song>
 {{ template "key" list .name (eq .side "l" | ternary "suffix" "prefix") "background" }} = "${colors.{{ index (list "fg_gutter" "bg_dark") .section }}}"
 {{- end }}
 {{ end }}
+{{ $path := env "PATH" | splitList ":" }}
+[module/mpd]
+type = internal/mpd
+label-song = %title:0:20:..%
+format-online = <label-song>
+{{ template "style" dict "separator" .separators.component.left "section" 0 "side" "l" "name" "online" "component" true }}
 
 [module/tray]
 type = internal/tray
