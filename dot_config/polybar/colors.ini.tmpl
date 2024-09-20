@@ -11,7 +11,11 @@
 [{{ $name }}]
 {{- range $k, $v := .colors }}
 {{- if kindIs "string" $v }}
+{{- if ne $k "none" }}
 {{ print $k " = " $v }}
+{{- else }}
+{{ "none = #00000000" }}
+{{- end }}
 {{- else if kindIs "slice" $v }}
 {{- range $i, $e := $v }}
 {{ printf "%s-%d = %s" $k $i $e }}
