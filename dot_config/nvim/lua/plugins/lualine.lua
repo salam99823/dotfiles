@@ -22,14 +22,6 @@ return {
           lualine_b = { "branch" },
           lualine_c = {
             LazyVim.lualine.root_dir(),
-            {
-              function()
-                return require("nvim-navic").get_location()
-              end,
-              cond = function()
-                return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-              end,
-            },
           },
           lualine_x = vim.list_slice(opts.sections.lualine_x, 1, 4),
           lualine_y = opts.sections.lualine_y,
