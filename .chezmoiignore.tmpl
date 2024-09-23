@@ -2,3 +2,15 @@ README.md
 LICENSE
 external/**
 demo/**
+{{ if not .hasGUI }}
+dot_config/alacritty/**
+dot_config/bspwm/**
+dot_config/dunst/**
+dot_config/exact_Wallpaper/**
+dot_config/flameshot/**
+dot_config/picom/**
+dot_config/polybar/**
+dot_config/polybar/exact_scripts/**
+dot_config/rofi/**
+dot_config/sxhkd/**
+{{ end }}

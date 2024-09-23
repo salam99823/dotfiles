@@ -8,8 +8,9 @@ command = "nvim"
 args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
 [data]
 editor = "nvim"
-hasGUI = << promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
-<<- if .hasGUI >>
+<<- $hasGUI := promptBoolOnce . "hasGUI" "Does this machine have a GUI" >>
+hasGUI = << $hasGUI >>
+<<- if $hasGUI >>
 colorscheme = << promptStringOnce . "colorscheme" "Colorscheme for all programms" | quote >>
 [data.font]
 family = "JetBrainsMono Nerd Font"
