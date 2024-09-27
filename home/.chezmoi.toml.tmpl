@@ -1,0 +1,23 @@
+# chezmoi:template:left-delimiter=<< right-delimiter=>>
+[diff]
+command = "batdiff"
+pager = "delta"
+args = ["{{ .Destination }}", "{{ .Target }}"]
+[merge]
+command = "nvim"
+args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+[data]
+editor = << promptStringOnce . "editor" "Default text editor" | quote >>
+<<- $GUI := promptChoiceOnce . "GUI" "Does this machine have a GUI" (list "wayland" "xorg" "none") >>
+GUI = << $GUI | quote >>
+<<- if ne $GUI "none" >>
+colorscheme = << promptStringOnce . "colorscheme" "Colorscheme for all programms" | quote >>
+[data.font]
+family = "JetBrainsMono Nerd Font"
+size = << promptIntOnce . "font.size" "Font size" >>
+<<- end >>
+[data.separators]
+<<- $data := . >>
+<<- range $k, $v := (dict "component" (list "left" "right") "section" (list "left" "right")) >><< range $v >>
+<< list $k . | join "." >> = << promptStringOnce $data (list "separators" $k . | join ".") (cat "Separator for" . $k) | quote >>
+<<- end >><< end >>

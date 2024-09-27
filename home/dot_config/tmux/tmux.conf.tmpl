@@ -1,0 +1,80 @@
+set -g default-shell $SHELL
+set -g allow-passthrough on
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+
+set -as terminal-overrides ",$TERM:RGB"
+
+setw -g xterm-keys on
+set -s focus-events on
+
+set -g mouse on
+setw -g monitor-activity on
+
+set -g base-index 1
+setw -g pane-base-index 1
+
+set -g prefix C-Space
+bind C-Space send-prefix
+unbind C-b
+
+unbind %
+unbind '"'
+
+bind S split-window -v
+bind s split-window -h
+
+bind -r h select-pane -L  # move left
+bind -r j select-pane -D  # move down
+bind -r k select-pane -U  # move up
+bind -r l select-pane -R  # move right
+bind > swap-pane -D       # swap current pane with the next one
+bind < swap-pane -U       # swap current pane with the previous one
+
+# pane resizing
+bind -r H resize-pane -L 2
+bind -r J resize-pane -D 2
+bind -r K resize-pane -U 2
+bind -r L resize-pane -R 2
+bind -r m resize-pane -Z
+
+bind Enter copy-mode # enter copy mode
+
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+bind -T copy-mode-vi y send -X copy-selection-and-cancel
+bind -T copy-mode-vi Escape send -X cancel
+bind -T copy-mode-vi H send -X start-of-line
+bind -T copy-mode-vi L send -X end-of-line
+
+# copy to X11 clipboard
+if -b 'command -v xsel > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | xsel -i -b"'
+if -b '! command -v xsel > /dev/null 2>&1 && command -v xclip > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | xclip -i -selection clipboard >/dev/null 2>&1"'
+# copy to Wayland clipboard
+if -b '[ "$XDG_SESSION_TYPE" = "wayland" ] && command -v wl-copy > /dev/null 2>&1' 'bind y run -b "\"\$TMUX_PROGRAM\" \${TMUX_SOCKET:+-S \"\$TMUX_SOCKET\"} save-buffer - | wl-copy"'
+
+set -g @plugin 'tmux-plugins/tpm'
+
+set -g @plugin 'tmux-plugins/tmux-logging'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+set -g @continuum-restore "off"
+set -g @resurrect-capture-pane-contents "off"
+set -g @resurrect-strategy-nvim "session"
+
+{{- if regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme }}
+{{ template "tokyonight.tmux.conf" . }}
+{{- end }}
+{{- if stat (joinPath .chezmoi.homeDir ".config/tmux/custom/tmux.conf") }}
+source {{ joinPath .chezmoi.homeDir ".config/tmux/custom/tmux.conf" }}
+{{- end }}
+
+setenv -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.config/tmux/plugins/"
+if "test ! -d ~/.config/tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm && ~/.config/tmux/plugins/tpm/bin/install_plugins'"
+
+run "~/.config/tmux/plugins/tpm/tpm"

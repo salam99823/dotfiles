@@ -1,0 +1,31 @@
+[configurations]
+brightnessctl = [".local/bin/brightness"]
+setxkbmap = [".local/bin/change_language"]
+alacritty = [".config/alacritty/**", ".local/bin/terminal_fullscreen"]
+dunstctl = [".local/bin/do_not_disturb"]
+pamixer = [".local/bin/volume"]
+lazygit = [".config/lazygit/**"]
+polybar = [
+  ".config/polybar/**",
+  ".config/polybar/scripts/**",
+  ".local/bin/toggle-polybar",
+]
+dunst = [".config/dunst/**"]
+bspwm = [".config/bspwm/**"]
+sxhkd = [".config/sxhkd/**"]
+picom = [".config/picom/**"]
+gpick = [".local/bin/xcolor-pick"]
+foot = [".config/foot/**"]
+nvim = [
+  ".config/nvim/**",
+  ".config/nvim/lua/config/**",
+  ".config/nvim/lua/utils/**",
+  ".config/nvim/lua/plugins/**",
+]
+rofi = [".config/rofi/**"]
+tmux = [".config/tmux/**"]
+yazi = [".config/yazi/**"]
+feh = [".local/bin/random_wallpaper"]
+bat = [".config/bat/**", ".config/bat/themes/**"]
+mpd = [".config/mpd/**"]
+bw = [".local/bin/bw-new"]

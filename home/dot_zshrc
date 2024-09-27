@@ -1,0 +1,32 @@
+#!/bin/zsh
+#
+# ~/.zshrc
+#
+# Source manjaro-zsh-configuration
+if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
+  source /usr/share/zsh/manjaro-zsh-config
+fi
+# Use manjaro zsh prompt
+if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
+  source /usr/share/zsh/manjaro-zsh-prompt
+fi
+USE_POWERLINE="true"
+
+plugins=(
+  alias-finder
+  eza
+  fzf
+  F-Sy-H
+  git
+  poetry
+  python
+  rust
+  tmux
+  zsh-autosuggestions
+  zoxide
+)
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+zstyle ':omz:plugins:alias-finder' exact yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
+

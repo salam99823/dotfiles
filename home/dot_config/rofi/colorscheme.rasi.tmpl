@@ -1,0 +1,25 @@
+{{- if regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme }}
+{{- with get . .colorscheme }}
+* {
+    bg:           {{ .bg }};
+    bg-dark:      {{ .bg_dark }};
+    selected-col: {{ .terminal_black }};
+    accent:       {{ .blue }};
+    fg:           {{ .fg }};
+    fg2:          {{ .blue2 }};
+    width:        600;
+}
+{{- end }}
+{{- else if eq .colorscheme "dracula" }}
+{{- with get . .colorscheme }}
+* {
+    bg:           {{ .bg }};
+    bg-dark:      {{ .black }};
+    selected-col: {{ .menu }};
+    accent:       {{ .purple }};
+    fg:           {{ .fg }};
+    fg2:          {{ .green }};
+    width:        600;
+}
+{{- end }}
+{{- end }}

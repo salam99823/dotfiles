@@ -1,0 +1,58 @@
+!-- Xft settings --!
+Xft.antialias: 0
+Xft.hinting: 1
+Xft.autohint: 0
+Xft.hintstyle: hintslight
+Xft.rgba: rgba
+Xft.lcdfilter: lcddefault
+
+st.font: {{ .font.family }}:size={{ .font.size }}
+
+! window border inner
+st.opacity: 15
+st.borderpx: 10
+
+{{- if regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme }}
+{{- with get . .colorscheme }}
+*background: {{ .bg | quote }}
+*foreground: {{ .fg | quote }}
+
+*color0: {{ .black | quote }}
+*color1: {{ .red | quote }}
+*color2: {{ .green | quote }}
+*color3: {{ .yellow | quote }}
+*color4: {{ .blue | quote }}
+*color5: {{ .magenta | quote }}
+*color6: {{ .cyan | quote }}
+*color7: {{ .fg_dark | quote }}
+
+*color8: {{ .terminal_black | quote }}
+*color9: {{ .red | quote }}
+*color10: {{ .green | quote }}
+*color11: {{ .yellow | quote }}
+*color12: {{ .blue | quote }}
+*color13: {{ .magenta | quote }}
+*color14: {{ .cyan | quote }}
+*color15: {{ .fg | quote }}
+{{- end }}
+{{- else if eq .colorscheme "dracula" }}
+! https://draculatheme.com/xresources
+*.foreground: #F8F8F2
+*.background: #282A36
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #BD93F9
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
+{{- end }}

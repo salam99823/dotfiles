@@ -1,0 +1,2 @@
+[flavor]
+use = {{ regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme | ternary "tokyo-night" .colorscheme | quote }}

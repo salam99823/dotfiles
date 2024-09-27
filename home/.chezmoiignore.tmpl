@@ -1,0 +1,12 @@
+{{- range $k, $v := .configurations }}
+{{- if lookPath $k | not }}
+{{- range $v }}
+{{ . }}{{ end }}
+{{- end }}{{ end }}
+
+{{- if ne .GUI "xorg" }}
+.xinitrc
+.Xclients
+.Xresources
+.local/bin/change_language
+{{- end }}

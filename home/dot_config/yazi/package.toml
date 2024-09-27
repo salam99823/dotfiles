@@ -1,0 +1,21 @@
+[plugin]
+deps = [
+  { use = "AnirudhG07/custom-shell", rev = "fbe2d59" },
+  { use = "dedukun/relative-motions", rev = "73f5542" },
+  { use = "redbeardymcgee/yazi-plugins:fg", rev = "a378f0d" },
+  { use = "Reledia/hexyl", rev = "f845ea5" },
+  { use = "yazi-rs/plugins:chmod", rev = "9a1129c" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "9a1129c" },
+  { use = "yazi-rs/plugins:max-preview", rev = "9a1129c" },
+  { use = "Reledia/glow", rev = "4e016fa" },
+  { use = "ndtoan96/ouch", rev = "251da69" },
+  { use = "imsi32/yatline", rev = "f5a56cb" },
+  { use = "imsi32/yatline-githead", rev = "2f2b000" },
+  { use = "Sonico98/exifaudio", rev = "6205460" },
+]
+
+[flavor]
+deps = [
+  { use = "BennyOe/tokyo-night", rev = "024fb09" },
+  { use = "salam99823/dracula", rev = "6d491e3" },
+]

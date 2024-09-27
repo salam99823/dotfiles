@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Execute accordingly
+if [[ "$1" == "--up" ]]; then
+  pamixer -i 2 --unmute && notify-send --replace=69 -u low "Volume : $(pamixer --get-volume)%"
+elif [[ "$1" == "--down" ]]; then
+  pamixer -d 2 --unmute && notify-send --replace=69 -u low "Volume : $(pamixer --get-volume)%"
+elif [[ "$1" == "--toggle" ]]; then
+  if [[ "$(pamixer --get-mute)" == "true" ]]; then
+    pamixer --unmute && notify-send --replace=69 -u low "Unmute"
+  else
+    pamixer --mute && notify-send --replace=69 -u low "Mute"
+  fi
+else
+  pamixer --get-volume
+fi
