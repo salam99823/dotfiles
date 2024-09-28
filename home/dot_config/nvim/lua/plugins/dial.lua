@@ -46,8 +46,43 @@ return {
             cyclic = true,
           }),
           augend.constant.new({
-            elements = { "&&", "||" },
+            elements = { "&mut", "&" },
             word = false,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub use", "use" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub mod", "mod" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub struct", "struct" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub enum", "enum" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub fn", "fn" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "pub const", "const" },
+            word = true,
+            cyclic = true,
+          }),
+          augend.constant.new({
+            elements = { "&&", "||" },
+            word = true,
             cyclic = true,
           }),
           augend.constant.alias.bool,
