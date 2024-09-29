@@ -16,6 +16,7 @@ return {
           NeoTreeNormal = { fg = colors.fg, bg = "None" },
           NeoTreeNormalNC = { fg = colors.fg, bg = "None" },
           TelescopeNormal = { fg = colors.fg, bg = "None" },
+          BufferLineBufferSelected = { bg = "None" },
         }
       end,
     },
