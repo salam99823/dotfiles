@@ -1,0 +1,32 @@
+{
+  "include": ["~/.config/waybar/modules.jsonc"],
+  "layer": "top",
+  "height": 30,
+  "position": "top",
+  "modules-left": [
+    "mpd",
+    "custom/playerctl",
+
+    "battery",
+    "sway/language",
+    "backlight",
+    "pulseaudio",
+  ],
+  "modules-center": ["custom/wf-recorder", "sway/mode", "custom/weather"],
+  "modules-right": [
+    "tray",
+    "network",
+    "bluetooth",
+    "custom/clipboard",
+    "custom/zeit",
+    "custom/valent",
+    "custom/sunset",
+    "custom/idle_inhibitor",
+    "custom/adaptive-light",
+    "custom/dnd",
+    "custom/pacman",
+
+    "sway/workspaces",
+    "clock",
+  ],
+}

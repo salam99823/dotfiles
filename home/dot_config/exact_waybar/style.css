@@ -1,0 +1,151 @@
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+
+/* import css definitions for current theme */
+
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-warning {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background-color: @warning_color;
+  }
+}
+
+@keyframes blink-critical {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background-color: @error_color;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
+/* The whole bar */
+window#waybar {
+  font-family: "JetBrainsMono NF", "Roboto Mono", sans-serif;
+  font-size: 14px;
+  background-color: transparent;
+}
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+.module {
+  color: @theme_bg_color;
+  background-color: @theme_selected_bg_color;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#custom-clipboard,
+#custom-zeit,
+#custom-valent,
+#custom-sunset,
+#custom-idle_inhibitor,
+#custom-adaptive-light,
+#custom-dnd,
+#custom-pacman,
+#custom-weather,
+#network,
+#battery,
+#language,
+#bluetooth,
+#backlight,
+#pulseaudio,
+#tray {
+  color: @theme_fg_color;
+  background-color: @theme_bg_color;
+}
+
+#custom-zeit.tracking {
+  background-color: @warning_color;
+}
+
+#battery {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.critical {
+  color: @error_color;
+}
+
+#battery.warning.discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#mode {
+  background: @background_color;
+}
+
+#custom-pacman,
+#battery.warning,
+#bluetooth.disabled,
+#custom-valent.dangerously-empty,
+#network.disconnected,
+#pulseaudio.muted {
+  color: @warning_color;
+}
+
+#workspaces button.focused {
+  background-color: @theme_selected_bg_color;
+}
+
+#workspaces button {
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15;
+  color: @theme_bg_color;
+}
+
+#workspaces button.urgent {
+  border-color: @error_color;
+  color: @error_color;
+}
+
+#workspaces button:hover {
+  color: @theme_bg_color;
+}
+
+#workspaces {
+  border-radius: 15;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#custom-playerctl,
+#custom-zeit,
+#custom-dnd,
+#custom-idle_inhibitor,
+#network {
+  padding-right: 14px;
+}
