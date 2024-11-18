@@ -41,7 +41,7 @@
 /* The whole bar */
 window#waybar {
   font-family: "JetBrainsMono NF", "Roboto Mono", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   background-color: transparent;
 }
 
@@ -50,13 +50,13 @@ window#waybar {
  * -------------------------------------------------------------------------- */
 
 .module {
-  color: @theme_bg_color;
-  background-color: @theme_selected_bg_color;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 15px;
-  margin-right: 5px;
-  margin-left: 5px;
+  color: @theme_fg_color;
+  background-color: transparent;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+  margin-right: 3px;
+  margin-left: 3px;
 }
 
 #custom-clipboard,
@@ -76,7 +76,7 @@ window#waybar {
 #pulseaudio,
 #tray {
   color: @theme_fg_color;
-  background-color: @theme_bg_color;
+  background-color: transparent;
 }
 
 #custom-zeit.tracking {
@@ -103,10 +103,6 @@ window#waybar {
   animation-duration: 2s;
 }
 
-#mode {
-  background: @background_color;
-}
-
 #custom-pacman,
 #battery.warning,
 #bluetooth.disabled,
@@ -121,10 +117,10 @@ window#waybar {
 }
 
 #workspaces button {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
   border-radius: 15;
-  color: @theme_bg_color;
+  color: @theme_fg_color;
 }
 
 #workspaces button.urgent {
@@ -132,20 +128,12 @@ window#waybar {
   color: @error_color;
 }
 
-#workspaces button:hover {
-  color: @theme_bg_color;
+button:hover {
+  color: @theme_fg_color;
 }
 
 #workspaces {
   border-radius: 15;
   padding-left: 0;
   padding-right: 0;
-}
-
-#custom-playerctl,
-#custom-zeit,
-#custom-dnd,
-#custom-idle_inhibitor,
-#network {
-  padding-right: 14px;
 }
