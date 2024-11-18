@@ -19,7 +19,7 @@ text/*)
   {{- $bat := findOneExecutable (list "bat" "batcat") $path }}
   {{- if $bat }}
     {{- $bat }} --style="plain" --color=always --pager=never -- "$file"
-  {{- else if findExecutable "cat" $path }}
+  {{- else if lookPath "cat" }}
     cat "$file"
   {{- end }}
   ;;
@@ -27,7 +27,7 @@ text/*)
   {{- $eza := findOneExecutable (list "eza" "exa") $path }}
   {{- if $eza }}
     {{- $eza }} -laTL1 --color=always --no-filesize --no-time --no-quotes "$file"
-  {{- else if findExecutable "ls" $path }}
+  {{- else if lookPath "ls" }}
     ls -lahG "$file"
   {{- end }}
   ;;
@@ -41,9 +41,9 @@ image/*)
   if [[ $KITTY_WINDOW_ID ]]; then
     kitty icat --clear --transfer-mode=memory --unicode-placeholder --stdin=no --place="$dim@0x0" "$file" | sed '$d' | sed $'$s/$/\e[m/'
   else
-    {{- if findExecutable "chafa" $path }}
+    {{- if lookPath "chafa" }}
     chafa -s "$dim" "$file"
-    {{- else if findExecutable "catimg" $path }}
+    {{- else if lookPath "catimg" }}
     catimg -w "${dim%%x*}" "$file"
     {{- end }}
   fi

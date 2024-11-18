@@ -9,4 +9,6 @@
 .Xclients
 .Xresources
 .local/bin/change_language
+{{- else if ne .GUI "wayland" }}
+.config/profile.d/10-wayland.sh
 {{- end }}

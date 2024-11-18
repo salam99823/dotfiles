@@ -1,4 +1,3 @@
-export FZF_BASE=/bin/fzf
 export FZF_DEFAULT_COMMAND="fd -t f -L -H -E '.git'"
 export FZF_DEFAULT_OPTS="\
 --color=bg+:#2d3f76 \
@@ -24,7 +23,7 @@ export FZF_DEFAULT_OPTS="\
 --pointer='' \
 --separator='󱋰' \
 --info='right' \
---preview='fzf-preview {}'"
+--preview='~/.local/bin/fzf-preview {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="\
   $FZF_DEFAULT_OPTS \

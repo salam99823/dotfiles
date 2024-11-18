@@ -25,7 +25,6 @@ nvim = [
 rofi = [".config/rofi/**"]
 tmux = [".config/tmux/**"]
 yazi = [".config/yazi/**"]
-feh = [".local/bin/random_wallpaper"]
 bat = [".config/bat/**", ".config/bat/themes/**"]
 mpd = [".config/mpd/**"]
 bw = [".local/bin/bw-new"]

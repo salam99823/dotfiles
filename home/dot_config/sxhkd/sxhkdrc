@@ -1,23 +1,20 @@
 # Launch Applications
-super + {t,shift + t,f,shift + f,v}
+super + {t,shift + t}
   {\
     alacritty,\
     alacritty -e "tmux",\
-    firefox,\
-    firefox --private-window,\
-    pavucontrol,\
   }
 
 # Launch scripts
-super + {x,shift + w,p,shift + c}
+super + {x,alt + w,shift + b,shift + c}
   ~/.local/bin/{\
     xcolor-pick,\
     random_wallpaper,\
-    toggle-polybar,\
+    toggle-bar,\
     change_language,\
   }
 
-super + {shift + ,_}space
+super + {shift + ,_}d
   {\
     rofi -show run,\
     rofi -show drun,\
@@ -48,10 +45,10 @@ super + {shift,_} + u
     pkill -USR1 -x sxhkd && notify-send 'sxhkd',\
   } 'Reloaded config' -t 1500
 
-super + {_,shift} + d
+super + {_,shift} + q
   bspc node -{c,k}
 
-super + alt + {space,ctrl + space,f}
+super + {space,f,w}
   bspc node -t {"~tiled","~fullscreen","~floating"}
 
 alt + {_,shift + }Tab

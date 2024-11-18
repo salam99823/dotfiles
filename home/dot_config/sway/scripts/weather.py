@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 """Script for the Waybar weather module."""
 
+import configparser
 import getopt
 import json
 import locale
 import sys
 import urllib.parse
-from datetime import datetime
+from os import environ, path
+
 import requests
-import configparser
-from os import path, environ
 
 config_path = path.join(
-    environ.get('APPDATA') or
-    environ.get('XDG_CONFIG_HOME') or
-    path.join(environ['HOME'], '.config'),
-    "weather.cfg"
+    environ.get("APPDATA")
+    or environ.get("XDG_CONFIG_HOME")
+    or path.join(environ["HOME"], ".config"),
+    "weather.cfg",
 )
 
 config = configparser.ConfigParser()
@@ -24,10 +24,10 @@ config.read(config_path)
 # see https://docs.python.org/3/library/locale.html#background-details-hints-tips-and-caveats
 locale.setlocale(locale.LC_ALL, "")
 current_locale, _ = locale.getlocale(locale.LC_NUMERIC)
-city = config.get('DEFAULT', 'city', fallback='auto')
-temperature = config.get('DEFAULT', 'temperature', fallback='C')
-distance = config.get('DEFAULT', 'distance', fallback='km')
-lng = config.get('DEFAULT', 'locale', fallback=locale.getlocale()[0] or current_locale)
+city = config.get("DEFAULT", "city", fallback="auto")
+temperature = config.get("DEFAULT", "temperature", fallback="C")
+distance = config.get("DEFAULT", "distance", fallback="km")
+lng = config.get("DEFAULT", "locale", fallback=locale.getlocale()[0] or current_locale)
 
 if current_locale == "en_US":
     temperature = temperature or "F"
@@ -77,7 +77,11 @@ if distance == "km":
 
 try:
     headers = {"Accept-Language": f"{lng.replace("_", "-")},{lng.split("_")[0]};q=0.5"}
-    weather = requests.get(f"https://manjaro-sway.download/weather/{city}?temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}", timeout=10, headers=headers).json()
+    weather = requests.get(
+        f"https://manjaro-sway.download/weather/{city}?temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}",
+        timeout=10,
+        headers=headers,
+    ).json()
 except (
     requests.exceptions.HTTPError,
     requests.exceptions.ConnectionError,

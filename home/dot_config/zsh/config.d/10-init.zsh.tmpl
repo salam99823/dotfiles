@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+{{- if lookPath "thefuck" }}
+eval "$(thefuck --alias)"
+{{- end }}
+{{- if lookPath "zoxide" }}
+eval "$(zoxide init zsh)"
+{{- end }}
+{{- if lookPath "zeit" }}
+eval "$(zeit completion zsh)"
+{{- end }}

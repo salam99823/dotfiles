@@ -8,8 +8,7 @@ shift
 type=$@
 
 swaymsg [$matcher] focus
-    if [ "$?" = "0" ]
-then
-    wtype $type
-    swaymsg "[pid=$PID] focus"
+if [ "$?" = "0" ]; then
+  wtype $type
+  swaymsg "[pid=$PID] focus"
 fi
