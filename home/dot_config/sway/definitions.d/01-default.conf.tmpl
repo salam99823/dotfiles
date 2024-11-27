@@ -1,0 +1,107 @@
+# shellcheck disable=SC2148,SC2086,SC2154,SC2046,SC2016
+### Variables
+#
+# Logo key. Use Mod1 for Alt and Mod4 for Super.
+set $mod Mod4
+set $alt_mod Mod1
+
+# Direction keys
+set $left Left
+set $down Down
+set $up Up
+set $right Right
+
+# Alternative direction keys
+set $left_alt h
+set $down_alt j
+set $up_alt k
+set $right_alt l
+
+# Random background
+set $background "$(find ~/.config/Wallpaper/ -type f | shuf -n1)"
+
+# Add --to-code to bindsym, support for non-latin layouts
+set $bindsym bindsym --to-code
+
+# For user's convenience, the same for unbindsym
+set $unbindsym unbindsym --to-code
+
+# Script paths
+set $script_path "$HOME/.local/bin/"
+set $wob_socket '/run/user/{{ .chezmoi.uid }}/wob.sock'
+
+# Terminal emulator
+set $term alacritty
+set $term_float $term --class floating_shell --option="dimensions = { columns = 80, lines = 45 }"
+
+# Brightness control
+set $brightness $script_path/brightness
+set $brightness_up $brightness up > $wob_socket
+set $brightness_down $brightness down > $wob_socket
+
+# Scaling
+set $scale_up $script_path/scale up
+set $scale_down $script_path/scale down
+set $scale_default $script_path/scale default
+
+# Audio control
+set $sink_volume pactl get-sink-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $source_volume pactl get-source-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
+set $volume_down echo $(pactl set-sink-volume @DEFAULT_SINK@ -5% && $sink_volume) > $wob_socket
+set $volume_up echo $(pactl set-sink-volume @DEFAULT_SINK@ +5% && $sink_volume) > $wob_socket
+set $volume_mute echo $(pactl set-sink-mute @DEFAULT_SINK@ toggle && pactl get-sink-mute @DEFAULT_SINK@ | sed -En "/no/ s/.*/$($sink_volume)/p; /yes/ s/.*/0/p") > $wob_socket
+set $mic_mute echo $(pactl set-source-mute @DEFAULT_SOURCE@ toggle && pactl get-source-mute @DEFAULT_SOURCE@ | sed -En "/no/ s/.*/$($source_volume)/p; /yes/ s/.*/0/p") > $wob_socket
+
+# Clipboard history
+set $clipboard cliphist list | rofi -dmenu -p "Select item to copy" -lines 10 | cliphist decode | wl-copy
+set $clipboard-del cliphist list | rofi -dmenu -p "Select item to delete" -lines 10 | cliphist delete
+
+# Zeit tracking
+set $zeit_list zeit list --only-projects-and-tasks --append-project-id-to-task | rofi -dmenu -p "Select task to track" -lines 10 | $script_path/zeit track && waybar-signal zeit
+
+# Application launcher
+set $menu rofi -show drun -show-icons -lines 10
+
+# Lockscreen configuration
+set $locking swaylock --daemonize --color "$selection-color" --inside-color "$selection-color" --inside-clear-color "$text-color" --ring-color "$color2" --ring-clear-color "$color11" --ring-ver-color "$color13" --show-failed-attempts --fade-in 0.2 --grace 2 --effect-vignette 0.5:0.5 --effect-blur 7x5 --screenshots --clock
+
+# Network menu
+set $network $script_path/once "$term_float --command 'nmtui connect'"
+
+# Bluetooth menu
+set $bluetooth $script_path/once "$term_float --command bluetuith"
+
+# Pulseaudio command
+set $pulseaudio $script_path/once "$term_float --command pulsemixer"
+
+# Calendar application
+set $calendar $script_path/once "$term_float --command calcurse"
+
+# Workspace names
+set $ws1 number 1
+set $ws2 number 2
+set $ws3 number 3
+set $ws4 number 4
+set $ws5 number 5
+set $ws6 number 6
+set $ws7 number 7
+set $ws8 number 8
+set $ws9 number 9
+set $ws10 number 10
+
+# Screenshot commands
+set $grimshot grimshot
+set $pipe_output $grimshot save output -
+set $pipe_selection $grimshot save area -
+set $notify_paste [[ $(wl-paste -l) == "image/png" ]] && notify-send "Screenshot copied to clipboard"
+set $swappy swappy -f -
+set $upload_pipe curl -s -F "file=@-;filename=.png" https://x0.at/ | tee >(wl-copy) >(xargs notify-send)
+
+set $screenshot_screen $pipe_output | $swappy && $notify_paste
+set $screenshot_screen_upload $pipe_output | $upload_pipe
+
+set $screenshot_selection $pipe_selection | $swappy && $notify_paste
+set $screenshot_selection_upload $pipe_selection | $upload_pipe
+
+# Emoji picker
+set $emoji_picker emoji-picker

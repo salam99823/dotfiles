@@ -13,14 +13,14 @@ return {
         jsonc = "json",
       },
       groups = {
-        json = vim.list_extend(opts.groups.json, {
+        json = vim.list_extend(opts.groups.json or {}, {
           augend.constant.alias.bool,
         }),
-        lua = vim.list_extend(opts.groups.lua, {
+        lua = vim.list_extend(opts.groups.lua or {}, {
           augend.paren.alias.lua_str_literal,
           augend.paren.alias.quote,
         }),
-        python = vim.list_extend(opts.groups.python, {
+        python = vim.list_extend(opts.groups.python or {}, {
           augend.constant.new({
             elements = { "and", "or" },
             word = true,

@@ -1,0 +1,18 @@
+anchor = top center
+margin = 20
+
+{{- with get . .colorscheme }}
+background_color = {{ .bg | trimPrefix "#" }}
+{{- end }}
+
+{{- if eq .colorscheme "dracula" }}
+{{- with get . .colorscheme }}
+border_color = {{ .purple | trimPrefix "#" }}
+bar_color = {{ .purple | trimPrefix "#" }}
+{{- end }}
+{{- else }}
+{{- with get . .colorscheme }}
+border_color = {{ .blue | trimPrefix "#" }}
+bar_color = {{ .blue | trimPrefix "#" }}
+{{- end }}
+{{- end }}

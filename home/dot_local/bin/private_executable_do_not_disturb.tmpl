@@ -31,7 +31,7 @@ case $1'' in
 'restore')
   makoctl restore
   ;;
-'toggle')
+)
   makoctl mode | grep 'do-not-disturb' && makoctl mode -r do-not-disturb || makoctl mode -a do-not-disturb
   ;;
 esac

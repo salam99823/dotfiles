@@ -119,8 +119,9 @@ window#waybar {
 #workspaces button {
   padding-left: 7px;
   padding-right: 7px;
-  border-radius: 15;
+  border-radius: 15px;
   color: @theme_fg_color;
+  background-color: @theme_bg_color;
 }
 
 #workspaces button.urgent {
@@ -133,7 +134,7 @@ button:hover {
 }
 
 #workspaces {
-  border-radius: 15;
+  border-radius: 15px;
   padding-left: 0;
   padding-right: 0;
 }

@@ -102,12 +102,16 @@
     "format": "{}",
     "tooltip": true,
     "interval": 3600,
-    // accepts -c/--city <city> -t/--temperature <C/F> -d/--distance <km/miles>
-    "exec": "/usr/share/sway/scripts/weather.py",
+    "exec": "~/.local/bin/weather.py",
     "return-type": "json",
     "on-click": "xdg-open \"https://wttr.in/$(curl -s https://manjaro-sway.download/geoip | jq -r '.city')\"",
     "on-click-right": "waybar-signal weather",
     "signal": 16,
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 5,
   },
 
   "network": {
@@ -122,7 +126,7 @@
     "tooltip-format-wifi": "{icon} {ifname} ({essid}): {ipaddr}",
     "tooltip-format-disconnected": "{icon} disconnected",
     "tooltip-format-disabled": "{icon} disabled",
-    "on-click": "swaymsg exec \\$once \\$term_float nmtui connect",
+    "on-click": "swaymsg exec \\$network",
   },
 
   "bluetooth": {
@@ -145,25 +149,11 @@
     "signal": 9,
   },
 
-  "custom/zeit": {
-    "return-type": "json",
-    "interval": "once",
-    "format": "{icon}",
-    "format-icons": {
-      "tracking": "󰖷",
-      "stopped": "󰋣",
-    },
-    "exec": "/usr/share/sway/scripts/zeit.sh status",
-    "on-click": "/usr/share/sway/scripts/zeit.sh click; waybar-signal zeit",
-    "exec-if": "[ -x \"$(command -v zeit)\" ]",
-    "signal": 10,
-  },
-
   "custom/valent": {
     "format": "{icon}",
     "tooltip": true,
     "interval": 60,
-    "exec": "/usr/share/sway/scripts/valent.py",
+    "exec": "~/.local/bin/valent.py",
     "exec-if": "[ -x \"$(command -v valent)\" ]",
     "return-type": "json",
     "format-icons": {
@@ -179,7 +169,7 @@
   },
 
   "custom/sunset": {
-    "interval": "once",
+    "interval": 1,
     "tooltip": true,
     "return-type": "json",
     "format": "{icon}",
@@ -187,9 +177,9 @@
       "on": "󰌵",
       "off": "󰌶",
     },
-    "exec": "fallback_latitude=50.1 fallback_longitude=8.7 latitude= longitude= /usr/share/sway/scripts/sunset.sh",
-    "on-click": "/usr/share/sway/scripts/sunset.sh toggle",
-    "exec-if": "/usr/share/sway/scripts/sunset.sh check",
+    "exec": "~/.local/bin/sunset",
+    "on-click": "~/.local/bin/sunset toggle",
+    "exec-if": "~/.local/bin/sunset check",
     "signal": 6,
   },
 
@@ -208,7 +198,7 @@
   },
 
   "custom/adaptive-light": {
-    "interval": "once",
+    "interval": 1,
     "tooltip": true,
     "return-type": "json",
     "format": "{icon}",
@@ -216,9 +206,9 @@
       "on": "󰃡",
       "off": "󰃠",
     },
-    "exec": "/usr/share/sway/scripts/wluma.sh",
-    "on-click": "/usr/share/sway/scripts/wluma.sh toggle",
-    "exec-if": "/usr/share/sway/scripts/wluma.sh check",
+    "exec": "~/.local/bin/wluma",
+    "on-click": "~/.local/bin/wluma toggle",
+    "exec-if": "~/.local/bin/wluma check",
     "signal": 12,
   },
 
@@ -230,26 +220,10 @@
       "default": "󰚢",
       "dnd": "󰚣",
     },
-    "on-click": "/usr/share/sway/scripts/dnd.sh toggle; waybar-signal dnd",
-    "on-click-right": "/usr/share/sway/scripts/dnd.sh restore",
-    "exec": "/usr/share/sway/scripts/dnd.sh status",
+    "on-click": "~/.local/bin/do_not_disturb; waybar-signal dnd",
+    "on-click-right": "~/.local/bin/do_not_disturb restore",
+    "exec": "~/.local/bin/do_not_disturb status",
     "signal": 11,
-  },
-
-  "custom/pacman": {
-    "format": "󰀼 {}",
-    "interval": 3600,
-    "return-type": "json",
-    "exec-if": "/usr/share/sway/scripts/checkupdates.sh check",
-    "exec": "/usr/share/sway/scripts/checkupdates.sh status",
-    "on-click": "/usr/share/sway/scripts/checkupdates.sh check && swaymsg exec \\$update_manager",
-    "on-click-middle": "waybar-signal pacman",
-    "signal": 14,
-  },
-
-  "tray": {
-    "icon-size": 21,
-    "spacing": 5,
   },
 
   "clock": {

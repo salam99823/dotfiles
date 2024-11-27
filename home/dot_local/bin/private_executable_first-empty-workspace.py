@@ -11,7 +11,7 @@ NUM_WORKSPACES = 10
 def main(arguments: argparse.Namespace):
     ipc = i3ipc.Connection()
     tree = ipc.get_tree()
-    workspaces = tree.workspaces()  # includes current_workspace
+    workspaces = tree.workspaces()
     focused = tree.find_focused()
     if focused is None:
         return

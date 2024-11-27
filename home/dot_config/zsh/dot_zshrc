@@ -1,19 +1,31 @@
-# base config for oh my zsh
-source /usr/share/oh-my-zsh/zshrc
+#!/bin/zsh
+#
+# ~/.zshrc
+#
 
-#p10k instant prompt to make terminal open a bit snappier
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+source ~/.profile
 
-source ~/.zshrc
+ZSH_THEME="random"
+plugins=(
+  alias-finder
+  eza
+  fzf
+  F-Sy-H
+  git
+  poetry
+  python
+  rust
+  tmux
+  zsh-autosuggestions
+  zoxide
+)
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# user-defined overrides
+[ -d /usr/share/oh-my-zsh ] && source /usr/share/oh-my-zsh/zshrc
 [ -d ~/.config/zsh/config.d/ ] && source <(cat ~/.config/zsh/config.d/*)
+[ -f ~/.config/user-dirs.dirs ] && source ~/.config/user-dirs.dirs
 
-# Fix for foot terminfo not installed on most servers
-alias ssh="TERM=xterm-256color ssh"
-source ~/.config/user-dirs.dirs
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+zstyle ':omz:plugins:alias-finder' exact yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
+

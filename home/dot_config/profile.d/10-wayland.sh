@@ -17,9 +17,9 @@ export MOZ_DBUS_REMOTE=1
 export GTK_CSD=0
 
 # qt wayland
-export QT_QPA_PLATFORM="wayland"
+export QT_QPA_PLATFORM=xcb
 export QT_QPA_PLATFORMTHEME=qt5ct
-export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
 #Java XWayland blank screens fix
 export _JAVA_AWT_WM_NONREPARENTING=1

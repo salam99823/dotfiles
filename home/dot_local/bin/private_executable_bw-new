@@ -1,3 +1,0 @@
-#!/bin/zsh
-# shellcheck disable=SC2155
-export BW_SESSION='$(bw unlock --raw)'

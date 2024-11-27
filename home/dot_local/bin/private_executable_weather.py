@@ -21,13 +21,18 @@ config_path = path.join(
 config = configparser.ConfigParser()
 config.read(config_path)
 
-# see https://docs.python.org/3/library/locale.html#background-details-hints-tips-and-caveats
+# see
+# https://docs.python.org/3/library/locale.html#background-details-hints-tips-and-caveats
 locale.setlocale(locale.LC_ALL, "")
 current_locale, _ = locale.getlocale(locale.LC_NUMERIC)
 city = config.get("DEFAULT", "city", fallback="auto")
 temperature = config.get("DEFAULT", "temperature", fallback="C")
 distance = config.get("DEFAULT", "distance", fallback="km")
-lng = config.get("DEFAULT", "locale", fallback=locale.getlocale()[0] or current_locale)
+lng = config.get(
+    "DEFAULT",
+    "locale",
+    fallback=locale.getlocale()[0] or current_locale,
+)
 
 if current_locale == "en_US":
     temperature = temperature or "F"
@@ -76,7 +81,9 @@ if distance == "km":
     wind_speed_unit = "kmh"
 
 try:
-    headers = {"Accept-Language": f"{lng.replace("_", "-")},{lng.split("_")[0]};q=0.5"}
+    headers = {
+        "Accept-Language": f"{lng.replace("_", "-")},{lng.split("_")[0]};q=0.5",
+    }
     weather = requests.get(
         f"https://manjaro-sway.download/weather/{city}?temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}",
         timeout=10,
