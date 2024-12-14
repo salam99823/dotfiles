@@ -1,0 +1,20 @@
+*background: {{ .bg | quote }}
+*foreground: {{ .fg | quote }}
+
+*color0: {{ .black | quote }}
+*color1: {{ .red | quote }}
+*color2: {{ .green | quote }}
+*color3: {{ .yellow | quote }}
+*color4: {{ .blue | quote }}
+*color5: {{ .magenta | quote }}
+*color6: {{ .cyan | quote }}
+*color7: {{ .fg_dark | quote }}
+
+*color8: {{ .terminal_black | quote }}
+*color9: {{ .red | quote }}
+*color10: {{ .green | quote }}
+*color11: {{ .yellow | quote }}
+*color12: {{ .blue | quote }}
+*color13: {{ .magenta | quote }}
+*color14: {{ .cyan | quote }}
+*color15: {{ .fg | quote }}

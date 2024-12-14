@@ -41,7 +41,7 @@
 /* The whole bar */
 window#waybar {
   font-family: "JetBrainsMono NF", "Roboto Mono", sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   background-color: transparent;
 }
 
@@ -60,13 +60,10 @@ window#waybar {
 }
 
 #custom-clipboard,
-#custom-zeit,
 #custom-valent,
 #custom-sunset,
-#custom-idle_inhibitor,
 #custom-adaptive-light,
 #custom-dnd,
-#custom-pacman,
 #custom-weather,
 #network,
 #battery,
@@ -77,10 +74,6 @@ window#waybar {
 #tray {
   color: @theme_fg_color;
   background-color: transparent;
-}
-
-#custom-zeit.tracking {
-  background-color: @warning_color;
 }
 
 #battery {
@@ -103,7 +96,6 @@ window#waybar {
   animation-duration: 2s;
 }
 
-#custom-pacman,
 #battery.warning,
 #bluetooth.disabled,
 #custom-valent.dangerously-empty,
@@ -121,7 +113,6 @@ window#waybar {
   padding-right: 7px;
   border-radius: 15px;
   color: @theme_fg_color;
-  background-color: @theme_bg_color;
 }
 
 #workspaces button.urgent {

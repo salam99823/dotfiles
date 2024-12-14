@@ -9,19 +9,6 @@ border-size=3
 border-radius=10
 default-timeout=1500
 
-{{- with get . .colorscheme }}
-text-color={{ .fg }}
-background-color={{ .bg }}
-{{- end }}
-
-{{- if eq .colorscheme "dracula" }}
-{{- with get . .colorscheme }}
-border-color={{ .purple }}
-{{- end }}
-{{- else }}
-{{- with get . .colorscheme }}
-border-color={{ .blue }}
-{{- end }}
-{{- end }}
+{{ includeTemplate .colorscheme (set (set (get . .colorscheme) "template" "mako") "separators" .separators) }}
 [mode=do-not-disturb]
 invisible=1

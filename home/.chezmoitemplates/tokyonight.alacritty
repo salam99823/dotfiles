@@ -1,5 +1,5 @@
-{{if false}} vim:filetype=toml.chezmoitmpl {{end}}
-{{ with get . .colorscheme }}
+{{/* vim: filetype=tomlchezmoitmpl
+*/}}
 [colors.primary]
 background = {{ .bg | quote }}
 foreground = {{ .fg | quote }}
@@ -32,10 +32,9 @@ white = {{ .fg | quote }}
 
 # Indexed Colors
 [[colors.indexed_colors]]
-index = 16
 color = {{ .orange | quote }}
 
+index = 16
 [[colors.indexed_colors]]
-index = 17
 color = {{ .red1 | quote }}
-{{- end }}
+index = 17

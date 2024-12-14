@@ -1,7 +1,6 @@
 export FZF_DEFAULT_COMMAND="fd -t f -L -H -E '.git'"
 export FZF_DEFAULT_OPTS="\
 --color=bg+:#2d3f76 \
---color=bg:#1e2030 \
 --color=border:#589ed7 \
 --color=fg:#c8d3f5 \
 --color=gutter:#1e2030 \

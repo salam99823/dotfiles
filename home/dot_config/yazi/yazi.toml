@@ -9,8 +9,6 @@ extract = [
   { run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
 ]
 
-[open]
-
 [plugin]
 prepend_previewers = [
   { mime = "audio/*", run = "exifaudio" },

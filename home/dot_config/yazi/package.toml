@@ -1,17 +1,17 @@
 [plugin]
 deps = [
-  { use = "AnirudhG07/custom-shell", rev = "d00d2f9" },
-  { use = "dedukun/relative-motions", rev = "d8dd68f" },
+  { use = "AnirudhG07/custom-shell", rev = "d7fb2b3" },
+  { use = "dedukun/relative-motions", rev = "df97039" },
   { use = "redbeardymcgee/yazi-plugins:fg", rev = "a378f0d" },
-  { use = "Reledia/hexyl", rev = "ccc0a4a" },
-  { use = "yazi-rs/plugins:chmod", rev = "ad52adf" },
-  { use = "yazi-rs/plugins:hide-preview", rev = "ad52adf" },
-  { use = "yazi-rs/plugins:max-preview", rev = "ad52adf" },
-  { use = "Reledia/glow", rev = "f52b382" },
-  { use = "ndtoan96/ouch", rev = "d13f7c0" },
-  { use = "imsi32/yatline", rev = "7b56434" },
+  { use = "Reledia/hexyl", rev = "39d3d4e" },
+  { use = "yazi-rs/plugins:chmod", rev = "62f0789" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "62f0789" },
+  { use = "yazi-rs/plugins:max-preview", rev = "62f0789" },
+  { use = "Reledia/glow", rev = "c2ed51e" },
+  { use = "ndtoan96/ouch", rev = "b869886" },
+  { use = "imsi32/yatline", rev = "1b4a9a1" },
   { use = "imsi32/yatline-githead", rev = "a6377a8" },
-  { use = "Sonico98/exifaudio", rev = "855ff05" },
+  { use = "Sonico98/exifaudio", rev = "d794614" },
 ]
 
 [flavor]

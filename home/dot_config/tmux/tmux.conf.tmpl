@@ -66,9 +66,7 @@ set -g @continuum-restore "off"
 set -g @resurrect-capture-pane-contents "off"
 set -g @resurrect-strategy-nvim "session"
 
-{{- if regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme }}
-{{ template "tokyonight.tmux.conf" . }}
-{{- end }}
+{{ includeTemplate .colorscheme (set (set (get . .colorscheme) "template" "tmux") "separators" .separators) }}
 {{- if stat (joinPath .chezmoi.homeDir ".config/tmux/custom/tmux.conf") }}
 source {{ joinPath .chezmoi.homeDir ".config/tmux/custom/tmux.conf" }}
 {{- end }}

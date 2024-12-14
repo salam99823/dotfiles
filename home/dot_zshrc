@@ -1,2 +1,26 @@
-export ZDOTDIR=~/.config/zsh
-source ~/.config/zsh/.zshrc
+#!/bin/zsh
+
+source ~/.profile
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export HISTFILE="$ZDOTDIR/history"
+export ZSH="$ZDOTDIR/ohmyzsh"
+export ZSH_THEME="random"
+plugins=(
+  eza
+  fzf
+  F-Sy-H
+  git
+  poetry
+  python
+  rust
+  tmux
+  zsh-autosuggestions
+  zoxide
+)
+
+source "$ZSH/oh-my-zsh.sh"
+
+[ -d "$ZDOTDIR/config.d/" ] && source <(cat "$ZDOTDIR"/config.d/*)
+[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && source "$XDG_CONFIG_HOME/user-dirs.dirs"

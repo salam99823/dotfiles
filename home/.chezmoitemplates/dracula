@@ -1,0 +1,28 @@
+{{/* vim: filetype=chezmoitmpl
+*/}}
+{{- if eq .template "rofi" }}
+* {
+    background:       {{ .black }};
+    background-alt:   {{ .bg }};
+    foreground:       {{ .fg }};
+    selected: {{ .purple }};
+    active:   {{ .green }};
+    urgent:   {{ .red }};
+}
+{{- else if eq .template "mako" }}
+text-color={{ .fg }}
+background-color={{ .bg }}
+border-color={{ .purple }}
+{{- else if eq .template "wob" }}
+background_color = {{ .bg | trimPrefix "#" }}
+border_color = {{ .purple | trimPrefix "#" }}
+bar_color = {{ .purple | trimPrefix "#" }}
+{{- else if eq .template "tmux" }}
+set -g @plugin 'dracula/tmux'
+set -g @dracula-show-powerline true
+set -g @dracula-refresh-rate 10
+set -g @dracula-show-fahrenheit true
+{{- else }}
+{{ $file := join "." (list "dracula" .template)}}
+{{- includeTemplate $file . }}
+{{- end }}

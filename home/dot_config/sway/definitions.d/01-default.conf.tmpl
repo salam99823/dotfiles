@@ -32,7 +32,7 @@ set $wob_socket '/run/user/{{ .chezmoi.uid }}/wob.sock'
 
 # Terminal emulator
 set $term alacritty
-set $term_float $term --class floating_shell --option="dimensions = { columns = 80, lines = 45 }"
+set $term_float $term --class floating_shell --option="window.dimensions = { columns = 80, lines = 25 }"
 
 # Brightness control
 set $brightness $script_path/brightness
@@ -57,25 +57,25 @@ set $clipboard cliphist list | rofi -dmenu -p "Select item to copy" -lines 10 | 
 set $clipboard-del cliphist list | rofi -dmenu -p "Select item to delete" -lines 10 | cliphist delete
 
 # Zeit tracking
-set $zeit_list zeit list --only-projects-and-tasks --append-project-id-to-task | rofi -dmenu -p "Select task to track" -lines 10 | $script_path/zeit track && waybar-signal zeit
+set $zeit_list zeit list --only-projects-and-tasks --append-project-id-to-task | rofi -dmenu -p "Select task to track" -lines 10 | $script_path/zeit track && ~/.local/bin/waybar-signal zeit
 
 # Application launcher
-set $menu rofi -show drun -show-icons -lines 10
+set $menu rofi -show drun
 
 # Lockscreen configuration
 set $locking swaylock --daemonize --color "$selection-color" --inside-color "$selection-color" --inside-clear-color "$text-color" --ring-color "$color2" --ring-clear-color "$color11" --ring-ver-color "$color13" --show-failed-attempts --fade-in 0.2 --grace 2 --effect-vignette 0.5:0.5 --effect-blur 7x5 --screenshots --clock
 
 # Network menu
-set $network $script_path/once "$term_float --command 'nmtui connect'"
+set $network $script_path/once $term_float --command nmtui connect
 
 # Bluetooth menu
-set $bluetooth $script_path/once "$term_float --command bluetuith"
+set $bluetooth $script_path/once $term_float --command bluetuith
 
 # Pulseaudio command
-set $pulseaudio $script_path/once "$term_float --command pulsemixer"
+set $pulseaudio $script_path/once $term_float --command pulsemixer
 
 # Calendar application
-set $calendar $script_path/once "$term_float --command calcurse"
+set $calendar $script_path/once $term_float --command calcurse
 
 # Workspace names
 set $ws1 number 1
@@ -90,7 +90,7 @@ set $ws9 number 9
 set $ws10 number 10
 
 # Screenshot commands
-set $grimshot grimshot
+set $grimshot /usr/share/sway-contrib/grimshot
 set $pipe_output $grimshot save output -
 set $pipe_selection $grimshot save area -
 set $notify_paste [[ $(wl-paste -l) == "image/png" ]] && notify-send "Screenshot copied to clipboard"

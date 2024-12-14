@@ -5,8 +5,4 @@ opacity = 0
 normal.family = {{ .font.family | quote }}
 size = {{ .font.size }}
 
-{{- if regexMatch "^tokyonight-(moon|storm|night)$" .colorscheme }}
-{{ template "tokyonight.alacritty.toml" . }}
-{{- else if eq .colorscheme "dracula" }}
-{{ template "dracula.alacritty.toml" }}
-{{- end }}
+{{ includeTemplate .colorscheme (set (set (get . .colorscheme) "template" "alacritty") "separators" .separators) }}

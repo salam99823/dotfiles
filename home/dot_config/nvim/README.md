@@ -1,6 +1,8 @@
 # :zzz: Neovim config
 
-This configuration based on [`LazyVim`](https://github.com/LazyVim/LazyVim). And can be used without [`chezmoi`](https://www.chezmoi.io/) by making [**`options.lua.tmpl`**](lua/config/options.lua.tmpl) a simple `Lua` script.
+This configuration based on [`LazyVim`](https://github.com/LazyVim/LazyVim).
+And can be used without [`chezmoi`](https://www.chezmoi.io/)
+by making [**`options.lua.tmpl`**](lua/config/options.lua.tmpl) a simple `Lua` script.
 
 ## :scroll: List of plugins
 

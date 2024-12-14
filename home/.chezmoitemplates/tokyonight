@@ -1,0 +1,23 @@
+{{/* vim: filetype=chezmoitmpl 
+*/}}
+{{ if eq .template "rofi" }}
+* {
+    background:     {{ .black }};
+    background-alt: {{ .bg }};
+    foreground:     {{ .fg }};
+    selected:       {{ .blue0 }};
+    active:         {{ .terminal_black }};
+    urgent:         {{ .red }};
+}
+{{ else if eq .template "mako" }}
+text-color={{ .fg }}
+background-color={{ .bg }}
+border-color={{ .blue }}
+{{ else if eq .template "wob" }}
+background_color = {{ .bg | trimPrefix "#" }}
+border_color = {{ .blue | trimPrefix "#" }}
+bar_color = {{ .blue | trimPrefix "#" }}
+{{ else }}
+{{ $file := join "." (list "tokyonight" .template)}}
+{{- includeTemplate $file . }}
+{{ end }}

@@ -1,4 +1,3 @@
-{{ with set (get . .colorscheme) "separators" .separators }}
 set -g mode-style "fg={{ .blue }},bg={{ .fg_gutter }}"
 
 set -g message-style "fg={{ .blue }},bg={{ .fg_gutter }}"
@@ -30,4 +29,3 @@ setw -g window-status-current-format "#[fg={{ .bg_statusline }},bg={{ .fg_gutter
 # tmux-plugins/tmux-prefix-highlight support
 set -g @prefix_highlight_output_prefix "#[fg={{ .yellow }}]#[bg={{ .bg_statusline }}]{{ .separators.section.right }}#[fg={{ .bg_statusline }}]#[bg={{ .yellow }}]"
 set -g @prefix_highlight_output_suffix "{{ .separators.section.right }}"
-{{- end }}

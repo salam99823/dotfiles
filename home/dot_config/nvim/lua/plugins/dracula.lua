@@ -1,5 +1,4 @@
 ---@module "lazy"
----@module "cmp"
 
 ---@type LazySpec[]
 return {
