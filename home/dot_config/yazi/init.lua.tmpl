@@ -5,33 +5,12 @@ require("yatline"):setup({
     section_separator = { open = << .separators.section.right | squote >>, close = << .separators.section.left | squote >> },
     part_separator = { open = << .separators.component.right | squote >>, close = << .separators.component.left | squote >> },
     inverse_separator = { open = "", close = "" },
-
-    selected = { icon = "󰻭" },
-    copied = { icon = "" },
-    cut = { icon = "" },
-
-    total = { icon = "󰮍" },
-    succ = { icon = "" },
-    fail = { icon = "" },
-    found = { icon = "󰮕" },
-    processed = { icon = "󰐍" },
-  },
-  tab_width = 10,
-  tab_use_inverse = true,
-  show_background = false,
-  header_line = {
-    left = {
-      section_a = {},
-      section_b = {{ type = "string", custom = false, name = "tab_path" }},
-      section_c = {},
-    },
-    right = { section_a = {}, section_b = {}, section_c = {} },
   },
   status_line = {
     left = {
       section_a = {{ type = "string", custom = false, name = "tab_mode" }},
-      section_b = {{ type = "coloreds", custom = false, name = "githead" }},
-      section_c = {{ type = "coloreds", custom = false, name = "count" }},
+      section_b = {{ type = "coloreds", custom = false, name = "count" }},
+      section_c = {},
     },
     right = {
       section_a = {{ type = "string", custom = false, name = "cursor_position" }},
@@ -75,11 +54,3 @@ require("yatline-githead"):setup({
   untracked_color = "red",
   untracked_symbol = "?",
 })
-function Yatline.string.get:cursor_position()
-  local length = #cx.active.current.files
-  if length ~= 0 then
-    return string.format("%2d/%-2d", cx.active.current.cursor + 1, length)
-  else
-    return "0"
-  end
-end
