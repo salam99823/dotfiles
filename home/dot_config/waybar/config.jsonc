@@ -11,8 +11,9 @@
     "sway/language",
     "backlight",
     "pulseaudio",
+    "custom/wf-recorder",
   ],
-  "modules-center": ["custom/wf-recorder", "sway/mode", "custom/weather"],
+  "modules-center": ["sway/mode", "custom/weather"],
   "modules-right": [
     "tray",
     "network",

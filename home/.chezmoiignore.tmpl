@@ -8,7 +8,24 @@
 .xinitrc
 .Xclients
 .Xresources
-.local/bin/change_language
-{{- else if ne .GUI "wayland" }}
+{{- end }}
+{{- if ne .GUI "wayland" }}
 .config/profile.d/10-wayland.sh
+.local/bin/recorder
+.local/bin/scratchpad
+.local/bin/sunset
+.local/bin/type-to-app
+.local/bin/waybar-signal
+.local/bin/wluma
+{{- end }}
+{{- if eq .GUI "none" }}
+.local/bin/brightness
+.local/bin/change_language
+.local/bin/do_not_disturb
+.local/bin/first-empty-workspace.py
+.local/bin/keyboard
+.local/bin/random_wallpaper
+.local/bin/sbdp.py
+.local/bin/scale
+.local/bin/screenshot-notify
 {{- end }}
