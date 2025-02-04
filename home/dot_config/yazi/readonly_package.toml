@@ -1,0 +1,69 @@
+[[plugin.deps]]
+use = "AnirudhG07/custom-shell"
+rev = "32cea3d"
+hash = "bf2dfe68c5dff1dbb898013e4545507e"
+
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "df97039"
+hash = "395940d2b22941e0acb1232579c9d4cf"
+
+[[plugin.deps]]
+use = "redbeardymcgee/yazi-plugins:fg"
+rev = "a378f0d"
+hash = "568dfa62f2a5960246e69d605ebb6572"
+
+[[plugin.deps]]
+use = "Reledia/hexyl"
+rev = "39d3d4e"
+hash = "dd624cbaff94af65f39fd86bc57b340"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "7707c09"
+hash = "4c7e8fd0266eedee7b619d966bd2d025"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:hide-preview"
+rev = "7707c09"
+hash = "5be5885898ca9df783bdec0d402bf4b0"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:max-preview"
+rev = "7707c09"
+hash = "9bc26d10d2f6e2aa93b10905b1b76979"
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "5ce76dc"
+hash = "52e5f5c602962e7cbf874da28f52ba45"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "083d564"
+hash = "1e4c0ac1fca31a23412324710193358a"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "9328205"
+hash = "3e51d1fd8a2e481fcfa8eab1251d1c5f"
+
+[[plugin.deps]]
+use = "imsi32/yatline-githead"
+rev = "a6377a8"
+hash = "4f1a71eff1dd8f245ae2e3985e3e2f91"
+
+[[plugin.deps]]
+use = "Sonico98/exifaudio"
+rev = "d794614"
+hash = "a8e15d3c21c02a5af41d46ed04778a02"
+
+[[flavor.deps]]
+use = "BennyOe/tokyo-night"
+rev = "caa00ab"
+hash = "e589a9fcd0dd8cef30ef5c2cc6b1dd1b"
+
+[[flavor.deps]]
+use = "salam99823/dracula"
+rev = "6d491e3"
+hash = "19d801e29eb1601f788a16088314c8ea"
