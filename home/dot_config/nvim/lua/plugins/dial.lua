@@ -10,6 +10,7 @@ return {
       dials_by_ft = {
         rust = "rust",
         toml = "toml",
+        conf = "conf",
         jsonc = "json",
       },
       groups = {
@@ -96,6 +97,16 @@ return {
           augend.constant.alias.bool,
           augend.integer.alias.decimal,
           augend.semver.alias.semver,
+        },
+        conf = {
+          augend.constant.alias.bool,
+          augend.integer.alias.decimal,
+          augend.semver.alias.semver,
+          augend.constant.new({
+            elements = { "yes", "no" },
+            word = true,
+            cyclic = true,
+          }),
         },
       },
     })
