@@ -24,3 +24,7 @@ source "$ZSH/oh-my-zsh.sh"
 
 [ -d "$ZDOTDIR/config.d/" ] && source <(cat "$ZDOTDIR"/config.d/*)
 [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && source "$XDG_CONFIG_HOME/user-dirs.dirs"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
