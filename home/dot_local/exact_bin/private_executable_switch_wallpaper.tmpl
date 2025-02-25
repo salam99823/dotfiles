@@ -1,17 +1,22 @@
 #!/bin/bash
 
+max="$(ls -1 ~/.config/Wallpaper | wc -l)"
+current="$(cat ~/.config/bg 2>/dev/null || echo 0)"
+
+next="$(((current + 1) % max))"
+
+echo $next >"$HOME/.config/bg"
+
+background="$(find ~/.config/Wallpaper/ -type f -name "$current.*")"
+
 {{- if eq .GUI "xorg" }}
-feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
+feh --no-fehbg --bg-fill $background
 {{- else if eq .GUI "wayland" }}
 
-max="$(ls ~/.config/Wallpaper -1 | wc -l)"
-current="$(cat ~/.cache/wallpaper)"
-echo "$((($current + 1) % $max))" >~/.cache/wallpaper
-background="$(find ~/.config/Wallpaper/ -type f -name "$current*")"
-
 {{- if lookPath "swww" }}
-swww img --transition-duration 0 "$background"
+swww img -t wave --transition-duration 1 $background
 {{- else }}
-swaybg "$background"
+swaybg $background
 {{- end }}
+
 {{- end }}
