@@ -29,7 +29,7 @@ $bindsym $mod+Shift+c reload
 $bindsym $mod+Shift+b exec pkill -x -SIGUSR1 waybar
 
 ## Action // Change Wallpaper ##
-$bindsym $alt_mod+w exec $apply_background
+$bindsym $alt_mod+w exec $apply_wallpaper
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
 $bindsym --locked XF86AudioRaiseVolume exec $volume_up

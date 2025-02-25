@@ -3,10 +3,14 @@
 {{- if eq .GUI "xorg" }}
 feh --randomize --no-fehbg --bg-fill ~/.config/Wallpaper/
 {{- else if eq .GUI "wayland" }}
+
 max="$(ls ~/.config/Wallpaper -1 | wc -l)"
 current="$(cat ~/.cache/wallpaper)"
+echo "$((($current + 1) % $max))" >~/.cache/wallpaper
+background="$(find ~/.config/Wallpaper/ -type f -name "$current*")"
+
 {{- if lookPath "swww" }}
-swww img --transition-fps 30 --transition-type top --transition-duration 3 "$background"
+swww img --transition-duration 0 "$background"
 {{- else }}
 swaybg "$background"
 {{- end }}
