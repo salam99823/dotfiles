@@ -1,5 +1,4 @@
-{{/* vim: filetype=tomlchezmoitmpl
-*/}}
+{{/* vim: filetype=toml.chezmoitmpl */}}
 [colors.primary]
 background = {{ .bg | quote }}
 foreground = {{ .fg | quote }}

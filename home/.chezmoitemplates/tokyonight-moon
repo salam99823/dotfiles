@@ -1,3 +1,2 @@
-{{/* vim: filetype=chezmoitmpl 
-*/}}
-{{ includeTemplate "tokyonight" . }}
+{{/* vim: filetype=chezmoitmpl */}}
+{{- includeTemplate "tokyonight" . }}

@@ -1,5 +1,4 @@
-{{/* vim: filetype=chezmoitmpl
-*/}}
+{{/* vim: filetype=chezmoitmpl */}}
 {{- if eq .template "rofi" }}
 * {
     background:       {{ .black }};

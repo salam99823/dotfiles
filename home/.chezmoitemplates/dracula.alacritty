@@ -1,5 +1,4 @@
-{{/* vim: filetype=chezmoitmpl 
-*/}}
+{{/* vim: filetype=toml.chezmoitmpl */}}
 # Dracula theme for Alacritty
 # https://draculatheme.com/alacritty
 #

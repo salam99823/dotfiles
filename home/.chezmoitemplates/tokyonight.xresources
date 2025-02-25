@@ -1,3 +1,4 @@
+{{/* vim: filetype=xdefaults.chezmoitmpl */}}
 *background: {{ .bg | quote }}
 *foreground: {{ .fg | quote }}
 

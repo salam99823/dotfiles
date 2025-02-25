@@ -1,3 +1,4 @@
+{{/* vim: filetype=tmux.chezmoitmpl */}}
 set -g mode-style "fg={{ .blue }},bg={{ .fg_gutter }}"
 
 set -g message-style "fg={{ .blue }},bg={{ .fg_gutter }}"
