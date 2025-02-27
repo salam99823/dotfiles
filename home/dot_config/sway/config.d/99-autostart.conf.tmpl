@@ -1,7 +1,9 @@
 # autostarts
 exec {
     $initialize_systemd
+    {{- if lookPath "swww" }}
     $initialize_swww
+    {{- end }}
     $initialize_foot_server
     $initialize_swayr_daemon
     $initialize_workspace_icons
@@ -34,10 +36,15 @@ exec_always {
     $nm_applet
     $watch_playerctl
     $calendar_daemon
-
-    $closeswaybg
-    $apply_wallpaper
     $auto_xdg_keyboard
+
+    {{ if lookPath "swww" -}}
+    $closeswaybg
+    {{- end }}
+
+    {{- if joinPath .chezmoi.homeDir ".config/bg" | stat | not }}
+    $apply_wallpaper
+    {{- end }}
 
     $reload_waybar
     $reload_mako
