@@ -6,13 +6,16 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTFILE="$ZDOTDIR/history"
 export ZSH="$ZDOTDIR/ohmyzsh"
-export ZSH_THEME="random"
+export ZSH_THEME="nicoulaj"
 plugins=(
+  chezmoi
+  bun
   eza
   fzf
   F-Sy-H
+  gh
   git
-  poetry
+  postgres
   python
   rust
   tmux
