@@ -1,5 +1,4 @@
 -- chezmoi:template:left-delimiter=<< right-delimiter=>>
-require("relative-motions"):setup({ show_numbers = "relative_absolute" })
 require("yatline"):setup({
   theme = {
     section_separator = { open = << .separators.section.right | squote >>, close = << .separators.section.left | squote >> },
