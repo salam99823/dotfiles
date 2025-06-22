@@ -3,7 +3,8 @@
 # Basics:
 #
 ## Launch // Terminal ##
-$bindsym $mod+Return exec $term
+$bindsym $mod+a exec $term
+$bindsym $mod+f exec firefox
 
 ## Action // Kill focused window ##
 $bindsym $mod+Shift+q kill
@@ -92,12 +93,6 @@ $bindsym $mod+Alt+$left_alt move workspace to output left
 $bindsym $mod+Alt+$down_alt move workspace to output down
 $bindsym $mod+Alt+$up_alt move workspace to output up
 
-## Navigation // List all open windows in last-recently-used order ##
-$bindsym $mod+p exec env RUST_BACKTRACE=1 swayr switch-window &>> /tmp/swayr.log
-
-## Navigation // Switch to the last recently used window ##
-$bindsym Mod1+Tab exec env RUST_BACKTRACE=1 swayr switch-to-urgent-or-lru-window &>> /tmp/swayr.log
-
 ## Navigation // Switch to the last recently used workspace ##
 $bindsym $mod+Tab workspace back_and_forth
 
@@ -158,10 +153,7 @@ $bindsym $mod+w layout tabbed
 $bindsym $mod+e layout toggle split
 
 ## Action // Toggle fullscreen ##
-$bindsym $mod+f fullscreen
-
-## Action // Toggle global fullscreen ##
-$bindsym $mod+Shift+f fullscreen global
+$bindsym $mod+Shift+f fullscreen
 
 ## Action // Scale up  ##
 $bindsym $alt_mod+plus exec $scale_up
@@ -179,7 +171,7 @@ $bindsym $mod+Shift+space floating toggle
 $bindsym $mod+space focus mode_toggle
 
 ## Navigation // Swap focus to the parent window ##
-$bindsym $mod+a focus parent
+$bindsym $mod+p focus parent
 
 ## Launch // Inhibit Idle ##
 $bindsym $mod+Shift+i exec inhibit-idle interactive
