@@ -1,8 +1,6 @@
 ---@module "lazy"
 ---@module "cmp"
 
-local utils = require("utils")
-
 ---@type LazySpec[]
 return {
   {

@@ -4,7 +4,7 @@
 ---@type LazySpec[]
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     ---@param _ LazyPlugin
     ---@param opts MasonSettings
     ---@return MasonSettings
