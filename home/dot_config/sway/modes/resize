@@ -29,8 +29,8 @@ mode --pango_markup $mode_resize {
     $bindsym Shift+$right_alt resize grow width 50px
 
     ## Resize // Window Gaps // + - ##
-    $bindsym minus gaps inner current minus 5px
-    $bindsym plus gaps inner current plus 5px
+    $bindsym minus gaps inner current minus 1px
+    $bindsym plus gaps inner current plus 1px
 
     # Return to default mode
     $bindsym Return mode "default"
@@ -38,5 +38,5 @@ mode --pango_markup $mode_resize {
 }
 ## Launch // Resize Mode ##
 $bindsym $mod+r mode $mode_resize
-gaps inner 5px
-gaps outer 5px
+gaps inner 1px
+gaps outer 1px

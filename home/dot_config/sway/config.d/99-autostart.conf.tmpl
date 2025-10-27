@@ -4,13 +4,19 @@ exec {
     {{- if lookPath "swww" }}
     $initialize_swww
     {{- end }}
+    {{- if lookPath "foot" }}
     $initialize_foot_server
+    {{- end }}
     $initialize_swayr_daemon
+    {{- if lookPath "sworkstyle" }}
     $initialize_workspace_icons
+    {{- end }}
     $initialize_poweralert_daemon
     $initialize_idlehack_daemon
     $initialize_idle_daemon
+    {{- if lookPath "pcmanfm-qt" }}
     $initialize_mounting_daemon
+    {{- end }}
     $initialize_way_displays
     $initialize_waybar
     $initialize_mako
