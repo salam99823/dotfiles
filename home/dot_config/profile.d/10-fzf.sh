@@ -27,7 +27,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="\
   $FZF_DEFAULT_OPTS \
   --border='bottom'"
-export FZF_CTRL_R_COMMAND="history"
+export FZF_CTRL_R_COMMAND=
 export FZF_CTRL_R_OPTS="\
   $FZF_DEFAULT_OPTS \
   --preview='' \
