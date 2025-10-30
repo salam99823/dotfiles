@@ -87,7 +87,7 @@ set $ws9 number 9
 set $ws10 number 10
 
 # Screenshot commands
-set $grimshot /usr/share/sway-contrib/grimshot
+set $grimshot grimshot
 set $pipe_output $grimshot save output -
 set $pipe_selection $grimshot save area -
 set $notify_paste [[ $(wl-paste -l) == "image/png" ]] && notify-send "Screenshot copied to clipboard"
