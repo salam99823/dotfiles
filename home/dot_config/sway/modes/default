@@ -28,6 +28,7 @@ $bindsym $mod+Shift+c reload
 
 ## Action // Toggle Waybar ##
 $bindsym $mod+Shift+b exec pkill -x -SIGUSR1 waybar
+$bindsym $alt_mod+Shift+b exec $reload_waybar
 
 ## Action // Change Wallpaper ##
 $bindsym $alt_mod+w exec $apply_wallpaper
