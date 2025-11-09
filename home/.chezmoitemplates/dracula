@@ -21,6 +21,8 @@ set -g @plugin 'dracula/tmux'
 set -g @dracula-show-powerline true
 set -g @dracula-refresh-rate 10
 set -g @dracula-show-fahrenheit true
+{{- else if eq .template "zellij" }}
+theme "dracula"
 {{- else }}
 {{ $file := join "." (list "dracula" .template)}}
 {{- includeTemplate $file . }}
