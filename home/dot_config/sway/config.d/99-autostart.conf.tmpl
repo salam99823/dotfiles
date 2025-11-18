@@ -48,9 +48,5 @@ exec_always {
     $closeswaybg
     {{- end }}
 
-    {{- if joinPath .chezmoi.homeDir ".config/bg" | stat | not }}
-    $apply_wallpaper
-    {{- end }}
-
     $reload_mako
 }

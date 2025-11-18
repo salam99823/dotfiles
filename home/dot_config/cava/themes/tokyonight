@@ -1,0 +1,12 @@
+[color]
+horizontal_gradient = 1
+horizontal_gradient_color_1 = '#3d59a1' # blue0
+horizontal_gradient_color_2 = '#7aa2f7' # blue
+horizontal_gradient_color_3 = '#89ddff' # blue5
+horizontal_gradient_color_4 = '#7aa2f7' # blue
+horizontal_gradient_color_5 = '#3d59a1' # blue0
+
+gradient = 1
+gradient_color_1 = '#2ac3de' # blue1
+gradient_color_2 = '#7dcfff' # cyan
+gradient_color_3 = '#b4f9f8' # blue6

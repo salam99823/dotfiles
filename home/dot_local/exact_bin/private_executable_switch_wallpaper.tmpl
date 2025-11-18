@@ -1,13 +1,27 @@
 #!/bin/bash
 
-max="$(ls -1 ~/.config/Wallpaper | wc -l)"
+max="$(/bin/ls -1B ~/.config/Wallpaper | grep -cP '\d+\.(jpeg|jpg|apng|png|gif|avif|pnm|tga|tif|tiff|webp|bmp|ff|svg)')"
 current="$(cat ~/.config/bg 2>/dev/null || echo 0)"
 
-next="$(((current + 1) % max))"
+case "$1" in
+'prev' | '-')
+  if [ $current -gt 0 ]; then
+    next="$(((current - 1) % max))"
+  else
+    next="$((max - 1))"
+  fi
+  ;;
+'next' | '+')
+  next="$(((current + 1) % max))"
+  ;;
+'default' | 'def')
+  next=0
+  ;;
+esac
 
 echo $next >"$HOME/.config/bg"
 
-background="$(find ~/.config/Wallpaper/ -type f -name "$current.*")"
+background="$(find ~/.config/Wallpaper/ -type f -name "$next.*")"
 
 {{- if eq .GUI "xorg" }}
 feh --no-fehbg --bg-fill $background

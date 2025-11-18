@@ -1,8 +1,10 @@
 {{- range $k, $v := .configurations }}
 {{- if lookPath $k | not }}
 {{- range $v }}
-{{ . }}{{ end }}
-{{- end }}{{ end }}
+{{ . }}
+{{- end }}
+{{- end }}
+{{- end }}
 
 {{- if ne .GUI "xorg" }}
 .xinitrc

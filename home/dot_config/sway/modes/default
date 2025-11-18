@@ -11,7 +11,6 @@ $bindsym $mod+Shift+q kill
 
 ## Launch // Open launcher ##
 $bindsym $mod+d exec $menu
-$bindsym $alt_mod+space exec $menu
 
 ## Launch // Open clipboard ##
 $bindsym $mod+Shift+p exec $clipboard
@@ -31,14 +30,18 @@ $bindsym $mod+Shift+b exec pkill -x -SIGUSR1 waybar
 $bindsym $alt_mod+Shift+b exec $reload_waybar
 
 ## Action // Change Wallpaper ##
-$bindsym $alt_mod+w exec $apply_wallpaper
+$bindsym $alt_mod+w exec $apply_wallpaper next
+$bindsym $alt_mod+Shift+w exec $apply_wallpaper prev
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
 $bindsym --locked XF86AudioRaiseVolume exec $volume_up
+$bindsym $mod+equal exec $volume_up
 
 $bindsym --locked XF86AudioLowerVolume exec $volume_down
+$bindsym $mod+minus exec $volume_down
 
 $bindsym --locked XF86AudioMute exec $volume_mute
+$bindsym $mod+plus exec $volume_mute
 
 $bindsym XF86AudioMicMute exec $mic_mute
 
@@ -163,7 +166,7 @@ $bindsym $alt_mod+plus exec $scale_up
 $bindsym $alt_mod+minus exec $scale_down
 
 ## Action // Scale default  ##
-$bindsym $mod+equal exec $scale_default
+$bindsym $alt_mod+0 exec $scale_default
 
 ## Action // Toggle floating ##
 $bindsym $mod+Shift+space floating toggle
@@ -182,6 +185,3 @@ hide_edge_borders smart
 
 # allow to kill focused floating shell windows using Esc
 $bindsym --release Escape [app_id="floating_shell" con_id=__focused__] kill
-
-## Launch // Emoji Picker ##
-$bindsym Alt+Shift+e exec $emoji_picker

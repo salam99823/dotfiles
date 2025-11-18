@@ -19,56 +19,6 @@ run = "plugin fg --args='fzf'"
 desc = "find file by filename"
 
 [[mgr.prepend_keymap]]
-on = [":"]
-run = "plugin custom-shell --args=auto"
-desc = "custom-shell as default"
-
-[[mgr.prepend_keymap]]
 on = ["c", "m"]
 run = "plugin chmod"
 desc = "Chmod on selected files"
-
-[[mgr.prepend_keymap]]
-on = ["1"]
-run = "plugin relative-motions --args=1"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["2"]
-run = "plugin relative-motions --args=2"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["3"]
-run = "plugin relative-motions --args=3"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["4"]
-run = "plugin relative-motions --args=4"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["5"]
-run = "plugin relative-motions --args=5"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["6"]
-run = "plugin relative-motions --args=6"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["7"]
-run = "plugin relative-motions --args=7"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["8"]
-run = "plugin relative-motions --args=8"
-desc = "Move in relative steps"
-
-[[mgr.prepend_keymap]]
-on = ["9"]
-run = "plugin relative-motions --args=9"
-desc = "Move in relative steps"

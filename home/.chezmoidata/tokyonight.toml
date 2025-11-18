@@ -1,4 +1,5 @@
 [tokyonight-moon]
+main_color = "#82aaff"
 bg = "#222436"
 bg_dark = "#1e2030"
 bg_float = "#1e2030"
@@ -60,6 +61,7 @@ delete = "#e26a75"
 ignore = "#545c7e"
 
 [tokyonight-night]
+main_color = "#7aa2f7"
 bg = "#1a1b26"
 bg_dark = "#16161e"
 bg_float = "#16161e"
@@ -121,6 +123,7 @@ delete = "#914c54"
 ignore = "#545c7e"
 
 [tokyonight-storm]
+main_color = "#7aa2f7"
 bg = "#24283b"
 bg_dark = "#1f2335"
 bg_float = "#1f2335"
@@ -182,6 +185,7 @@ delete = "#914c54"
 ignore = "#545c7e"
 
 [tokyonight-day]
+main_color = "#2e7de9"
 bg = "#e1e2e7"
 bg_dark = "#d0d5e3"
 bg_float = "#d0d5e3"

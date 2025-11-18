@@ -1,6 +1,6 @@
 [mgr]
-show_hidden = true
-sort_by = "extension"
+show_hidden = false
+sort_by = "natural"
 scrolloff = 4
 
 [opener]

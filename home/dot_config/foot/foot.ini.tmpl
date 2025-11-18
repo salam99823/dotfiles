@@ -1,6 +1,6 @@
-include=~/.config/foot/foot-theme.ini
+{{ includeTemplate .colorscheme (set (set (get . .colorscheme) "template" "foot") "separators" .separators) }}
 
-font={{ .font.family }}:size={{ .font.size }}
+font={{ .font.family }}:size={{ add .font.size 5 }}
 
 [colors]
 alpha=0.0

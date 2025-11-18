@@ -1,4 +1,5 @@
 [dracula]
+main_color = "#BD93F9"
 bg = "#282A36"
 fg = "#F8F8F2"
 selection = "#44475A"

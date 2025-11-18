@@ -1,0 +1,29 @@
+#!/bin/python3
+from os import listdir, path
+from PIL import Image
+
+
+{{ with (get . .colorscheme) -}}
+FOREGROUND = {{ .main_color | quote }}
+BACKGROUND = {{ .bg | quote }}
+{{ end }}
+
+def generate_image(source: str, destination: str):
+    image = Image.open(source)
+    background = Image.new("RGB", size=image.size, color=BACKGROUND)
+    foreground = Image.new("RGB", size=image.size, color=FOREGROUND)
+    background.paste(foreground, mask=image)
+    background.save(destination)
+
+def main():
+    wallpapers = sum(1 for f in listdir("./") if path.isfile(f))
+    for element in listdir("./monochrome/"):
+        file_path = path.join("./monochrome", element)
+        if path.isfile(file_path):
+            filename, ext = path.splitext(file_path)
+            generate_image(file_path, f"{wallpapers}{ext}")
+            wallpapers += 1
+
+
+if __name__ == "__main__":
+    main()

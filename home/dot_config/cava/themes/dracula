@@ -1,0 +1,17 @@
+[color]
+horizontal_gradient = 1
+horizontal_gradient_color_1 = "#69FF94"
+horizontal_gradient_color_2 = "#8BE9FD"
+horizontal_gradient_color_3 = "#A4FFFF"
+horizontal_gradient_color_4 = "#8BE9FD"
+horizontal_gradient_color_5 = "#69FF94"
+
+gradient = 1
+gradient_color_1 = '#8BE9FD'
+gradient_color_2 = '#9AEDFE'
+gradient_color_3 = '#CAA9FA'
+gradient_color_4 = '#BD93F9'
+gradient_color_5 = '#FF92D0'
+gradient_color_6 = '#FF79C6'
+gradient_color_7 = '#FF6E67'
+gradient_color_8 = '#FF5555'

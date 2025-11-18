@@ -4,7 +4,7 @@
     background:     {{ .black }};
     background-alt: {{ .bg }};
     foreground:     {{ .fg }};
-    selected:       {{ .blue0 }};
+    selected:       {{ .main_color }};
     active:         {{ .terminal_black }};
     urgent:         {{ .red }};
 }
@@ -12,13 +12,13 @@
 
 text-color={{ .fg }}
 background-color={{ .bg }}
-border-color={{ .blue }}
+border-color={{ .main_color }}
 
 {{- else if eq .template "wob" -}}
 
 background_color = {{ .bg | trimPrefix "#" }}
-border_color = {{ .blue | trimPrefix "#" }}
-bar_color = {{ .blue | trimPrefix "#" }}
+border_color = {{ .main_color | trimPrefix "#" }}
+bar_color = {{ .main_color | trimPrefix "#" }}
 
 {{- else if eq .template "zellij" -}}
 
@@ -26,6 +26,14 @@ bar_color = {{ .blue | trimPrefix "#" }}
 theme "tokyo-night"
 {{- else -}}
 theme {{ list "tokyo" "night" (trimPrefix "tokyonight-" .colorscheme) | join "-" | quote }}
+{{- end -}}
+
+{{- else if eq .template "cava" -}}
+
+{{- if hasSuffix "night" .colorscheme }}
+theme = "tokyonight"
+{{- else -}}
+theme = {{ .colorscheme | quote }}
 {{- end -}}
 
 {{- else -}}
