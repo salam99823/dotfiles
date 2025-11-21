@@ -16,13 +16,19 @@ def generate_image(source: str, destination: str):
     background.save(destination)
 
 def main():
-    wallpapers = sum(1 for f in listdir("./") if path.isfile(f))
-    for element in listdir("./monochrome/"):
-        file_path = path.join("./monochrome", element)
-        if path.isfile(file_path):
-            filename, ext = path.splitext(file_path)
-            generate_image(file_path, f"{wallpapers}{ext}")
-            wallpapers += 1
+    with open("./monochrome/theme") as theme_file:
+        theme = theme_file.read()
+    if theme != {{ .colorscheme | quote }}:
+        wallpapers = sum(1 for f in listdir("./") if path.isfile(f))
+        for element in listdir("./monochrome/"):
+            file_path = path.join("./monochrome", element)
+            if path.isfile(file_path):
+                filename, ext = path.splitext(file_path)
+                if ext:
+                    generate_image(file_path, f"{wallpapers}{ext}")
+                wallpapers += 1
+        with open("./monochrome/theme", "w") as theme_file:
+            theme_file.write({{ .colorscheme | quote }})
 
 
 if __name__ == "__main__":
