@@ -9,17 +9,31 @@ export ZSH="$ZDOTDIR/ohmyzsh"
 export ZSH_THEME="nicoulaj"
 plugins=(
   chezmoi
+{{- if lookPath "bun" }}
   bun
+{{- end }}
+{{- if lookPath "eza" }}
   eza
+{{- end }}
+{{- if lookPath "fzf" }}
   fzf
+{{- end }}
   F-Sy-H
+{{- if lookPath "gh" }}
   gh
+{{- end }}
   git
+{{- if lookPath "postgres" }}
   postgres
+{{- end }}
   python
+{{- if lookPath "rustup" }}
   rust
+{{- end }}
   zsh-autosuggestions
+{{- if lookPath "zoxide" }}
   zoxide
+{{- end }}
 )
 
 source "$ZSH/oh-my-zsh.sh"
@@ -27,6 +41,11 @@ source "$ZSH/oh-my-zsh.sh"
 [ -d "$ZDOTDIR/config.d/" ] && source <(cat "$ZDOTDIR"/config.d/*)
 [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && source "$XDG_CONFIG_HOME/user-dirs.dirs"
 
-# bun
+{{- if lookPath "bun" }}
+
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+{{- end }}
+
+export PATH="$HOME/.local/bin/:$PATH"
