@@ -22,7 +22,7 @@ export FZF_DEFAULT_OPTS="\
 --pointer='' \
 --separator='󱋰' \
 --info='right' \
---preview='~/.local/bin/fzf-preview {}'"
+--preview='~/.local/scripts/fzf-preview {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="\
   $FZF_DEFAULT_OPTS \

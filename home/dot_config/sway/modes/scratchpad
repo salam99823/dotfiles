@@ -5,8 +5,8 @@
 # You can send windows there and get them back later.
 
 ## Action // Move window to scratchpad ##
-$bindsym $mod+bracketleft move scratchpad, exec "~/.local/bin/waybar-signal scratchpad"
+$bindsym $mod+bracketleft move scratchpad, exec "~/.local/scripts/waybar-signal scratchpad"
 
 # If there are multiple scratchpad windows, this command cycles through them.
 ## Action // Toggle scratchpad ##
-$bindsym $mod+bracketright scratchpad show, exec "~/.local/bin/waybar-signal scratchpad"
+$bindsym $mod+bracketright scratchpad show, exec "~/.local/scripts/waybar-signal scratchpad"

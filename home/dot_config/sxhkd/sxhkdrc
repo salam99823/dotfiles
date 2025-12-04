@@ -7,7 +7,7 @@ super + {t,shift + t}
 
 # Launch scripts
 super + {x,alt + w,shift + b,shift + c}
-  ~/.local/bin/{\
+  ~/.local/scripts/{\
     xcolor-pick,\
     random_wallpaper,\
     toggle-bar,\
@@ -21,10 +21,10 @@ super + {shift + ,_}d
   }
 
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-  ~/.local/bin/volume {--up,--down,--toggle}
+  ~/.local/scripts/volume {--up,--down,--toggle}
 
 XF86MonBrightness{Up,Down}
-  ~/.local/bin/brightness {--up,--down}
+  ~/.local/scripts/brightness {--up,--down}
 
 XF86Audio{Prev,Next,Play,Pause}
   mpc -q {prev,next,toggle,pause}

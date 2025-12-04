@@ -49,7 +49,7 @@ set {
   $clipboard-del cliphist list | rofi -dmenu -p "Select item to delete" -lines 10 | cliphist delete
 
 # Zeit tracking
-  $zeit_list zeit list --only-projects-and-tasks --append-project-id-to-task | rofi -dmenu -p "Select task to track" -lines 10 | $script_path/zeit track && ~/.local/bin/waybar-signal zeit
+  $zeit_list zeit list --only-projects-and-tasks --append-project-id-to-task | rofi -dmenu -p "Select task to track" -lines 10 | $script_path/zeit track && ~/.local/scripts/waybar-signal zeit
 
 # Application launcher
   $menu rofi -show drun

@@ -35,11 +35,11 @@ start() {
 case $1'' in
 'off')
   pkill -x wlsunset
-  ~/.local/bin/waybar-signal sunset
+  ~/.local/scripts/waybar-signal sunset
   ;;
 'on')
   start
-  ~/.local/bin/waybar-signal sunset
+  ~/.local/scripts/waybar-signal sunset
   ;;
 'toggle')
   if pkill -x -0 wlsunset; then
@@ -47,7 +47,7 @@ case $1'' in
   else
     start
   fi
-  ~/.local/bin/waybar-signal sunset
+  ~/.local/scripts/waybar-signal sunset
   ;;
 'check')
   command -v wlsunset
