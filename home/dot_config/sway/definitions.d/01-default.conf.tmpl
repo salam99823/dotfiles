@@ -36,11 +36,6 @@ set {
   $brightness_up $brightness up > $wob_socket
   $brightness_down $brightness down > $wob_socket
 
-# Scaling
-  $scale_up $script_path/scale up
-  $scale_down $script_path/scale down
-  $scale_default $script_path/scale default
-
 # Audio control
   $sink_volume pactl get-sink-volume @DEFAULT_SINK@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
   $source_volume pactl get-source-volume @DEFAULT_SOURCE@ | grep '^Volume:' | cut -d / -f 2 | tr -d ' ' | sed 's/%//'
