@@ -7,11 +7,11 @@ status() {
 # Accepts managing parameter
 case "$1" in
 'toggle')
-  status && systemctl --user stop wluma || systemctl --user --now enable wluma
   ~/.local/bin/waybar-signal adaptive-brightness
+  status && systemctl --user stop wluma || systemctl --user start wluma
   ;;
 'check')
-  [ -x "$(command -v wluma)" ] && [ $(ls -A /sys/class/backlight/ | wc -l) -gt 0 ]
+  [ -x "$(command -v wluma)" ] && [ "$(find /sys/class/backlight/ | wc -l)" -gt 0 ]
   exit $?
   ;;
 esac
