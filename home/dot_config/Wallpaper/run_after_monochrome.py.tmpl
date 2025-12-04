@@ -16,8 +16,12 @@ def generate_image(source: str, destination: str):
     background.save(destination)
 
 def main():
-    with open("./monochrome/theme") as theme_file:
-        theme = theme_file.read()
+    try:
+        with open("./monochrome/theme") as theme_file:
+            theme = theme_file.read()
+    except FileNotFoundError:
+        theme = ""
+
     if theme != {{ .colorscheme | quote }}:
         wallpapers = sum(1 for f in listdir("./") if path.isfile(f))
         for element in listdir("./monochrome/"):
