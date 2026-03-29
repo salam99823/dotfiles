@@ -1,8 +1,8 @@
 # autostarts
 exec {
     $initialize_systemd
-    {{- if lookPath "swww" }}
-    $initialize_swww
+    {{- if lookPath "awww" }}
+    $initialize_awww
     {{- end }}
     {{- if lookPath "foot" }}
     $initialize_foot_server
@@ -44,7 +44,7 @@ exec_always {
     $calendar_daemon
     $auto_xdg_keyboard
 
-    {{ if lookPath "swww" -}}
+    {{ if lookPath "awww" -}}
     $closeswaybg
     {{- end }}
 

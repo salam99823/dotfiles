@@ -27,8 +27,8 @@ background="$(find ~/.config/Wallpaper/ -type f -name "$next.*")"
 feh --no-fehbg --bg-fill $background
 {{- else if eq .GUI "wayland" }}
 
-{{- if lookPath "swww" }}
-swww img -t wave --transition-duration 1 $background
+{{- if lookPath "awww" }}
+awww img -t wave --transition-duration 1 $background
 {{- else }}
 swaybg $background
 {{- end }}

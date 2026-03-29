@@ -1,11 +1,11 @@
 [Unit]
 Description=Wayland background daemon
-Documentation=https://github.com/LGFae/swww
+Documentation=https://codeberg.org/LGFae/awww
 PartOf=wayland-session.target
 After=wayland-session.target
 
 [Service]
-ExecStart=swww-daemon
+ExecStart=awww-daemon
 Restart=on-failure
 
 [Install]
