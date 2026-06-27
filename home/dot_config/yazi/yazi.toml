@@ -12,7 +12,7 @@ extract = [
 [plugin]
 prepend_previewers = [
   { mime = "audio/*", run = "exifaudio" },
-  { name = "*.md", run = "glow" },
+  { url = "*.md", run = "glow" },
   { mime = "application/*zip", run = "ouch" },
   { mime = "application/x-tar", run = "ouch" },
   { mime = "application/x-bzip2", run = "ouch" },
@@ -20,4 +20,4 @@ prepend_previewers = [
   { mime = "application/x-rar", run = "ouch" },
   { mime = "application/x-xz", run = "ouch" },
 ]
-append_previewers = [{ name = "*", run = "hexyl" }]
+append_previewers = [{ url = "*", run = "hexyl" }]

@@ -5,8 +5,8 @@ hash = "50da29476e744dba37d77fb209328fd1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "8f1d971"
-hash = "8ad3e90b079190b4905f24a44f4ca06b"
+rev = "39aaf6d"
+hash = "f0c8c378184d5f8abd1b095a443d336d"
 
 [[plugin.deps]]
 use = "Reledia/glow"
@@ -15,8 +15,8 @@ hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "0742fff"
-hash = "2bd799b42b8e42b8ef100310be71f8d1"
+rev = "406ce6c"
+hash = "f5afc904d5106ee368c8aa2ded43bd74"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
