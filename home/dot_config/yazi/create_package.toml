@@ -1,34 +1,29 @@
 [[plugin.deps]]
-use = "Reledia/hexyl"
-rev = "016a09b"
-hash = "50da29476e744dba37d77fb209328fd1"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "39aaf6d"
-hash = "f0c8c378184d5f8abd1b095a443d336d"
-
-[[plugin.deps]]
-use = "Reledia/glow"
-rev = "bd3eaa5"
-hash = "92b5c58159a51c567f82b618cee2b78"
+rev = "6229767"
+hash = "87472b05a8c420100f6a2b9cde1e7746"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "406ce6c"
-hash = "f5afc904d5106ee368c8aa2ded43bd74"
+rev = "596b666"
+hash = "c2f4f4aca257dcceafa9e3b828dbf1c9"
 
 [[plugin.deps]]
 use = "Sonico98/exifaudio"
 rev = "4506f9d"
 hash = "4761fffb60a12d37096c34a356380cdf"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "6229767"
+hash = "d1e0499cae5f3aeb628c267616d4b682"
+
 [[flavor.deps]]
 use = "BennyOe/tokyo-night"
-rev = "5f56364"
-hash = "c0bf69ad2c44005892d586e9693993c6"
+rev = "8e6296f"
+hash = "d9da921c3bd37ba32ee27a8a7a40461f"
 
 [[flavor.deps]]
 use = "salam99823/dracula"
 rev = "6d491e3"
-hash = "19d801e29eb1601f788a16088314c8ea"
+hash = "3d19fe5ee9163e64c24f3badc1ae07f6"
