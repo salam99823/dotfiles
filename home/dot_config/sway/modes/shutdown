@@ -27,6 +27,7 @@ mode --pango_markup $mode_shutdown {
     $bindsym r exec $purge_cliphist; exec systemctl reboot
 
     # Return to default mode.
+    $bindsym Return mode "default"
     $bindsym Escape mode "default"
 }
 

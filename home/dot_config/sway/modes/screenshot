@@ -13,6 +13,7 @@ mode --pango_markup $mode_screenshot {
     $bindsym Shift+p mode "default", exec $screenshot_selection_upload
 
     # Return to default mode.
+    $bindsym Return mode "default"
     $bindsym Escape mode "default"
 }
 

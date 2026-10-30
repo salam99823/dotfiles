@@ -1,0 +1,44 @@
+set $mode_mouse "<span foreground='$color10'>󰍽</span>  \
+<span foreground='$color5'><b>Move mouse</b></span> <span foreground='$color10'>(<b>↑ ↓ ← →</b>)</span> \
+<span foreground='$color5'><b>Click</b></span> <span foreground='$color10'>(<b>s</b>:L <b>d</b>:M <b>f</b>:R)</span> \
+<span foreground='$color5'>+ <span foreground='$color10'><b>Shift</b></span> to move faster</span>"
+mode --pango_markup $mode_mouse {
+    $bindsym $left seat * cursor move -20 0
+    $bindsym $down seat * cursor move 0 20
+    $bindsym $up seat * cursor move 0 -20
+    $bindsym $right seat * cursor move 20 0
+
+    $bindsym $left_alt seat * cursor move -20 0
+    $bindsym $down_alt seat * cursor move 0 20
+    $bindsym $up_alt seat * cursor move 0 -20
+    $bindsym $right_alt seat * cursor move 20 0
+
+    $bindsym Shift+$left seat * cursor move -100 0
+    $bindsym Shift+$down seat * cursor move 0 100
+    $bindsym Shift+$up seat * cursor move 0 -100
+    $bindsym Shift+$right seat * cursor move 100 0
+
+    $bindsym Shift+$left_alt seat * cursor move -100 0
+    $bindsym Shift+$down_alt seat * cursor move 0 100
+    $bindsym Shift+$up_alt seat * cursor move 0 -100
+    $bindsym Shift+$right_alt seat * cursor move 100 0
+
+    $bindsym s seat * cursor press button1
+    $bindsym --release s seat * cursor release button1
+
+    $bindsym d seat * cursor press button2
+    $bindsym --release d seat * cursor release button2
+
+    $bindsym f seat * cursor press button3
+    $bindsym --release f seat * cursor release button3
+
+    $bindsym r seat * cursor press button4, exec sleep 0.05, swaymsg seat * cursor release button4
+    $bindsym v seat * cursor press button5, exec sleep 0.05, swaymsg seat * cursor release button5
+
+    # Return to default mode.
+    $bindsym Return mode "default"
+    $bindsym Escape mode "default"
+}
+
+## Launch // Mouse Mode ##
+$bindsym $mod+Shift+m mode $mode_mouse

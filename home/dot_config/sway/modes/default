@@ -130,9 +130,6 @@ $bindsym $mod+n exec $script_path/first-empty-workspace.py --switch
 ## Action // Move focused window to a new workspace ##
 $bindsym $mod+Shift+n exec $script_path/first-empty-workspace.py --move
 
-## Action // Move focused window to a new workspace and switch there ##
-$bindsym $mod+Shift+m exec $script_path/first-empty-workspace.py --move --switch
-
 #
 # Layout stuff:
 #
