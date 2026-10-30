@@ -1,6 +1,11 @@
 [[mgr.prepend_keymap]]
-on = ["C"]
+on = ["c", "Z"]
 run = "plugin ouch --args=zip"
+desc = "Compress with ouch"
+
+[[mgr.prepend_keymap]]
+on = ["c", "z"]
+run = "plugin ouch --args=7z"
 desc = "Compress with ouch"
 
 [[mgr.prepend_keymap]]
