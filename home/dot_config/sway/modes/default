@@ -30,8 +30,8 @@ $bindsym $mod+Shift+b exec pkill -x -SIGUSR1 waybar
 $bindsym $alt_mod+Shift+b exec $reload_waybar
 
 ## Action // Change Wallpaper ##
-$bindsym $alt_mod+w exec $apply_wallpaper next
-$bindsym $alt_mod+Shift+w exec $apply_wallpaper prev
+$bindsym $mod+w exec $apply_wallpaper next
+$bindsym $mod+Shift+w exec $apply_wallpaper prev
 
 # --locked flags allow the buttons to be used whilst the screen is locked.
 $bindsym --locked XF86AudioRaiseVolume exec $volume_up
@@ -141,7 +141,7 @@ $bindsym $mod+v splitv
 ## Action // Switch to window stacking ##
 $bindsym $mod+s layout stacking
 ## Action // Switch to window tabbing ##
-$bindsym $mod+w layout tabbed
+$bindsym $mod+t layout tabbed
 ## Action // Switch to window tiling ##
 $bindsym $mod+e layout toggle split
 
