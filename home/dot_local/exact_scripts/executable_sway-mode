@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+[[ -z "$SWAYSOCK" || ! -S "$SWAYSOCK" ]] && exit 0
+
+mode=$(swaymsg -t get_binding_state 2>/dev/null | jq -r '.name // "default"')
+
+if [[ "$mode" == "default" || -z "$mode" ]]; then
+  exit 0
+fi
+
+echo "$mode" | sed -E 's/<[^>]+>//g' | awk -F'(' '{print $1}' | xargs

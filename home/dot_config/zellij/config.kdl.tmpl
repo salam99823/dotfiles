@@ -1,6 +1,3 @@
-keybinds preset="unlock-first"
-default_layout "zjstatus"
-
 plugins {
     about location="zellij:about"
     configuration location="zellij:configuration"
@@ -17,14 +14,13 @@ plugins {
     }
     zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm"
     zjforgot location="file:~/.config/zellij/plugins/zellij_forgot.wasm"
+    zjroom location="file:~/.config/zellij/plugins/room.wasm"
+    zjnewtab-plus location="file:~/.config/zellij/plugins/zellij-newtab-plus.wasm"
+    zjmultitask location="file:~/.config/zellij/plugins/multitask.wasm"
 }
 
 load_plugins {
-};
-
-mouse_mode false
-pane_frames false
-mirror_session true
+}
 
 {{ includeTemplate .colorscheme (set . "template" "zellij") }}
 
@@ -34,10 +30,10 @@ copy_command "xclip -selection clipboard"
 copy_command "wl-copy"
 {{- end }}
 
-session_name "salam"
-attach_to_session true
+mouse_mode false
+pane_frames false
+mirror_session true
 show_startup_tips false
-
 mouse_scroll_resize false
 
 on_quit "quit"
@@ -51,16 +47,105 @@ terminal {
     middle_click_paste false
     hide_pointer_while_typing true
 }
-keybinds {
-  shared_except "locked" "renametab" "renamepane" "renamesession" {
-    bind "F1" {
+
+default_layout "zjstatus"
+keybinds preset="unlock-first" {
+  shared_among "normal" "tab" {
+    bind "d" {
+        Edit ".multitask" {
+            direction "Right"
+        }
+        SwitchToMode "Locked"
+    }
+    bind "Shift d" {
+        LaunchPlugin "zjmultitask" {
+            shell "/bin/zsh"
+            layout "{{ includeTemplate "zellij-multitask-layout.kdl" . | regexReplaceAll "\\s+" " " | replace "\"" "\\\"" }}"
+            multitask_file_name ".multitask"
+        }
+        SwitchToMode "Locked"
+    }
+    bind "f" {
+        LaunchOrFocusPlugin "zjroom" {
+            floating true
+            ignore_case true
+            quick_jump true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "w" {
+        LaunchOrFocusPlugin "zjnewtab-plus" {
+            floating true
+            use_zoxide true
+        }
+        SwitchToMode "Locked"
+    }
+  }
+  shared_among "normal" {
+    bind "/" {
         LaunchOrFocusPlugin "zjforgot" {
             floating true
+            "LOAD_ZELLIJ_BINDINGS" "false"
+
+            // --- Zellij Mode Entry & Global ---
+            "Zellij Locked Unlock to Normal Mode" "Ctrl + g"
+            "Zellij Global Next / Prev Swap Layout (cycle panes)" "Alt + ] / Alt + ["
+            "Zellij Global Toggle Floating Panes (popup overlay)" "Alt + f"
+            "Zellij Global New Pane (split terminal)" "Alt + n"
+            "Zellij Global Move Focus (navigate panes)" "Alt + h / j / k / l"
+            "Zellij Global Resize Pane (grow / shrink)" "Alt + = / Alt + -"
+            "Zellij Global Move Tab Left / Right (reorder)" "Alt + i / Alt + o"
+            "Zellij Global Group / Mark Pane (sync)" "Alt + p / Alt + Shift + p"
+
+            // --- Zellij Normal Mode ---
+            "Zellij Normal Lock Mode" "Ctrl + g / Enter"
+            "Zellij Normal Tab Switcher / Fuzzy Jump (zjroom)" "f"
+            "Zellij Normal New Tab Plus / Zoxide (zjnewtab-plus)" "w"
+            "Zellij Normal Open Multitask CI Runner (zjmultitask)" "d"
+            "Zellij Normal Cheatsheet / Keybinds (zjforgot)" "/"
+            "Zellij Normal Enter Pane / Tab / Resize / Move Mode" "p / t / r / m"
+            "Zellij Normal Enter Scroll / Session Mode" "s / o"
+            "Zellij Normal Quit / Exit Session" "Ctrl + q"
+
+            // --- Zellij Pane Mode ---
+            "Zellij Pane Split Down / Right / Stacked" "d / r / s"
+            "Zellij Pane Close Focused Pane" "x"
+            "Zellij Pane Fullscreen Pane (maximize)" "f"
+            "Zellij Pane Embed or Float Pane" "e"
+            "Zellij Pane Rename Pane" "c"
+            "Zellij Pane Pin / Mute / Watch Pane" "i / u / v"
+
+            // --- Zellij Tab Mode ---
+            "Zellij Tab Switcher / Fuzzy Jump (zjroom)" "f"
+            "Zellij Tab New Tab Plus / Zoxide (zjnewtab-plus)" "w"
+            "Zellij Tab Open Multitask CI Runner (zjmultitask)" "d"
+            "Zellij Tab New Tab / Close Tab" "n / x"
+            "Zellij Tab Rename Tab" "r"
+            "Zellij Tab Break Pane to New / Left / Right Tab" "b / [ / ]"
+            "Zellij Tab Sync Input Across Panes" "s"
+            "Zellij Tab Switch to Tab 1-9" "1..9"
+
+            // --- Zellij Scroll & Session Mode ---
+            "Zellij Scroll Edit Scrollback in Editor (dump buffer)" "e"
+            "Zellij Scroll Search Text" "f"
+            "Zellij Scroll Copy Last Command Output (clipboard)" "c"
+            "Zellij Session Detach Session" "d"
+            "Zellij Session Session Manager (switch / attach)" "w"
+            "Zellij Session Rename Session" "r"
+
+            // --- Sway Window Manager Modes ---
+            "Sway Mouse Move Cursor Fast (+Shift)" "Shift + Arrows"
+            "Sway Mouse Move Cursor" "Arrows"
+            "Sway Mouse Left / Middle / Right Click" "s / d / f"
+            "Sway Record Screen Capture / With Audio (+Shift)" "r / Shift + r"
+            "Sway Resize Resize Window" "Arrows"
+            "Sway Resize Increase / Decrease Gaps" "+ / -"
+            "Sway Picker Pick Color" "p"
+            "Sway Picker Output Screenshot / Upload (+Shift)" "o / Shift + o"
+            "Sway Power Lock / Logout" "l / e"
+            "Sway Power Reboot / Suspend / Shutdown" "r / u / s"
         }
+        SwitchToMode "Locked"
     }
   }
 }
-    // shared_except "locked" "renametab" "renamepane" "renamesession" {
-    //     bind "{unlock}" { SwitchToMode "Locked"; }
-    //     bind "{primary} q" { Quit; }
-    // }

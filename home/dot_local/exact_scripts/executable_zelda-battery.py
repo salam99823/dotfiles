@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
+"""
+Zelda-style heart battery indicator for Arch Linux (/sys/class/power_supply).
+Based on: https://gist.github.com/zspotter/e4b361a398d8d8818f2cfeab3c25df80/
+"""
+# https://gist.github.com/zspotter/e4b361a398d8d8818f2cfeab3c25df80/
 
 import glob
 import os
 import sys
-from math import ceil, floor
 
 
 def render_hearts(pct, max_hearts, discharging):
-    hearts = max_hearts * pct
-    partial = hearts - floor(hearts)
-
-    full_hearts = floor(hearts) + round(partial)
-    half_hearts = 1 - round(partial) if hearts != max_hearts else 0
-    empty_hearts = max_hearts - ceil(hearts)
+    half_steps = round(pct / 50 * max_hearts)
+    full_hearts = half_steps // 2
+    half_hearts = half_steps % 2
+    empty_hearts = max_hearts - full_hearts - half_hearts
 
     chars = [
         *"󰋑" * full_hearts,
@@ -20,26 +22,20 @@ def render_hearts(pct, max_hearts, discharging):
         *"󰋕" * empty_hearts,
     ]
 
-    if chars[-1] == "󰋕":
-        chars[-1] = "󱐲" if discharging else "󱐱"
-    elif chars[-1] == "󰋑":
-        chars[-1] = "󱐯" if discharging else "󱐮"
-    elif chars[0] == "󰋑":
+    percent = f"{pct}% " if pct < 10 else ""
+
+    if chars[0] == "󰋑":
         chars[0] = "󱐯" if discharging else "󱐮"
     else:
-        raise ValueError("Invalid state")
+        chars[0] = "󱐲" if discharging else "󱐱"
 
-    return (
-        (f"{floor(pct * 100)}% " if pct <= 1 / max_hearts else "")
-        + " ".join(chars)
-        + " "
-    )
+    return f"{percent}{' '.join(chars)} "
 
 
 def get_battery_info():
     batteries = sorted(glob.glob("/sys/class/power_supply/BAT*"))
     if not batteries:
-        return 1.0, False
+        return 100, False
 
     capacities = []
     statuses = []
@@ -55,19 +51,19 @@ def get_battery_info():
                 statuses.append(f.read().strip().lower())
 
     if not capacities:
-        return 1.0, False
+        return 100, False
 
-    avg_pct = (sum(capacities) / len(capacities)) / 100
+    avg_pct = sum(capacities) / len(capacities)
     discharging = "discharging" in statuses
 
     return avg_pct, discharging
 
 
 def main():
-    max_hearts = 4
+    max_hearts = 10
     if "--test" in sys.argv:
-        for i in range(1, 101, 1):
-            print(f"{i}%\t{render_hearts(i / 100, max_hearts, i % 2 == 0)}")
+        for i in range(1, 101):
+            print(f"{i}%\t{render_hearts(i, max_hearts, i % 2 == 0)}")
         return
 
     pct, discharging = get_battery_info()
