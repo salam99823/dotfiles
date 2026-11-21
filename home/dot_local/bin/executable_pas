@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -e
+
+ACTION="$1"
+FILE="${2:-Program.pas}"
+
+# Append .pas if omitted
+[[ "$FILE" != *.pas ]] && FILE="${FILE}.pas"
+
+if [ ! -f "$FILE" ]; then
+  echo "Error: File '$FILE' not found."
+  exit 1
+fi
+
+# Adjust this path to match where PascalABC.NET is installed in your Wine prefix
+PABC_DIR="${PABC_DIR:-$HOME/.wine/drive_c/Program Files (x86)/PascalABC.NET}"
+COMPILER="$PABC_DIR/pabcnetc.exe"
+
+if [ ! -f "$COMPILER" ]; then
+  echo "Error: pabcnetc.exe not found at '$COMPILER'."
+  echo "Set PABC_DIR or update the path in ~/.local/bin/pas."
+  exit 1
+fi
+
+# Convert Linux paths to Windows paths for Wine
+WIN_FILE="$(winepath -w "$FILE")"
+EXE_FILE="${FILE%.pas}.exe"
+
+build() {
+  echo "Compiling $FILE ..."
+  # WINEDEBUG=-all suppresses noisy Wine stderr warnings in your terminal
+  WINEDEBUG=-all wine "$COMPILER" "$WIN_FILE"
+}
+
+run() {
+  if [ ! -f "$EXE_FILE" ]; then
+    echo "Error: Executable '$EXE_FILE' not found."
+    exit 1
+  fi
+
+  WINEDEBUG=-all wine "$EXE_FILE"
+}
+
+case "$ACTION" in
+build)
+  build
+  ;;
+run)
+  build
+  run
+  ;;
+*)
+  echo "Usage: pas {build|run} [file.pas]"
+  echo "Examples:"
+  echo "  pas build main.pas    # Compiles main.pas -> main.exe"
+  echo "  pas run main.pas      # Compiles and runs main.exe"
+  echo "  pas run               # Compiles and runs Program.pas"
+  exit 1
+  ;;
+esac

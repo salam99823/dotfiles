@@ -1,0 +1,2 @@
+#!/bin/env bash
+/bin/neo -a -M 1 -s -d 0.1 -S 20 -D -c cyan --charset=greek $@

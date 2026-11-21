@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -e
+
+ACTION="$1"
+TARGET="${2:-Main}"
+
+# Strip .java extension or src/ prefix if provided (e.g., "src/com/app/Main.java" -> "com/app/Main")
+TARGET="${TARGET%.java}"
+TARGET="${TARGET#src/}"
+
+PROJECT_NAME="$(basename "$PWD")"
+OUT_DIR="out/production/$PROJECT_NAME"
+SRC_DIR="src"
+
+# Fallback to current directory if no 'src' folder exists
+if [ ! -d "$SRC_DIR" ]; then
+  SRC_DIR="."
+fi
+
+build() {
+  mkdir -p "$OUT_DIR"
+
+  # Find all .java files in the source directory
+  mapfile -t JAVA_FILES < <(find "$SRC_DIR" -name "*.java" ! -path "./out/*")
+
+  if [ ${#JAVA_FILES[@]} -eq 0 ]; then
+    echo "Error: No .java files found in '$SRC_DIR'."
+    exit 1
+  fi
+
+  echo "Building $PROJECT_NAME -> $OUT_DIR ..."
+  javac -d "$OUT_DIR" -sourcepath "$SRC_DIR" "${JAVA_FILES[@]}"
+}
+
+run() {
+  # Convert path separators to dots for Java class execution (e.g., com/app/Main -> com.app.Main)
+  MAIN_CLASS="${TARGET//\//.}"
+
+  if [ ! -f "$OUT_DIR/${TARGET}.class" ]; then
+    echo "Error: Class '$MAIN_CLASS' not found in $OUT_DIR."
+    exit 1
+  fi
+
+  java -cp "$OUT_DIR" "$MAIN_CLASS"
+}
+
+case "$ACTION" in
+build)
+  build
+  ;;
+run)
+  build
+  run
+  ;;
+*)
+  echo "Usage: jv {build|run} [ClassName]"
+  echo "Examples:"
+  echo "  jv build              # Compiles all sources into out/production/<project>"
+  echo "  jv run                # Compiles and runs Main"
+  echo "  jv run App            # Compiles and runs App"
+  echo "  jv run com/app/Main   # Compiles and runs com.app.Main"
+  exit 1
+  ;;
+esac

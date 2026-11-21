@@ -1,5 +1,5 @@
 keybinds preset="unlock-first"
-default_layout "default"
+default_layout "zjstatus"
 
 plugins {
     about location="zellij:about"
@@ -15,15 +15,11 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
-{{- if stat (joinPath .chezmoi.homeDir ".config/zellij/plugins/zjstatus.wasm") }}
     zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm"
-{{- end }}
+    zjforgot location="file:~/.config/zellij/plugins/zellij_forgot.wasm"
 }
 
 load_plugins {
-{{- if stat (joinPath .chezmoi.homeDir ".config/zellij/plugins/zjstatus.wasm") }}
-  zjstatus
-{{- end }}
 };
 
 mouse_mode false
@@ -55,3 +51,16 @@ terminal {
     middle_click_paste false
     hide_pointer_while_typing true
 }
+keybinds {
+  shared_except "locked" "renametab" "renamepane" "renamesession" {
+    bind "F1" {
+        LaunchOrFocusPlugin "zjforgot" {
+            floating true
+        }
+    }
+  }
+}
+    // shared_except "locked" "renametab" "renamepane" "renamesession" {
+    //     bind "{unlock}" { SwitchToMode "Locked"; }
+    //     bind "{primary} q" { Quit; }
+    // }

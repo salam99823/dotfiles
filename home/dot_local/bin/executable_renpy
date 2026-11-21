@@ -1,0 +1,24 @@
+#!/bin/sh
+
+renpy=$HOME/Projects/renpy-8.5.2-sdk/renpy.sh
+
+case "$1" in
+"launcher")
+  launcher=$HOME/Projects/renpy-8.5.2-sdk/launcher/
+  shift
+  $renpy "$launcher" "$@"
+  ;;
+"gui")
+  gui=$HOME/Projects/renpy-8.5.2-sdk/gui/
+  shift
+  $renpy "$gui" "$@"
+  ;;
+"doc")
+  doc=$HOME/Projects/renpy-8.5.2-sdk/doc/
+  shift
+  $renpy "$doc" "$@"
+  ;;
+*)
+  $renpy "$@"
+  ;;
+esac

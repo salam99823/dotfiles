@@ -11,11 +11,9 @@ return {
     opts = function(_, opts)
       return vim.tbl_deep_extend("force", opts, {
         ensure_installed = vim.list_extend(opts.ensure_installed or {}, {
-          "emmet_ls",
           "cssls",
           "lua_ls",
           "pylsp",
-          "lemminx",
           "biome",
           "taplo",
           "hydra_lsp",

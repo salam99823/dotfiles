@@ -15,7 +15,22 @@ return {
             return true
           end,
         },
+        servers = {
+          jdtls = {
+            mason = false,
+          },
+        },
       })
+    end,
+  },
+  {
+    "mfussenegger/nvim-jdtls",
+    opts = function(_, opts)
+      opts.cmd = { vim.fn.exepath("jdtls") }
+      opts.root_dir = function(path)
+        return vim.fs.root(path, vim.lsp.config.jdtls.root_markers) or vim.fs.dirname(path)
+      end
+      return opts
     end,
   },
 }
