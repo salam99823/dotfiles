@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+if [[ -z "$ZELLIJ" ]]; then
+  echo "Not inside a Zellij session."
+  exit 1
+fi
+
+mode="${1:-run}"
+shift 2>/dev/null
+
+if [[ "$mode" == "run" && $# -eq 0 ]]; then
+  cache_file="$HOME/.cache/zj-last-exec"
+  last_cmd=""
+  if [[ -f "$cache_file" ]]; then
+    last_cmd=$(awk -F'\t' -v dir="$PWD" '$1 == dir {print $2; exit}' "$cache_file")
+  fi
+
+  if [[ -n "$last_cmd" ]]; then
+    zellij run --floating --name "$last_cmd" -- "${SHELL:-/bin/bash}" -ic "$last_cmd"
+    exit 0
+  fi
+fi
+
+cmd=()
+if [[ -f "Cargo.toml" ]] || [[ -n "$(find . -maxdepth 2 -name 'Cargo.toml' -print -quit 2>/dev/null)" ]]; then
+  cmd=(cargo "$mode" "$@")
+elif [[ -f "pom.xml" || -f "build.gradle" || -f "build.gradle.kts" ]] ||
+  [[ -n "$(find . -maxdepth 2 -name '*.java' -print -quit 2>/dev/null)" ]]; then
+  cmd=(jv "$mode" "$@")
+else
+  echo "Unknown project type in $PWD"
+  exit 1
+fi
+
+zellij run --floating --name "${cmd[*]}" -- "${cmd[@]}"

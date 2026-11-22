@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC2181,SC2124
 set -x
 
 PID=$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .pid')
@@ -7,8 +8,8 @@ matcher=$1
 shift
 type=$@
 
-swaymsg [$matcher] focus
+swaymsg ["$matcher"] focus
 if [ "$?" = "0" ]; then
-  wtype $type
+  wtype "$type"
   swaymsg "[pid=$PID] focus"
 fi

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+if [[ -z "$ZELLIJ" ]]; then
+  echo "Not inside a Zellij session."
+  exit 1
+fi
+
+cache_file="$HOME/.cache/zj-last-exec"
+last_cmd=""
+if [[ -f "$cache_file" ]]; then
+  last_cmd=$(awk -F'\t' -v dir="$PWD" '$1 == dir {print $2; exit}' "$cache_file")
+fi
+
+suggestions=()
+[[ -n "$last_cmd" ]] && suggestions+=("$last_cmd")
+
+if [[ -f "Cargo.toml" ]] || [[ -n "$(find . -maxdepth 2 -name 'Cargo.toml' -print -quit 2>/dev/null)" ]]; then
+  suggestions+=(
+    "cargo run"
+    "cargo build"
+    "cargo check"
+    "cargo test"
+    "cargo clippy"
+  )
+  shopt -s nullglob
+  for ex in examples/*.rs; do
+    base="${ex##*/}"
+    suggestions+=("cargo run --example ${base%.rs}")
+  done
+  shopt -u nullglob
+elif [[ -f "pom.xml" || -f "build.gradle" || -f "build.gradle.kts" ]] ||
+  [[ -n "$(find . -maxdepth 2 -name '*.java' -print -quit 2>/dev/null)" ]]; then
+  suggestions+=(
+    "jv run"
+    "jv build"
+    "jv test"
+  )
+fi
+
+picked=$(
+  { ((${#suggestions[@]})) && printf "%s\n" "${suggestions[@]}" | awk '!seen[$0]++'; } | fzf \
+    --no-preview \
+    --print-query \
+    --prompt=" Exec > " \
+    --height=100% \
+    --reverse \
+    --border \
+    --header="Select a command or type your own and press Enter"
+)
+
+query="${picked%%$'\n'*}"
+match="${picked#*$'\n'}"
+cmd="${match:-$query}"
+
+[[ -z "$cmd" ]] && exit 0
+
+mkdir -p "${cache_file%/*}"
+tmp_file="${cache_file}.tmp"
+{
+  printf "%s\t%s\n" "$PWD" "$cmd"
+  [[ -f "$cache_file" ]] && awk -F'\t' -v dir="$PWD" '$1 != dir' "$cache_file"
+} >"$tmp_file" && mv "$tmp_file" "$cache_file"
+
+zellij run --floating --name "$cmd" -- "${SHELL:-/bin/bash}" -ic "$cmd"

@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+mode="$1"
+prompt=" All > "
+case "$mode" in
+  p|projects) prompt=" Project > " ;;
+  r|refs)     prompt=" Ref > " ;;
+  c|config)   prompt=" Config > " ;;
+esac
+
+active_sessions=""
+if [[ -z "$ZELLIJ" ]]; then
+  active_sessions=$(zellij list-sessions --short 2>/dev/null)
+fi
+
+choice=$(
+  {
+    if [[ -z "$mode" || "$mode" == "p" || "$mode" == "projects" ]]; then
+      find "$HOME/Projects" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+    fi
+    if [[ -z "$mode" || "$mode" == "r" || "$mode" == "refs" ]]; then
+      find "$HOME/Refs" -mindepth 1 -maxdepth 1 -type d 2>/dev/null
+    fi
+    if [[ -z "$mode" || "$mode" == "c" || "$mode" == "config" ]]; then
+      echo "$HOME/.local/share/chezmoi"
+      echo "$HOME/.local/scripts"
+      echo "$HOME/.local/bin"
+    fi
+  } | while IFS= read -r dir; do
+    [[ -d "$dir" ]] || continue
+    short_name="${dir##*/}"
+    session="${short_name//./_}"
+    tag=""
+
+    if [[ "$dir" == "$HOME/Refs/"* ]]; then
+      session="ref_${session}"
+      [[ -z "$mode" ]] && tag=" \033[1;34m[ref]\033[0m"
+    fi
+
+    if [[ -z "$ZELLIJ" ]] && grep -Fxq "$session" <<< "$active_sessions"; then
+      tag="${tag} \033[1;32m[active]\033[0m"
+    fi
+
+    printf "%s\t%s%b\n" "$dir" "$short_name" "$tag"
+  done | fzf --ansi --delimiter='\t' --with-nth=2 --prompt="$prompt" --reverse --border \
+    --preview="$HOME/.local/scripts/zj-preview {1}" \
+    --preview-window='right:55%:border-left'
+)
+
+[[ -z "$choice" ]] && exit 0
+
+selected="${choice%%$'\t'*}"
+short_name="${selected##*/}"
+session_name="${short_name//./_}"
+[[ "$selected" == "$HOME/Refs/"* ]] && session_name="ref_${session_name}"
+
+layout="zjstatus"
+if [[ "$short_name" == "chezmoi" \
+      || "$selected" == "$HOME/.local/scripts" \
+      || "$selected" == "$HOME/.local/bin" \
+      || -f "$selected/Cargo.toml" \
+      || -f "$selected/pom.xml" \
+      || -f "$selected/build.gradle" \
+      || -f "$selected/build.gradle.kts" \
+      || -n "$(find "$selected" -maxdepth 2 -name '*.java' -print -quit 2>/dev/null)" ]]; then
+  layout="editor"
+fi
+
+if [[ -n "$ZELLIJ" ]]; then
+  zellij action new-tab --cwd "$selected" --layout "$layout" --name "$short_name"
+else
+  if ! grep -Fxq "$session_name" <<< "$active_sessions"; then
+    zellij attach --create-background "$session_name" options --default-cwd "$selected" --default-layout "$layout"
+    (
+      for _ in {1..20}; do
+        if zellij --session "$session_name" action list-tabs 2>/dev/null | grep -q '^0[[:space:]]'; then
+          zellij --session "$session_name" action rename-tab-by-id 0 "$short_name"
+          break
+        fi
+        sleep 0.05
+      done
+    ) >/dev/null 2>&1 &
+    disown
+  fi
+  zellij attach "$session_name"
+fi

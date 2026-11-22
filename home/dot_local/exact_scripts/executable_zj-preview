@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+dir="$1"
+[[ -d "$dir" ]] || exit 0
+
+printf "\033[1;36mPath:\033[0m %s\n" "${dir/#$HOME/~}"
+
+if [[ -d "$dir/.git" ]]; then
+  branch=$(git -C "$dir" branch --show-current 2>/dev/null)
+  dirty=$(git -C "$dir" status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+  printf "\033[1;35mGit:\033[0m  %s (%s changed)\n" "$branch" "$dirty"
+  git -C "$dir" log -n 3 --oneline --color=always 2>/dev/null
+fi
+
+printf "\n\033[1;33mFiles:\033[0m\n"
+if command -v eza >/dev/null 2>&1; then
+  eza --icons --color=always -la --no-permissions --no-user --no-time --group-directories-first "$dir" | head -n 25
+else
+  {
+    find "$dir" -mindepth 1 -maxdepth 1 -type d -printf "    -  \033[1;34m%f\033[0m\n" | sort
+    find "$dir" -mindepth 1 -maxdepth 1 ! -type d -printf "%s\t%f\n" | sort -k2 | numfmt --to=iec --format="%5f" --field=1 | awk -F'\t' '{printf "%5s  %s\n", $1, $2}'
+  } | head -n 25
+fi

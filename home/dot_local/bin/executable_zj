@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+scripts_dir="$HOME/.local/scripts"
+mode="$1"
+
+case "$mode" in
+exec)
+  exec "$scripts_dir/zj-exec"
+  ;;
+run | build | test | check)
+  exec "$scripts_dir/zj-run" "$@"
+  ;;
+"" | p | projects | r | refs | c | config)
+  exec "$scripts_dir/zj-session" "$mode"
+  ;;
+*)
+  echo "Usage: zj [p|r|c|exec|run|build|test|check]"
+  exit 1
+  ;;
+esac

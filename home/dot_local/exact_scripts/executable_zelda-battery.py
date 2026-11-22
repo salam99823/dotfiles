@@ -2,8 +2,7 @@
 """
 Zelda-style heart battery indicator for Arch Linux (/sys/class/power_supply).
 Based on: https://gist.github.com/zspotter/e4b361a398d8d8818f2cfeab3c25df80/
-"""
-# https://gist.github.com/zspotter/e4b361a398d8d8818f2cfeab3c25df80/
+"""  # noqa: EXE001
 
 import glob
 import os

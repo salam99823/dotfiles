@@ -30,7 +30,3 @@ refreshPeriod = "168h"
 type = "file"
 url = "https://github.com/AlexZasorin/zellij-newtab-plus/releases/latest/download/zellij-newtab-plus.wasm"
 refreshPeriod = "168h"
-[".config/zellij/plugins/multitask.wasm"]
-type = "file"
-url = "https://github.com/leakec/multitask/releases/latest/download/multitask.wasm"
-refreshPeriod = "168h"

@@ -12,14 +12,18 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    // Custom plugins
     zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm"
     zjforgot location="file:~/.config/zellij/plugins/zellij_forgot.wasm"
     zjroom location="file:~/.config/zellij/plugins/room.wasm"
-    zjnewtab-plus location="file:~/.config/zellij/plugins/zellij-newtab-plus.wasm"
-    zjmultitask location="file:~/.config/zellij/plugins/multitask.wasm"
+    // TODO: customize and build custom one
+    // zjmultitask location="file:~/.config/zellij/plugins/multitask.wasm"
 }
 
 load_plugins {
+  // zjmultitask {
+  //     multitask_file_name ".multitask"
+  // }
 }
 
 {{ includeTemplate .colorscheme (set . "template" "zellij") }}
@@ -50,39 +54,8 @@ terminal {
 
 default_layout "zjstatus"
 keybinds preset="unlock-first" {
-  shared_among "normal" "tab" {
-    bind "d" {
-        Edit ".multitask" {
-            direction "Right"
-        }
-        SwitchToMode "Locked"
-    }
-    bind "Shift d" {
-        LaunchPlugin "zjmultitask" {
-            shell "/bin/zsh"
-            layout "{{ includeTemplate "zellij-multitask-layout.kdl" . | regexReplaceAll "\\s+" " " | replace "\"" "\\\"" }}"
-            multitask_file_name ".multitask"
-        }
-        SwitchToMode "Locked"
-    }
-    bind "f" {
-        LaunchOrFocusPlugin "zjroom" {
-            floating true
-            ignore_case true
-            quick_jump true
-        }
-        SwitchToMode "Locked"
-    }
-    bind "w" {
-        LaunchOrFocusPlugin "zjnewtab-plus" {
-            floating true
-            use_zoxide true
-        }
-        SwitchToMode "Locked"
-    }
-  }
-  shared_among "normal" {
-    bind "/" {
+  shared_among "normal" "locked" {
+    bind "Alt /" {
         LaunchOrFocusPlugin "zjforgot" {
             floating true
             "LOAD_ZELLIJ_BINDINGS" "false"
@@ -100,8 +73,12 @@ keybinds preset="unlock-first" {
             // --- Zellij Normal Mode ---
             "Zellij Normal Lock Mode" "Ctrl + g / Enter"
             "Zellij Normal Tab Switcher / Fuzzy Jump (zjroom)" "f"
-            "Zellij Normal New Tab Plus / Zoxide (zjnewtab-plus)" "w"
-            "Zellij Normal Open Multitask CI Runner (zjmultitask)" "d"
+            "Zellij Normal New Project Tab (zj projects)" "d"
+            "Zellij Normal New Ref Tab (zj refs)" "Shift + d"
+            "Zellij Normal New Config Tab (zj config)" "c"
+            "Zellij Normal Lazygit (lazygit)" "g"
+            "Zellij Normal Network Manager Wi-Fi (nmtui)" "Shift + n"
+            "Zellij Normal Bluetooth Manager (bluetuith)" "Shift + b"
             "Zellij Normal Cheatsheet / Keybinds (zjforgot)" "/"
             "Zellij Normal Enter Pane / Tab / Resize / Move Mode" "p / t / r / m"
             "Zellij Normal Enter Scroll / Session Mode" "s / o"
@@ -117,8 +94,9 @@ keybinds preset="unlock-first" {
 
             // --- Zellij Tab Mode ---
             "Zellij Tab Switcher / Fuzzy Jump (zjroom)" "f"
-            "Zellij Tab New Tab Plus / Zoxide (zjnewtab-plus)" "w"
-            "Zellij Tab Open Multitask CI Runner (zjmultitask)" "d"
+            "Zellij Tab New Project Tab (zj projects)" "d"
+            "Zellij Tab New Ref Tab (zj refs)" "Shift + d"
+            "Zellij Tab New Config Tab (zj config)" "c"
             "Zellij Tab New Tab / Close Tab" "n / x"
             "Zellij Tab Rename Tab" "r"
             "Zellij Tab Break Pane to New / Left / Right Tab" "b / [ / ]"
@@ -144,6 +122,80 @@ keybinds preset="unlock-first" {
             "Sway Picker Output Screenshot / Upload (+Shift)" "o / Shift + o"
             "Sway Power Lock / Logout" "l / e"
             "Sway Power Reboot / Suspend / Shutdown" "r / u / s"
+        }
+    }
+    bind "Alt w" {
+        LaunchOrFocusPlugin "zjroom" {
+            floating true
+            ignore_case true
+            quick_jump true
+        }
+    }
+  }
+  shared_among "normal" "tab" {
+    bind "Shift d" {
+        Run "zj" "refs" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "d" {
+        Run "zj" "projects" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "c" {
+        Run "zj" "config" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "f" {
+        LaunchOrFocusPlugin "zjroom" {
+            floating true
+            ignore_case true
+            quick_jump true
+        }
+        SwitchToMode "Locked"
+    }
+  }
+  shared_among "normal" {
+    bind "e" {
+        Run "zj" "run" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "Shift e" {
+        Run "zj" "exec" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "g" {
+        Run "lazygit" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "Shift n" {
+        Run "nmtui" {
+            floating true
+            close_on_exit true
+        }
+        SwitchToMode "Locked"
+    }
+    bind "Shift b" {
+        Run "bluetuith" {
+            floating true
+            close_on_exit true
         }
         SwitchToMode "Locked"
     }
