@@ -9,10 +9,6 @@ timeouts:
   # locking_timeout
   - timeout: 300
     command: swaymsg exec \$locking
-  # screen_timeout
-  - timeout: 600
-    command: ~/.local/scripts/keyboard-backlight-switch off
-    resume: ~/.local/scripts/keyboard-backlight-switch on
   # dpms_timeout
   - timeout: 600
     command: swaymsg "output * dpms off"

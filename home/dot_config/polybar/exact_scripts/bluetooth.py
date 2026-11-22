@@ -28,7 +28,7 @@ class Bluetoothctl:
 
     def __init__(self):
         if shutil.which("bluetoothctl") is None:
-            raise EnvironmentError("bluetoothctl missing")
+            raise OSError("bluetoothctl missing")
 
     def __call__(self, *args: str) -> str:
         return subprocess.check_output(("bluetoothctl", *args)).decode()
@@ -111,8 +111,7 @@ def main(online: str, offline: str, connected: str, icons: str):
             return connected.format(**device)
         except KeyError:
             return ""
-    else:
-        return online.format(**info)
+    return online.format(**info)
 
 
 if __name__ == "__main__":

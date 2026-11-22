@@ -4,8 +4,6 @@
 
 mode=$(swaymsg -t get_binding_state 2>/dev/null | jq -r '.name // "default"')
 
-if [[ "$mode" == "default" || -z "$mode" ]]; then
-  exit 0
+if [[ "$mode" != "default" && -n "$mode" ]]; then
+  echo "$mode"
 fi
-
-echo "$mode" | sed -E 's/<[^>]+>//g' | awk -F'(' '{print $1}' | xargs

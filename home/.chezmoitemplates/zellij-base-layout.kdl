@@ -3,14 +3,14 @@ default_tab_template {
     plugin location="zjstatus" {
       color_bg "black"
       format_left   "#[bg=$bg] {mode}{tabs}"
-      format_center "#[bg=$bg]{command_sway}"
-      format_right  "{command_battery}{datetime}"
+      format_center "#[bg=$bg]"
+      format_right  "#[bg=$bg]{command_mpd}{command_battery}{datetime}"
       format_space  "#[bg=$bg] "
       hide_frame_for_single_pane "true"
       border_enabled  "false"
 
       mode_normal        "#[fg=red,bg=$bg]󰓥 "
-      mode_locked        "#[fg=red,bg=$bg]󰒘 "
+      mode_locked        "#[fg=blue,bg=$bg]󰒘 "
 
       mode_pane          "#[fg=blue,bg=$bg] "
       mode_rename_pane   "#[fg=blue,bg=$bg]󰤌 "
@@ -28,6 +28,11 @@ default_tab_template {
 
       mode_tmux          "#[fg=green,bg=$bg] "
 
+      command_mpd_command     "mpc current -f '[%title%]|[%file%]'"
+      command_mpd_format      "#[fg=cyan,bg=$bg,bold]{stdout} "
+      command_mpd_interval    "1"
+
+      // Tab {
       // formatting for inactive tabs
       tab_normal              "#[bg=$bg]{index}"
       tab_normal_fullscreen   "#[bg=$bg]{index}"
@@ -45,14 +50,11 @@ default_tab_template {
       tab_sync_indicator       " "
       tab_fullscreen_indicator " "
       tab_floating_indicator   " "
+      // }
 
-      command_sway_command  {{ joinPath .chezmoi.homeDir ".local/scripts/sway-mode" | quote }}
-      command_sway_format   "#[fg=yellow,bg=$bg,bold]{stdout}"
-      command_sway_interval "0"
-
-      command_battery_command {{ joinPath .chezmoi.homeDir ".local/scripts/zelda-battery.py" | quote }}
+      command_battery_command {{ joinPath .chezmoi.homeDir ".local/scripts/zelda-battery" | quote }}
       command_battery_format "#[fg=red,bg=$bg,bold]{stdout} "
-      command_battery_interval "10"
+      command_battery_interval "1"
 
       datetime        "#[fg=white,bg=$bg,bold]{format} "
       datetime_format "%T"

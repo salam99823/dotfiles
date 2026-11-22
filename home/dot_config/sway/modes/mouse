@@ -1,7 +1,4 @@
-set $mode_mouse "<span foreground='$color10'>󰍽</span>  \
-<span foreground='$color5'><b>Move mouse</b></span> <span foreground='$color10'>(<b>↑ ↓ ← →</b>)</span> \
-<span foreground='$color5'><b>Click</b></span> <span foreground='$color10'>(<b>s</b>:L <b>d</b>:M <b>f</b>:R)</span> \
-<span foreground='$color5'>+ <span foreground='$color10'><b>Shift</b></span> to move faster</span>"
+set $mode_mouse "󰍽 Mouse"
 mode --pango_markup $mode_mouse {
     $bindsym $left seat * cursor move -20 0
     $bindsym $down seat * cursor move 0 20

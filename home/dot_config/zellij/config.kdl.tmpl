@@ -1,18 +1,4 @@
 plugins {
-    about location="zellij:about"
-    configuration location="zellij:configuration"
-    filepicker location="zellij:strider" {
-        cwd "/"
-    }
-    plugin-manager location="zellij:plugin-manager"
-    session-manager location="zellij:session-manager"
-    status-bar location="zellij:status-bar"
-    strider location="zellij:strider"
-    tab-bar location="zellij:tab-bar"
-    welcome-screen location="zellij:session-manager" {
-        welcome_screen true
-    }
-    // Custom plugins
     zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm"
     zjforgot location="file:~/.config/zellij/plugins/zellij_forgot.wasm"
     zjroom location="file:~/.config/zellij/plugins/room.wasm"
@@ -62,6 +48,8 @@ keybinds preset="unlock-first" {
 
             // --- Zellij Mode Entry & Global ---
             "Zellij Locked Unlock to Normal Mode" "Ctrl + g"
+            "Zellij Global Cheatsheet / Keybinds (zjforgot)" "Alt + /"
+            "Zellij Global Tab Switcher / Fuzzy Jump (zjroom)" "Alt + w"
             "Zellij Global Next / Prev Swap Layout (cycle panes)" "Alt + ] / Alt + ["
             "Zellij Global Toggle Floating Panes (popup overlay)" "Alt + f"
             "Zellij Global New Pane (split terminal)" "Alt + n"
@@ -76,10 +64,11 @@ keybinds preset="unlock-first" {
             "Zellij Normal New Project Tab (zj projects)" "d"
             "Zellij Normal New Ref Tab (zj refs)" "Shift + d"
             "Zellij Normal New Config Tab (zj config)" "c"
+            "Zellij Normal Run Project / Last Command (zj run)" "e"
+            "Zellij Normal Fuzzy Exec Command (zj exec)" "Shift + e"
             "Zellij Normal Lazygit (lazygit)" "g"
             "Zellij Normal Network Manager Wi-Fi (nmtui)" "Shift + n"
             "Zellij Normal Bluetooth Manager (bluetuith)" "Shift + b"
-            "Zellij Normal Cheatsheet / Keybinds (zjforgot)" "/"
             "Zellij Normal Enter Pane / Tab / Resize / Move Mode" "p / t / r / m"
             "Zellij Normal Enter Scroll / Session Mode" "s / o"
             "Zellij Normal Quit / Exit Session" "Ctrl + q"

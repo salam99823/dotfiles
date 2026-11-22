@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Zelda-style heart battery indicator for Arch Linux (/sys/class/power_supply).
+# Based on: https://gist.github.com/zspotter/e4b361a398d8d8818f2cfeab3c25df80/
+
+max_hearts=10
+
+render_hearts() {
+  local pct=$1
+  local status=$2
+  local half_steps=$(((pct * max_hearts + 25) / 50))
+  local full=$((half_steps / 2))
+  local half=$((half_steps % 2))
+  local empty=$((max_hearts - full - half))
+
+  local chars=()
+  local i
+  for ((i = 0; i < full; i++)); do chars+=("󰋑"); done
+  for ((i = 0; i < half; i++)); do chars+=("󰛞"); done
+  for ((i = 0; i < empty; i++)); do chars+=("󰋕"); done
+
+  if [[ "$status" == "charging" ]]; then
+    if [[ "${chars[0]}" == "󰋑" ]]; then chars[0]="󱐮"; else chars[0]="󱐱"; fi
+  elif [[ "$status" == "discharging" ]]; then
+    if [[ "${chars[0]}" == "󰋑" ]]; then chars[0]="󱐯"; else chars[0]="󱐲"; fi
+  fi
+
+  local prefix=""
+  ((pct < 10)) && prefix="${pct}% "
+
+  local out="${chars[*]}"
+  printf "%s%s \n" "$prefix" "$out"
+}
+
+if [[ "$1" == "--test" ]]; then
+  for ((i = 1; i <= 100; i++)); do
+    st="discharging"
+    ((i % 2 == 0)) && st="charging"
+    printf "%d%%\t%s\n" "$i" "$(render_hearts "$i" "$st")"
+  done
+  exit 0
+fi
+
+shopt -s nullglob
+bats=(/sys/class/power_supply/BAT*)
+shopt -u nullglob
+
+if ((${#bats[@]} == 0)); then
+  render_hearts 100 "full"
+  exit 0
+fi
+
+total_cap=0
+count=0
+status="full"
+
+for bat in "${bats[@]}"; do
+  if [[ -r "$bat/capacity" && -r "$bat/status" ]]; then
+    cap=$(<"$bat/capacity")
+    st=$(<"$bat/status")
+    st="${st,,}"
+    total_cap=$((total_cap + cap))
+    ((count++))
+    if [[ "$st" == "charging" ]]; then
+      status="charging"
+    elif [[ "$st" == "discharging" && "$status" != "charging" ]]; then
+      status="discharging"
+    fi
+  fi
+done
+
+if ((count == 0)); then
+  render_hearts 100 "full"
+else
+  avg=$(((total_cap + count / 2) / count))
+  render_hearts "$avg" "$status"
+fi
